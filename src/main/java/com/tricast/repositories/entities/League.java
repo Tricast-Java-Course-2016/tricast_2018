@@ -30,4 +30,28 @@ public class League implements Serializable {
 
     @Column(name = "sportid")
     private Integer sportId;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Integer getSportId() {
+		return sportId;
+	}
+
+	public void setSportId(Integer sportId) {
+		this.sportId = sportId;
+	}
 }
