@@ -35,23 +35,8 @@ public class Account implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "sex")
-    private Integer sex;
-
-    @Column(name = "identitycardnumber")
-    private String identityCardNumber;
-
     @Column(name = "dob")
     private Integer dob;
-
-    @Column(name = "country")
-    private String country;
-
-    @Column(name = "zipcode")
-    private String zipcode;
-
-    @Column(name = "city")
-    private String city;
 
     @Column(name = "address")
     private String address;
@@ -59,11 +44,23 @@ public class Account implements Serializable {
     @Column(name = "phonenumber")
     private String phoneNumber;
 
-    @Column(name = "email")
+    @Column(name = "emailaddress")
     private String email;
 
     @Column(name = "createddate")
     private Date createdDate;
+
+    @Column(name = "bankaccountnumber")
+    private String bankaccountnumber;
+
+    @Column(name = "bankcardnumber")
+    private String bankcardnumber;
+
+    @Column(name = "accounttype")
+    private String accounttype;
+
+    @Column(name = "pin")
+    private String pin;
 
     public Long getId() {
         return id;
@@ -105,52 +102,12 @@ public class Account implements Serializable {
         this.password = password;
     }
 
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
-    public String getIdentityCardNumber() {
-        return identityCardNumber;
-    }
-
-    public void setIdentityCardNumber(String identityCardNumber) {
-        this.identityCardNumber = identityCardNumber;
-    }
-
     public Integer getDob() {
         return dob;
     }
 
     public void setDob(Integer dob) {
         this.dob = dob;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getAddress() {
@@ -183,6 +140,38 @@ public class Account implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getBankaccountnumber() {
+        return bankaccountnumber;
+    }
+
+    public void setBankaccountnumber(String bankaccountnumber) {
+        this.bankaccountnumber = bankaccountnumber;
+    }
+
+    public String getBankcardnumber() {
+        return bankcardnumber;
+    }
+
+    public void setBankcardnumber(String bankcardnumber) {
+        this.bankcardnumber = bankcardnumber;
+    }
+
+    public String getAccounttype() {
+        return accounttype;
+    }
+
+    public void setAccounttype(String accounttype) {
+        this.accounttype = accounttype;
+    }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
     }
 
 
