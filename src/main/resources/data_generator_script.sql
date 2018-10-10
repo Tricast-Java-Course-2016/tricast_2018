@@ -65,13 +65,13 @@ INSERT INTO "tricast"."leagues" ("id", "description", "sportid") VALUES
 	(5, 'EPSOM DOWNS 2018-08-17', 2),
 	(6, 'MUSSELBURGH 2018-11-01', 2);
 
-INSERT INTO "tricast"."leaguecompetitormap" ("competitorid", "leagueid") VALUES
-	(1, 1),
-	(3, 1),
-	(5, 1),
-	(10, 5),
-	(11, 5),
-	(13, 5);
+INSERT INTO "tricast"."leaguecompetitormap" ("id", "competitorid", "leagueid") VALUES
+	(1, 1, 1),
+	(2, 3, 1),
+	(3, 5, 1),
+	(4, 10, 5),
+	(5, 11, 5),
+	(6, 13, 5);
 
 INSERT INTO "tricast"."events" ("id", "eventtypeid", "leagueid", "description", "status", "starttime") VALUES
 	(1, 1, 1, E'Szuper EB döntő', E'OPEN', E'2018-09-30 17:45:22+02'),
@@ -121,10 +121,10 @@ INSERT INTO tricast.bets(id, bettypeid, accountid) VALUES
 	(1, 2, 1),
 	(2, 1, 2);
 	
-INSERT INTO tricast.betoutcomemap(betid, outcomeid, odds) VALUES 
-	(1, 1, 3.10),
-	(1, 4, 4),
-	(2, 8, 3.15);
+INSERT INTO tricast.betoutcomemap(id, betid, outcomeid, odds) VALUES 
+	(1, 1, 1, 3.10),
+	(2, 1, 4, 4),
+	(3, 2, 8, 3.15);
 	
 INSERT INTO tricast.transactions(id, betid, createddate, description, amount, accountid, type) VALUES 
 	(1, null, CURRENT_TIMESTAMP, 'Bankkártya feltöltés', 1000, 1, 'TRANSFER'),

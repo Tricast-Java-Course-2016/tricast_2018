@@ -43,10 +43,21 @@ CREATE SEQUENCE tricast.accounts_id_seq
 ALTER SEQUENCE tricast.accounts_id_seq OWNED BY tricast.accounts.id;
 
 CREATE TABLE tricast.betoutcomemap (
-    betid integer NOT NULL,
+    id integer NOT NULL,
+	betid integer NOT NULL,
     outcomeid integer NOT NULL,
     odds numeric(18,2) NOT NULL
 );
+
+CREATE SEQUENCE tricast.betoutcomemap_id_seq
+    AS integer
+    START WITH 100
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+	
+ALTER SEQUENCE tricast.betoutcomemap_id_seq OWNED BY tricast.betoutcomemap.id;
 
 CREATE TABLE tricast.bets (
     id integer NOT NULL,
@@ -68,16 +79,6 @@ CREATE TABLE tricast.bettypes (
     id integer NOT NULL,
     description character varying(50) NOT NULL
 );
-
-CREATE SEQUENCE tricast.bettypes_id_seq
-    AS integer
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-	
-ALTER SEQUENCE tricast.bettypes_id_seq OWNED BY tricast.bettypes.id;
 
 CREATE TABLE tricast.competitors (
     id integer NOT NULL,
@@ -134,7 +135,13 @@ CREATE TABLE tricast.eventtypes (
     description character varying(50) NOT NULL
 );
 
-CREATE SEQUENCE tricast.eventtypes_id_seq
+CREATE TABLE tricast.leaguecompetitormap (
+    id integer NOT NULL,
+	competitorid integer NOT NULL,
+    leagueid integer NOT NULL
+);
+
+CREATE SEQUENCE tricast.leaguecompetitormap_id_seq
     AS integer
     START WITH 100
     INCREMENT BY 1
@@ -142,12 +149,7 @@ CREATE SEQUENCE tricast.eventtypes_id_seq
     NO MAXVALUE
     CACHE 1;
 	
-ALTER SEQUENCE tricast.eventtypes_id_seq OWNED BY tricast.eventtypes.id;
-
-CREATE TABLE tricast.leaguecompetitormap (
-    competitorid integer NOT NULL,
-    leagueid integer NOT NULL
-);
+ALTER SEQUENCE tricast.leaguecompetitormap_id_seq OWNED BY tricast.leaguecompetitormap.id;
 
 CREATE TABLE tricast.leagues (
     id integer NOT NULL,
@@ -223,16 +225,6 @@ CREATE TABLE tricast.periodtypes (
     description character varying(50) NOT NULL
 );
 
-CREATE SEQUENCE tricast.periodtypes_id_seq
-    AS integer
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-	
-ALTER SEQUENCE tricast.periodtypes_id_seq OWNED BY tricast.periodtypes.id;
-
 CREATE TABLE tricast.results (
     id integer NOT NULL,
     resulttypeid integer NOT NULL,
@@ -256,21 +248,11 @@ CREATE TABLE tricast.resulttypes (
     description character varying(50) NOT NULL
 );
 
-CREATE SEQUENCE tricast.resulttypes_id_seq
-    AS integer
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-	
-ALTER SEQUENCE tricast.resulttypes_id_seq OWNED BY tricast.resulttypes.id;
-
 CREATE TABLE tricast.transactions (
     id integer NOT NULL,
     betid integer,
     createddate timestamp(6) with time zone NOT NULL,
-    description character varying(60) NOT NULL,
+    description character varying(300) NOT NULL,
     amount numeric(18,2) NOT NULL,
     accountid integer NOT NULL,
     type character varying(13) NOT NULL
@@ -291,51 +273,29 @@ CREATE TABLE tricast.sports (
     description character varying(50) NOT NULL
 );
 
-CREATE SEQUENCE tricast.sports_id_seq
-    AS integer
-    START WITH 100
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-	
-ALTER SEQUENCE tricast.sports_id_seq OWNED BY tricast.transactions.id;
-
 ALTER TABLE ONLY tricast.accounts ALTER COLUMN id SET DEFAULT nextval('tricast.accounts_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.bets ALTER COLUMN id SET DEFAULT nextval('tricast.bets_id_seq'::regclass);
-
-ALTER TABLE ONLY tricast.bettypes ALTER COLUMN id SET DEFAULT nextval('tricast.bettypes_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.competitors ALTER COLUMN id SET DEFAULT nextval('tricast.competitors_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.events ALTER COLUMN id SET DEFAULT nextval('tricast.events_id_seq'::regclass);
 
-ALTER TABLE ONLY tricast.eventtypes ALTER COLUMN id SET DEFAULT nextval('tricast.eventtypes_id_seq'::regclass);
-
 ALTER TABLE ONLY tricast.leagues ALTER COLUMN id SET DEFAULT nextval('tricast.leagues_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.markets ALTER COLUMN id SET DEFAULT nextval('tricast.markets_id_seq'::regclass);
 
-ALTER TABLE ONLY tricast.markettypes ALTER COLUMN id SET DEFAULT nextval('tricast.markettypes_id_seq'::regclass);
-
 ALTER TABLE ONLY tricast.outcomes ALTER COLUMN id SET DEFAULT nextval('tricast.outcomes_id_seq'::regclass);
-
-ALTER TABLE ONLY tricast.periodtypes ALTER COLUMN id SET DEFAULT nextval('tricast.periodtypes_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.results ALTER COLUMN id SET DEFAULT nextval('tricast.results_id_seq'::regclass);
 
-ALTER TABLE ONLY tricast.resulttypes ALTER COLUMN id SET DEFAULT nextval('tricast.resulttypes_id_seq'::regclass);
-
 ALTER TABLE ONLY tricast.transactions ALTER COLUMN id SET DEFAULT nextval('tricast.transactions_id_seq'::regclass);
-
-ALTER TABLE ONLY tricast.sports ALTER COLUMN id SET DEFAULT nextval('tricast.sports_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.accounts
     ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY tricast.betoutcomemap
-    ADD CONSTRAINT betoutcomemap_pkey PRIMARY KEY (betid, outcomeid);
+    ADD CONSTRAINT betoutcomemap_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY tricast.bets
     ADD CONSTRAINT bets_pkey PRIMARY KEY (id);
@@ -356,7 +316,7 @@ ALTER TABLE ONLY tricast.eventtypes
     ADD CONSTRAINT eventtypes_pkey PRIMARY KEY (id);
 	
 ALTER TABLE ONLY tricast.leaguecompetitormap
-    ADD CONSTRAINT leaguecompetitormap_pkey PRIMARY KEY (leagueid, competitorid);
+    ADD CONSTRAINT leaguecompetitormap_pkey PRIMARY KEY (id);
 
 ALTER TABLE ONLY tricast.leagues
     ADD CONSTRAINT leagues_pkey PRIMARY KEY (id);
