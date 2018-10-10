@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,8 +58,9 @@ public class Account implements Serializable {
     @Column(name = "bankcardnumber")
     private String bankcardnumber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "accounttype")
-    private String accounttype;
+    private AccountType accounttype;
 
     @Column(name = "pin")
     private String pin;
@@ -158,11 +161,11 @@ public class Account implements Serializable {
         this.bankcardnumber = bankcardnumber;
     }
 
-    public String getAccounttype() {
+    public AccountType getAccounttype() {
         return accounttype;
     }
 
-    public void setAccounttype(String accounttype) {
+    public void setAccounttype(AccountType accounttype) {
         this.accounttype = accounttype;
     }
 
