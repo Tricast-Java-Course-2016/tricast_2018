@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "LEAGUES")
 public class League implements Serializable {
@@ -26,15 +28,12 @@ public class League implements Serializable {
     @Column(name = "sportid")
     private Integer sportId;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                CascadeType.PERSIST,
-                CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.LAZY ,cascade = {CascadeType.ALL})
     @JoinTable(name = "LEAGUECOMPETITORMAP",
         joinColumns = 		 @JoinColumn(name="leagueid", referencedColumnName="id"),
         inverseJoinColumns = @JoinColumn(name="competitorid", referencedColumnName="id")
         )
+	@JsonIgnoreProperties("leagues")
     public Set<Competitor> competitors = new HashSet<>();
 
     
