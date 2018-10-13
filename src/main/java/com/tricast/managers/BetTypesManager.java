@@ -10,9 +10,9 @@ public interface BetTypesManager {
 
     BetTypes findById(Long id);
 
-    BetTypes create(BetTypes player);
+    BetTypes create(BetTypes bettype);
 
-    BetTypes update(BetTypes player);
+    BetTypes update(BetTypes bettype);
 
     void deleteById(Long id);
 

@@ -15,8 +15,8 @@ public class BetTypesManagerImpl implements BetTypesManager {
     private BetTypesRepository bettypesRepository;
 
     @Inject
-    public BetTypesManagerImpl(BetTypesRepository bettypeRepository) {
-        this.bettypesRepository = bettypeRepository;
+    public BetTypesManagerImpl(BetTypesRepository bettypesRepository) {
+        this.bettypesRepository = bettypesRepository;
     }
 
     @Override
