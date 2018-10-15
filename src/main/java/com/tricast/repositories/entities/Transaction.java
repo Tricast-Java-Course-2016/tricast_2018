@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +23,9 @@ public class Transaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "betid")
-    private Long betId;
+    @ManyToOne
+    @JoinColumn(name = "betid")
+    private Bets bet;
 
     @Column(name = "createddate")
     private Date createdDate;
@@ -33,6 +36,7 @@ public class Transaction implements Serializable {
     @Column(name = "amount")
     private Double amount;
 
+    @OneToOne
     @JoinColumn(name = "accountid")
     private Account account;
 
@@ -47,12 +51,12 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Long getBetId() {
-        return betId;
+    public Bets getBetId() {
+        return bet;
     }
 
-    public void setBetId(Long betId) {
-        this.betId = betId;
+    public void setBetId(Bets bet) {
+        this.bet = bet;
     }
 
     public Date getCreatedDate() {
