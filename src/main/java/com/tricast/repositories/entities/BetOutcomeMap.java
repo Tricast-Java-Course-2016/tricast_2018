@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,9 +20,10 @@ public class BetOutcomeMap implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-	@Column(name = "betid")
-    private Long betId;
+	
+	@OneToOne
+	@JoinColumn(name = "betid")
+    private Bets bet;
 	
 	@Column(name = "outcomeid")
     private Long outcomeID;
@@ -36,12 +39,12 @@ public class BetOutcomeMap implements Serializable {
 		this.id = id;
 	}
 
-	public Long getBetId() {
-		return betId;
+	public Bets getBetId() {
+		return bet;
 	}
 
-	public void setBetId(Long betId) {
-		this.betId = betId;
+	public void setBetId(Bets bet) {
+		this.bet = bet;
 	}
 
 	public Long getOutcomeID() {
