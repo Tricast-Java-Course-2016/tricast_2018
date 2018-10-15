@@ -48,11 +48,11 @@ public class PeriodTypes implements Serializable {
 
 	public PeriodType getDescription() {
 		return getPeriodType();
-		//this.description
+		//return this.description;
 	}
 
 	//public void setDescription(PeriodType description){
-	//	this.description=description;
+		//this.description=description;
 	//}
 	
 	public boolean setDescription(String description) {
