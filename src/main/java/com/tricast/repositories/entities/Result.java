@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,15 +24,16 @@ public class Result implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+	
 	@Column(name = "resulttypeid")
 	private Long resultTypeId;
 	
 	@Column(name = "result")
 	private Integer result;
 
-	@Column(name = "periodtypeid")
-	private Long periodTypeId;
+	@ManyToOne
+	@JoinColumn(name = "periodtypeid")
+	private PeriodTypes periodTypeId;
 	
 	@Column(name = "eventcompetitormapid")
 	private Long eventCompetitorMapId;
@@ -59,11 +62,11 @@ public class Result implements Serializable {
 		this.result = result;
 	}
 
-	public Long getPeriodTypeId() {
+	public PeriodTypes getPeriodTypeId() {
 		return periodTypeId;
 	}
 
-	public void setPeriodTypeId(Long periodTypeId) {
+	public void setPeriodTypeId(PeriodTypes periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
 
