@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,11 +25,13 @@ public class Bets implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-    @Column(name = "bettypeid")
-    private Long betTypeId;
+	@OneToOne
+    @JoinColumn(name = "bettypeid")
+    private BetTypes betTypeId;
 
-    @Column(name = "accountid")
-    private Long accountId;
+	@ManyToOne
+    @JoinColumn(name = "accountid")
+    private Account accountId;
 
 	public Long getId() {
 		return id;
@@ -36,19 +41,19 @@ public class Bets implements Serializable {
 		this.id = id;
 	}
 
-	public Long getBetTypeId() {
+	public BetTypes getBetTypeId() {
 		return betTypeId;
 	}
 
-	public void setBetTypeId(Long betTypeId) {
+	public void setBetTypeId(BetTypes betTypeId) {
 		this.betTypeId = betTypeId;
 	}
 
-	public Long getAccountId() {
+	public Account getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(Long accountId) {
+	public void setAccountId(Account accountId) {
 		this.accountId = accountId;
 	}
     
