@@ -24,6 +24,10 @@ public class PeriodTypes implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
+    //@Enumerated(EnumType.STRING)
+    //@Column(name = "description")
+    //private PeriodType description;
+	
     @Column(name = "description")
     private String description;
 
@@ -44,8 +48,13 @@ public class PeriodTypes implements Serializable {
 
 	public PeriodType getDescription() {
 		return getPeriodType();
+		//this.description
 	}
 
+	//public void setDescription(PeriodType description){
+	//	this.description=description;
+	//}
+	
 	public boolean setDescription(String description) {
 	    for(int i=0;i<PeriodType.values().length;i++) {
 	    	if(PeriodType.values()[i].getValue().equals(description)) {
