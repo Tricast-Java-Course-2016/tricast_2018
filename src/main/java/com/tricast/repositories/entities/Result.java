@@ -25,8 +25,9 @@ public class Result implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@Column(name = "resulttypeid")
-	private Long resultTypeId;
+	@ManyToOne
+	@JoinColumn(name = "resulttypeid")
+	private ResultTypes resultTypeId;
 	
 	@Column(name = "result")
 	private Integer result;
@@ -46,11 +47,11 @@ public class Result implements Serializable {
 		this.id = id;
 	}
 
-	public Long getResultTypeId() {
+	public ResultTypes getResultTypeId() {
 		return resultTypeId;
 	}
 
-	public void setResultTypeId(Long resultTypeId) {
+	public void setResultTypeId(ResultTypes resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
 
