@@ -25,7 +25,7 @@ public class PeriodTypeConverter implements AttributeConverter<PeriodType, Strin
     @Override
     public PeriodType convertToEntityAttribute(String dbData) {
         switch (dbData) {
-            case "90 Minutes":
+            case "90 minutes":
                 return NINETYMINUTES;
             case "First half":
                 return FIRSTHALF;

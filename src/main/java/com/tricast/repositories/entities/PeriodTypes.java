@@ -3,6 +3,7 @@ package com.tricast.repositories.entities;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,6 +26,7 @@ public class PeriodTypes implements Serializable {
     private Long id;
 	
     @Column(name = "description")
+    @Convert(converter = PeriodTypeConverter.class)
     private PeriodType description;
 
 
