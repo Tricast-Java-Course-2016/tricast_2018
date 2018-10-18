@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.tricast.repositories.entities.converters.SportsConverter;
+
 @Entity
 @Table(name = "SPORTS")
 public class Sports implements Serializable {

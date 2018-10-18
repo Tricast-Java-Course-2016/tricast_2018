@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.tricast.repositories.entities.converters.PeriodTypeConverter;
+
 @Entity
 @Table(name = "PERIODTYPES")
 public class PeriodTypes implements Serializable {

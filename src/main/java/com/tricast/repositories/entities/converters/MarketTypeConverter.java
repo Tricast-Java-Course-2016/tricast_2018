@@ -1,6 +1,9 @@
-package com.tricast.repositories.entities;
+package com.tricast.repositories.entities.converters;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import com.tricast.repositories.entities.MarketType;
+
 import static com.tricast.repositories.entities.MarketType.*;
 
 @Converter
