@@ -2,15 +2,15 @@ package com.tricast.repositories.entities.converters;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.tricast.repositories.entities.Sport;
+import com.tricast.repositories.entities.Sports;
 
-import static com.tricast.repositories.entities.Sport.*;
+import static com.tricast.repositories.entities.Sports.*;
 
 @Converter
-public class SportsConverter implements AttributeConverter<Sport, String> {
+public class SportsConverter implements AttributeConverter<Sports, String> {
 
     @Override
-    public String convertToDatabaseColumn(Sport attribute) {
+    public String convertToDatabaseColumn(Sports attribute) {
         switch (attribute) {
             case FOOTBALL:
                 return "Football";
@@ -22,7 +22,7 @@ public class SportsConverter implements AttributeConverter<Sport, String> {
     }
 
     @Override
-    public Sport convertToEntityAttribute(String dbData) {
+    public Sports convertToEntityAttribute(String dbData) {
         switch (dbData) {
             case "Football":
                 return FOOTBALL;

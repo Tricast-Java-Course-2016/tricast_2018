@@ -24,7 +24,7 @@ public class Transaction implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "betid")
-    private Bets bet;
+    private Bet bet;
 
     @Column(name = "createddate")
     private Date createdDate;
@@ -50,11 +50,11 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public Bets getBetId() {
+    public Bet getBetId() {
         return bet;
     }
 
-    public void setBetId(Bets bet) {
+    public void setBetId(Bet bet) {
         this.bet = bet;
     }
 

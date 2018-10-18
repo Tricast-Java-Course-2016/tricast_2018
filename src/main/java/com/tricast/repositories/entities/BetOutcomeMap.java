@@ -23,11 +23,11 @@ public class BetOutcomeMap implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name = "betid")
-    private Bets bet;
+    private Bet bet;
 	
 	@OneToOne
 	@JoinColumn(name = "outcomeid")
-    private Outcomes outcomeID;
+    private Outcome outcomeID;
 
     @Column(name = "odds")
     private Double odds;
@@ -40,19 +40,19 @@ public class BetOutcomeMap implements Serializable {
 		this.id = id;
 	}
 
-	public Bets getBetId() {
+	public Bet getBetId() {
 		return bet;
 	}
 
-	public void setBetId(Bets bet) {
+	public void setBetId(Bet bet) {
 		this.bet = bet;
 	}
 
-	public Outcomes getOutcomeID() {
+	public Outcome getOutcomeID() {
 		return outcomeID;
 	}
 
-	public void setOutcomeID(Outcomes outcomeID) {
+	public void setOutcomeID(Outcome outcomeID) {
 		this.outcomeID = outcomeID;
 	}
 

@@ -27,14 +27,14 @@ public class Result implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "resulttypeid")
-	private ResultTypes resultTypeId;
+	private ResultType resultTypeId;
 	
 	@Column(name = "result")
 	private Integer result;
 
 	@ManyToOne
 	@JoinColumn(name = "periodtypeid")
-	private PeriodTypes periodTypeId;
+	private PeriodType periodTypeId;
 	
 	@Column(name = "eventcompetitormapid")
 	private Long eventCompetitorMapId;
@@ -47,11 +47,11 @@ public class Result implements Serializable {
 		this.id = id;
 	}
 
-	public ResultTypes getResultTypeId() {
+	public ResultType getResultTypeId() {
 		return resultTypeId;
 	}
 
-	public void setResultTypeId(ResultTypes resultTypeId) {
+	public void setResultTypeId(ResultType resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
 
@@ -63,11 +63,11 @@ public class Result implements Serializable {
 		this.result = result;
 	}
 
-	public PeriodTypes getPeriodTypeId() {
+	public PeriodType getPeriodTypeId() {
 		return periodTypeId;
 	}
 
-	public void setPeriodTypeId(PeriodTypes periodTypeId) {
+	public void setPeriodTypeId(PeriodType periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
 
