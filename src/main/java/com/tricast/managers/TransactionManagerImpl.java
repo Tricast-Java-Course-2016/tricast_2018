@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tricast.controllers.requests.TransactionRequest;
+import com.tricast.controllers.responses.TransactionResponse;
 import com.tricast.repositories.TransactionRepository;
-import com.tricast.repositories.entities.Transaction;
 
 @Service
 public class TransactionManagerImpl implements TransactionManager {
@@ -15,31 +16,27 @@ public class TransactionManagerImpl implements TransactionManager {
     private TransactionRepository transactionRepository;
 
     @Override
-    public List<Transaction> findAll() {
-        // TODO Auto-generated method stub
+    public List<TransactionResponse> findAll() {
         return null;
     }
 
     @Override
-    public Transaction findById(Long id) {
-        return transactionRepository.findOne(id);
-    }
-
-    @Override
-    public Transaction create(Transaction player) {
-        // TODO Auto-generated method stub
+    public TransactionResponse findById(Long id) {
         return null;
     }
 
     @Override
-    public Transaction update(Transaction player) {
-        // TODO Auto-generated method stub
+    public TransactionResponse create(TransactionRequest player) {
+        return null;
+    }
+
+    @Override
+    public TransactionResponse update(TransactionRequest player) {
         return null;
     }
 
     @Override
     public void deleteById(Long id) {
-        // TODO Auto-generated method stub
 
     }
 

@@ -2,17 +2,19 @@ package com.tricast.managers;
 
 import java.util.List;
 
-import com.tricast.repositories.entities.Transaction;
+import com.tricast.controllers.requests.TransactionRequest;
+import com.tricast.controllers.responses.TransactionResponse;
+
 
 public interface TransactionManager {
 
-    List<Transaction> findAll();
+    List<TransactionResponse> findAll();
 
-    Transaction findById(Long id);
+    TransactionResponse findById(Long id);
 
-    Transaction create(Transaction player);
+    TransactionResponse create(TransactionRequest player);
 
-    Transaction update(Transaction player);
+    TransactionResponse update(TransactionRequest player);
 
     void deleteById(Long id);
 
