@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tricast.controllers.responses.LeagueResponse;
 import com.tricast.managers.LeagueManager;
 import com.tricast.repositories.entities.League;
 
@@ -19,12 +20,12 @@ public class LeagueController {
 	private LeagueManager leagueManager;
 	
 	@GetMapping(path="/{id}")
-    public League findById(@PathVariable("id") Long $id) {
-        return leagueManager.findById($id);
+    public LeagueResponse findById(@PathVariable("id") Long $id) {
+        return null;
     }
 	
 	@GetMapping
-    public List<League> findAll() {
-        return leagueManager.findAll();
+    public List<LeagueResponse> findAll() {
+        return null;
     }
 }
