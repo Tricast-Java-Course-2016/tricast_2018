@@ -22,10 +22,5 @@ public class ResultTypeController {
 	public List<ResultType> findAll() {
 		return resultTypeManager.findAll();
 	}
-	
-	@GetMapping(path = "findById/{id}")
-	public ResultType findById(@PathVariable("id") Long id) {
-		return resultTypeManager.findById(id);
-	}
 
 }

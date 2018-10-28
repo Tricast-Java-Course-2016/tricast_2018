@@ -1,5 +1,6 @@
 package com.tricast.controllers;
 
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tricast.controllers.responses.TransactionResponse;
 import com.tricast.managers.EventManager;
 import com.tricast.repositories.entities.Event;
 
@@ -23,8 +25,13 @@ public class EventController {
     public List<Event> findAll() {
         return eventManager.findAll();
     }
+    
+    @GetMapping(path = "{date}/{name}")
+    public List<Event> findByDateAndName(@PathVariable("date") Calendar date, @PathVariable("name") String name) {
+    	return null;
+    }
 
-    @GetMapping(path = "findById/{id}")
+    @GetMapping(path = "{id}")
     public Event findById(@PathVariable("id") Long id) {
         return eventManager.findById(id);
     }
