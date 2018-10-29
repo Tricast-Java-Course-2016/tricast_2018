@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tricast.controllers.responses.EventTypeResponse;
 import com.tricast.managers.EventTypeManager;
-import com.tricast.repositories.entities.EventType;
 
 @RestController
 @RequestMapping(path = "eventtypes")
@@ -20,13 +20,13 @@ public class EventTypeController {
 
 
     @GetMapping
-    public List<EventType> findAll() {
-        return eventtypeManager.findAll();
+    public List<EventTypeResponse> findAll() {
+        return null;
     }
 
     @GetMapping(path = "findById/{id}")
-    public EventType findById(@PathVariable("id") Long id) {
-        return eventtypeManager.findById(id);
+    public EventTypeResponse findById(@PathVariable("id") Long id) {
+        return null;
     }
 
 }

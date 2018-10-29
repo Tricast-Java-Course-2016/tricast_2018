@@ -16,9 +16,6 @@ import javax.persistence.Table;
 @Table(name = "EVENTS")
 public class Event implements Serializable {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 7208235612252822959L;
 
 	@Id
