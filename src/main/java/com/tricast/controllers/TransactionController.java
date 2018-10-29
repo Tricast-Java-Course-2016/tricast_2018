@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tricast.controllers.requests.TransactionRequest;
 import com.tricast.controllers.responses.TransactionResponse;
 import com.tricast.managers.TransactionManager;
-import com.tricast.repositories.entities.Account;
 
 @RestController
 @RequestMapping(path = "transactions")
@@ -37,18 +36,18 @@ public class TransactionController {
     	return null;
     }
     
-    @PostMapping
+    @PostMapping(path="???")
     public TransactionResponse createTransaction(TransactionRequest request) {
     	return null;
     }
     
-    @GetMapping(path = "listByBetId/{id}")
-    public List <TransactionResponse> listByBetId(@PathVariable("id") Long id) {
+    @GetMapping(path = "listByBetId/{betid}")
+    public List <TransactionResponse> listByBetId(@PathVariable("betid") Long id) {
         return null;
     }
     
-    @GetMapping(path = "listByAccountId/{id}")
-    public List <TransactionResponse> listByAcccountId(@PathVariable("id") Long id) {
+    @GetMapping(path = "listByAccountId/{accountid}")
+    public List <TransactionResponse> listByAcccountId(@PathVariable("accountid") Long id) {
         return null;
     }
 }
