@@ -1,5 +1,26 @@
 package com.tricast.controllers.responses;
 
-public class BetOutcomeMapResponse {
+import java.io.Serializable;
 
+public class BetOutcomeMapResponse implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6569449988528471674L;
+
+	private Long betId;
+	private Long outcomeId;
+	private double odds;
+	
+	public Long getBetId() {
+		return betId;
+	}
+	public Long getOutcomeId() {
+		return outcomeId;
+	}
+	public double getOdds() {
+		return odds;
+	}
+	
 }
