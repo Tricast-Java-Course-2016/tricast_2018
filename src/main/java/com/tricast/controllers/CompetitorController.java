@@ -5,11 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tricast.controllers.requests.CompetitorRequest;
+import com.tricast.controllers.responses.CompetitorResponse;
 import com.tricast.managers.CompetitorManager;
-import com.tricast.repositories.entities.Competitor;
 
 @RestController
 @RequestMapping(path = "competitors")
@@ -19,12 +22,23 @@ public class CompetitorController {
 	private CompetitorManager competitorManager;
 	
 	@GetMapping(path="/{id}")
-    public Competitor findById(@PathVariable("id") Long $id) {
-        return competitorManager.findById($id);
+    public CompetitorResponse findById(@PathVariable("id") Long $id) {
+        return null;
     }
 	
-	@GetMapping
-    public List<Competitor> findAll() {
-        return competitorManager.findAll();
-    }
+	@GetMapping(path="/list/{search}/{page}")
+    public List<CompetitorResponse> findAll(String search ,int page) {
+        return null;
+    } 
+	
+	
+	@PostMapping
+	public void create(CompetitorRequest competitorRequest) {
+		
+	}
+	
+	@PutMapping(path="/{id}")
+	public void update(CompetitorRequest competitorRequest) {
+		
+	}
 }
