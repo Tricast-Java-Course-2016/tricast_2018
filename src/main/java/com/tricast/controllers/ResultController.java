@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tricast.controllers.requests.TransactionRequest;
-import com.tricast.controllers.responses.TransactionResponse;
+import com.tricast.controllers.requests.ResultRequest;
 import com.tricast.managers.ResultManager;
 import com.tricast.repositories.entities.Result;
 
@@ -23,12 +22,11 @@ public class ResultController {
 
     @GetMapping(path = "{id}")
     public Result findById(@PathVariable("id") Long id) {
-        return resultManager.findById(id);
+        return null;
     }
     	
     @PostMapping
-    public Result createResult(Long resultId, Long resultTypeId, Integer result, Long periodTypeId, Long eventCompetitorMapId) {
-    	return null;
+    public void  createResult(ResultRequest resultRequest) {
     }
 	
 }
