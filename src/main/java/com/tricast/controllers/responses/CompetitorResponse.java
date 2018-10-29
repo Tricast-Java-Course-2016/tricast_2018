@@ -11,7 +11,7 @@ public class CompetitorResponse implements Serializable {
 	
 	private Long id;
 	private String description; 
-	private List<League> leagues;
+	private List<Long> leagueIds;
 	public Long getId() {
 		return id;
 	}
@@ -24,11 +24,11 @@ public class CompetitorResponse implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<League> getLeagues() {
-		return leagues;
+	public List<Long> getLeagueIds() {
+		return leagueIds;
 	}
-	public void setLeagues(List<League> leagues) {
-		this.leagues = leagues;
+	public void setLeagueIds(List<Long> leagueIds) {
+		this.leagueIds = leagueIds;
 	}
 	
 	
