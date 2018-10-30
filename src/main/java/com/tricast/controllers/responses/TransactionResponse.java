@@ -6,17 +6,22 @@ import java.util.Date;
 public class TransactionResponse implements Serializable{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 8033532302109490790L;
-	
+
+    // TransactionId?
 	private Long betId;
+    // OffsetDateTime
 	private Date createdDate;
-	private String description; 
+	private String description;
+    // BigDecimal
 	private double amount;
+    // Primitive
 	private Long accountId;
+    // Enum
 	private String type;
-	
+
 	public Long getBetId() {
 		return betId;
 	}

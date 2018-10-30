@@ -25,27 +25,32 @@ public class TransactionController {
     public List<TransactionResponse> findAll() {
         return null;
     }
-    
+
+    // ID URL enough
     @GetMapping(path = "findById/{id}")
     public TransactionResponse findById(@PathVariable("id") Long id) {
         return null;
     }
-       
+
+    // RequestParam
     @GetMapping(path = "{date}/{name}")
     public List <TransactionResponse> findByDateAndName(@PathVariable("date") Calendar date, @PathVariable("name") String name) {
     	return null;
     }
-    
+
+    // Empty URL is fine
     @PostMapping(path="???")
     public TransactionResponse createTransaction(TransactionRequest request) {
     	return null;
     }
-    
+
+    // Can be removed
     @GetMapping(path = "listByBetId/{betid}")
     public List <TransactionResponse> listByBetId(@PathVariable("betid") Long id) {
         return null;
     }
-    
+
+    // Should be merged with the other
     @GetMapping(path = "listByAccountId/{accountid}")
     public List <TransactionResponse> listByAcccountId(@PathVariable("accountid") Long id) {
         return null;
