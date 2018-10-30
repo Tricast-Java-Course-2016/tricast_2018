@@ -27,27 +27,32 @@ public class BetController {
     public List<BetResponse> findAll() {
         return null;
     }
-    
+
+    // URL not needed only PathVariable
     @GetMapping(path = "findById/{id}")
     public BetResponse findById(@PathVariable("id") Long id) {
         return null;
     }
-    
+
+    // URL empty, use BetRequest, put betTypeId and accountId in the Request.
     @PostMapping(path="createBet/{bettypeid}/{accountid} ???")
     public BetResponse createBet(@RequestBody BetResponse newBet, @PathVariable ("bettypeid") Long bettypeid, @PathVariable("accountid") Long accountid) {
     	return null;
     }
-    
+
+    // No such public API. We don't want to delete bets.
     @DeleteMapping(path="deleteBet/{id}")
     public void deleteBet(@PathVariable Long id) {
-    	
+
     }
-    
+
+    // Not necessary, remove
     @PostMapping(path="updateBet/{id}")
     public BetResponse updateBet(@PathVariable Long id, BetRequest request) {
     	return null;
     }
-    
+
+    // Not necessary, remove
     @GetMapping(path = "listByAccountId/{accountid}")
     public List <BetResponse> listByAcccountId(@PathVariable("accountid") Long id) {
         return null;

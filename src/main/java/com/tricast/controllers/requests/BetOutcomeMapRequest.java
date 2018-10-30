@@ -4,15 +4,16 @@ import java.io.Serializable;
 
 public class BetOutcomeMapRequest implements Serializable{
 
+    // Remove completely
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 4027065991077356896L;
-	
+
 	private Long betId;
 	private Long outcomeId;
 	private Double odds;
-	
+
 	public Long getBetId() {
 		return betId;
 	}
@@ -31,6 +32,6 @@ public class BetOutcomeMapRequest implements Serializable{
 	public void setOdds(Double odds) {
 		this.odds = odds;
 	}
-	
+
 
 }

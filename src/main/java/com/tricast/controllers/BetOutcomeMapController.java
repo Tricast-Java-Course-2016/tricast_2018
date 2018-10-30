@@ -17,6 +17,8 @@ import com.tricast.managers.BetOutcomeMapManager;
 @RequestMapping(path = "betoutcomemap")
 public class BetOutcomeMapController {
 
+    // Remove completely
+
     @Autowired
     private BetOutcomeMapManager betoutcomemapManager;
 
@@ -34,7 +36,7 @@ public class BetOutcomeMapController {
     public BetOutcomeMapResponse addOutcomeToBet(BetOutcomeMapRequest request) {
     	return null;
     }
-    
+
     @PostMapping(path="???")
     public BetOutcomeMapResponse removeOutcomeFromBet(BetOutcomeMapRequest request) {
     	return null;
