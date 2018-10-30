@@ -4,26 +4,29 @@ import java.io.Serializable;
 import java.util.List;
 
 public class LeagueResponse implements Serializable {
-	
+
 	private static final long serialVersionUID = -7016467317642235818L;
-	
+
+    // Use primitive
 	private Long id;
 	private String description;
+    // Use primitive
 	private Long sportId;
+    // List of Competitors instead
 	private List<Long> competitorIds;
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -43,5 +46,5 @@ public class LeagueResponse implements Serializable {
 	public void setCompetitorIds(List<Long> competitorIds) {
 		this.competitorIds = competitorIds;
 	}
-	
+
 }

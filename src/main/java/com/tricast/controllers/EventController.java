@@ -23,27 +23,32 @@ public class EventController {
     @Autowired
     private EventManager eventManager;
 
+    // The $ sign has a meaning in Java, remove it.
 	@GetMapping(path="/{id}")
     public EventResponse findById(@PathVariable("id") Long $id) {
         return null;
     }
 
+    // Where was this supposed to be used? No screen seems to use.
     @GetMapping(path = "{date}/{name}")
     public List<EventResponse> findByDateAndName(@PathVariable("date") Calendar date,
             @PathVariable("name") String name) {
     	return null;
     }
 
+    // Should be query params, both of them. Might worth merging this with the previous call.
 	@GetMapping(path="/list/{search}/{page}")
     public List<EventResponse> findAll(String search ,int page) {
         return null;
     }
 
+    // A Response would not hurt
 	@PostMapping
 	public void create(EventRequest eventRequest) {
 
 	}
 
+    // Response with the new object is mandatory!
 	@PutMapping(path="/{id}")
 	public void update(EventRequest eventRequest) {
 

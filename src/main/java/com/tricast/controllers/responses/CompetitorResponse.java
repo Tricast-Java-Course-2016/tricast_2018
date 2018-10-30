@@ -3,15 +3,15 @@ package com.tricast.controllers.responses;
 import java.io.Serializable;
 import java.util.List;
 
-import com.tricast.repositories.entities.League;
-
 public class CompetitorResponse implements Serializable {
-	
+
 	private static final long serialVersionUID = 6809698961726889351L;
-	
+
 	private Long id;
-	private String description; 
+	private String description;
+    // List of Leagues would be better
 	private List<Long> leagueIds;
+
 	public Long getId() {
 		return id;
 	}
@@ -30,6 +30,6 @@ public class CompetitorResponse implements Serializable {
 	public void setLeagueIds(List<Long> leagueIds) {
 		this.leagueIds = leagueIds;
 	}
-	
-	
+
+
 }

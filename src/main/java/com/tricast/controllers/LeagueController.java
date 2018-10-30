@@ -20,24 +20,29 @@ public class LeagueController {
 
 	@Autowired
 	private LeagueManager leagueManager;
-	
+
 	@GetMapping(path="/{id}")
     public LeagueResponse findById(@PathVariable("id") Long $id) {
         return null;
     }
-	
+
+    // Should be query params, both of them.
 	@GetMapping(path="/list/{search}/{page}")
     public List<LeagueResponse> findAll(String search ,int page) {
         return null;
-    } 
-	
+    }
+
+    // A Response would not hurt
 	@PostMapping
 	public void create(LeagueRequest leagueRequest) {
-		
+
 	}
-	
+
+    // Response with the new object is mandatory!
 	@PutMapping(path="/{id}")
 	public void update(LeagueRequest leagueRequest) {
-		
+
 	}
+
+    // Delete would be useful
 }
