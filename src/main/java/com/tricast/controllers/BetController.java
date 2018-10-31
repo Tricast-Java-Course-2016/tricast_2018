@@ -27,14 +27,14 @@ public class BetController {
         return null;
     }
 
-    @GetMapping()
+    @GetMapping
     public BetResponse findById(@PathVariable("id") Long id) {
         return null;
     }
 
     
-    @PostMapping()
-    public BetResponse createBet(BetRequest newBet) {
+    @PostMapping
+    public BetResponse createBet(@RequestBody BetRequest newBet) {
     	return null;
     }
 
