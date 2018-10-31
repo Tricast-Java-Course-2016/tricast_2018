@@ -6,37 +6,41 @@ public class ResultRequest implements Serializable {
 
 	private static final long serialVersionUID = -6817451528421899276L;
 
-    // There should be a list of these here
-
-    // Primitive
-	private Long resultTypeId;
-    // Primitive
+    private long resultTypeId;
     private int result;
-    // Primitive
-    private Long periodTypeId;
-    // Primitive
-    private Long eventCompetitorMapId;
+    private long periodTypeId;
+    private long competitorId;
 
-    public ResultRequest(Long resultTypeId, int result, Long periodTypeId, Long eventCompetitorMapId) {
-        this.result = result;
-        this.periodTypeId = periodTypeId;
-        this.eventCompetitorMapId = eventCompetitorMapId;
+    public long getResultTypeId() {
+        return resultTypeId;
     }
 
-    public Long getResultTypeId() {
-    	return resultTypeId;
+    public void setResultTypeId(long resultTypeId) {
+        this.resultTypeId = resultTypeId;
     }
-
     public int getResult() {
         return result;
     }
 
-    public Long getPeriodTypeId() {
+    public void setResult(int result) {
+        this.result = result;
+    }
+
+    public long getPeriodTypeId() {
         return periodTypeId;
     }
 
-    public Long getEventCompetitorMapId() {
-        return eventCompetitorMapId;
+    public void setPeriodTypeId(long periodTypeId) {
+        this.periodTypeId = periodTypeId;
     }
+
+    public long getCompetitorId() {
+        return competitorId;
+    }
+
+    public void setCompetitorId(long competitorId) {
+        this.competitorId = competitorId;
+    }
+
 
 }

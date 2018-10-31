@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tricast.controllers.requests.ResultRequest;
+import com.tricast.controllers.requests.ResultSaveRequest;
+import com.tricast.controllers.responses.ResultResponse;
 import com.tricast.managers.ResultManager;
-import com.tricast.repositories.entities.Result;
 
 @RestController
 @RequestMapping(path = "results")
@@ -18,13 +18,14 @@ public class ResultController {
     @Autowired
     private ResultManager resultManager;
 
+    // Instead of this, get a list of results for the screen, by eventId.
     @GetMapping(path = "{id}")
-    public Result findById(@PathVariable("id") Long id) {
+    public ResultResponse findById(@PathVariable("id") Long id) {
         return null;
     }
 
     @PostMapping
-    public void  createResult(ResultRequest resultRequest) {
+    public void createResults(ResultSaveRequest resultRequest) {
     }
 
 

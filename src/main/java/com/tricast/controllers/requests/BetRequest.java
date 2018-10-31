@@ -9,7 +9,8 @@ public class BetRequest implements Serializable {
 	 */
 	private static final long serialVersionUID = 750396854994179350L;
 
-    // Missing OutcomeId list, stake, please add them.
+    // Missing OutcomeId+Odds map, please add them.
+    // Missing BetStake/TotalStake
 	private Long bettypeId;
 	private Long accountId;
 
