@@ -9,8 +9,7 @@ public class BetResponse implements Serializable{
 	 */
 	private static final long serialVersionUID = 7691801419776027759L;
 
-    // Missing, bet status, Outcome, Event, Market descriptions, BetType, Stake, Odds, PotentialWin
-	private long bettypeId;
+    private long bettypeId;
 	private long accountId;
 	
 	private String betStatus;

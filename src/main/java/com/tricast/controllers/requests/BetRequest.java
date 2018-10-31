@@ -1,6 +1,7 @@
 package com.tricast.controllers.requests;
 
 import java.io.Serializable;
+import java.util.Map;
 
 public class BetRequest implements Serializable {
 
@@ -9,22 +10,35 @@ public class BetRequest implements Serializable {
 	 */
 	private static final long serialVersionUID = 750396854994179350L;
 
-    // Missing OutcomeId+Odds map, please add them.
-    // Missing BetStake/TotalStake
-	private Long bettypeId;
-	private Long accountId;
+    
+	private long bettypeId;
+	private long accountId;
 
-	public Long getBettypeId() {
+	private long betStake;
+	private Map<Long, Double> outcomeOdds;
+	public long getBettypeId() {
 		return bettypeId;
 	}
-	public void setBettypeId(Long bettypeId) {
+	public void setBettypeId(long bettypeId) {
 		this.bettypeId = bettypeId;
 	}
-	public Long getAccountId() {
+	public long getAccountId() {
 		return accountId;
 	}
-	public void setAccountId(Long accountId) {
+	public void setAccountId(long accountId) {
 		this.accountId = accountId;
+	}
+	public long getBetStake() {
+		return betStake;
+	}
+	public void setBetStake(long betStake) {
+		this.betStake = betStake;
+	}
+	public Map<Long, Double> getOutcomeOdds() {
+		return outcomeOdds;
+	}
+	public void setOutcomeOdds(Map<Long, Double> outcomeOdds) {
+		this.outcomeOdds = outcomeOdds;
 	}
 
 
