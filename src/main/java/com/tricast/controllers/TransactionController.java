@@ -49,11 +49,6 @@ public class TransactionController {
     	return null;
     }
 
-    // Can be removed
-    @GetMapping(path = "listByBetId/{betid}")
-    public List <TransactionResponse> listByBetId(@PathVariable("betid") Long id) {
-        return null;
-    }
 
     // Should be merged with the other
     @GetMapping(path = "listByAccountId/{accountid}")
