@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.BetManager;
 
@@ -26,15 +27,14 @@ public class BetController {
         return null;
     }
 
-    // URL not needed only PathVariable
-    @GetMapping(path = "findById/{id}")
+    @GetMapping()
     public BetResponse findById(@PathVariable("id") Long id) {
         return null;
     }
 
-    // URL empty, use BetRequest, put betTypeId and accountId in the Request.
-    @PostMapping(path="createBet/{bettypeid}/{accountid} ???")
-    public BetResponse createBet(@RequestBody BetResponse newBet, @PathVariable ("bettypeid") Long bettypeid, @PathVariable("accountid") Long accountid) {
+    
+    @PostMapping()
+    public BetResponse createBet(BetRequest newBet) {
     	return null;
     }
 
