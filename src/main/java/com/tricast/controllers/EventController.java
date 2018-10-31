@@ -1,14 +1,17 @@
 package com.tricast.controllers;
 
-import java.util.Calendar;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.EventRequest;
@@ -29,16 +32,17 @@ public class EventController {
         return null;
     }
 
-    // Where was this supposed to be used? No screen seems to use.
-    @GetMapping(path = "{date}/{name}")
-    public List<EventResponse> findByDateAndName(@PathVariable("date") Calendar date,
-            @PathVariable("name") String name) {
-    	return null;
+    @GetMapping(path = "/filter/")
+    public List<EventResponse> byFilter(@RequestParam(value = "sport", required = false) String sport,
+            @RequestParam(value = "league", required = false) String league,
+            @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
+            @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate,
+            @RequestParam(value = "search", required = false) String search) {
+        return null;
     }
 
-    // Should be query params, both of them. Might worth merging this with the previous call.
-	@GetMapping(path="/list/{search}/{page}")
-    public List<EventResponse> findAll(String search ,int page) {
+    @GetMapping(path = "/{id}/detail")
+    public List<EventResponse> detail(@PathVariable("id") long id) {
         return null;
     }
 

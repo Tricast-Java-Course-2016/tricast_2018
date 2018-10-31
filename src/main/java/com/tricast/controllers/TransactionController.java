@@ -1,13 +1,16 @@
 package com.tricast.controllers;
 
-import java.util.Calendar;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.TransactionRequest;
@@ -32,10 +35,12 @@ public class TransactionController {
         return null;
     }
 
-    // RequestParam
-    @GetMapping(path = "{date}/{name}")
-    public List <TransactionResponse> findByDateAndName(@PathVariable("date") Calendar date, @PathVariable("name") String name) {
-    	return null;
+    @GetMapping(path = "/filter")
+    public List<TransactionResponse> byFilter(
+            @RequestParam(value = "transactionType", required = false) String transactionType,
+            @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
+            @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
+        return null;
     }
 
     // Empty URL is fine
