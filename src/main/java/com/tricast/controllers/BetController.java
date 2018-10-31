@@ -27,7 +27,7 @@ public class BetController {
         return null;
     }
 
-    @GetMapping
+    @GetMapping(path="/{id}")
     public BetResponse findById(@PathVariable("id") Long id) {
         return null;
     }
