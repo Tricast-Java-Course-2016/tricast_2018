@@ -1,6 +1,7 @@
 package com.tricast.controllers.responses;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class BetResponse implements Serializable{
 
@@ -12,14 +13,15 @@ public class BetResponse implements Serializable{
     private long bettypeId;
 	private long accountId;
 	
-	private String betStatus;
-	private String outcome;
-	private String event;
-	private String marketDescription;
+	private List <String> betStatus;
+	private List <String> outcome;
+	private List <String> event;
+	private List <String> marketDescription;
 	private String betType;
-	private long stake;
-	private long odds;
-	private long potentialWin;
+	private double stake;
+	private List <Double> odds;
+	private double sumOdds;
+	private double potentialWin;
 	
 	public long getBettypeId() {
 		return bettypeId;
@@ -33,28 +35,28 @@ public class BetResponse implements Serializable{
 	public void setAccountId(long accountId) {
 		this.accountId = accountId;
 	}
-	public String getBetStatus() {
+	public List<String> getBetStatus() {
 		return betStatus;
 	}
-	public void setBetStatus(String betStatus) {
+	public void setBetStatus(List<String> betStatus) {
 		this.betStatus = betStatus;
 	}
-	public String getOutcome() {
+	public List<String> getOutcome() {
 		return outcome;
 	}
-	public void setOutcome(String outcome) {
+	public void setOutcome(List<String> outcome) {
 		this.outcome = outcome;
 	}
-	public String getEvent() {
+	public List<String> getEvent() {
 		return event;
 	}
-	public void setEvent(String event) {
+	public void setEvent(List<String> event) {
 		this.event = event;
 	}
-	public String getMarketDescription() {
+	public List<String> getMarketDescription() {
 		return marketDescription;
 	}
-	public void setMarketDescription(String marketDescription) {
+	public void setMarketDescription(List<String> marketDescription) {
 		this.marketDescription = marketDescription;
 	}
 	public String getBetType() {
@@ -63,25 +65,30 @@ public class BetResponse implements Serializable{
 	public void setBetType(String betType) {
 		this.betType = betType;
 	}
-	public long getStake() {
+	public double getStake() {
 		return stake;
 	}
-	public void setStake(long stake) {
+	public void setStake(double stake) {
 		this.stake = stake;
 	}
-	public long getOdds() {
+	public List<Double> getOdds() {
 		return odds;
 	}
-	public void setOdds(long odds) {
+	public void setOdds(List<Double> odds) {
 		this.odds = odds;
 	}
-	public long getPotentialWin() {
+	public double getSumOdds() {
+		return sumOdds;
+	}
+	public void setSumOdds(double sumOdds) {
+		this.sumOdds = sumOdds;
+	}
+	public double getPotentialWin() {
 		return potentialWin;
 	}
-	public void setPotentialWin(long potentialWin) {
+	public void setPotentialWin(double potentialWin) {
 		this.potentialWin = potentialWin;
 	}
 	
-	
-	
+
 }

@@ -14,7 +14,6 @@ import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.BetManager;
 
-
 @RestController
 @RequestMapping(path = "bets")
 public class BetController {
@@ -24,12 +23,12 @@ public class BetController {
 
     @GetMapping
     public List<BetResponse> findAll() {
-        return null;
+        return betManager.findAll();
     }
 
     @GetMapping(path="/{id}")
     public BetResponse findById(@PathVariable("id") Long id) {
-        return null;
+        return betManager.findById(id);
     }
 
     

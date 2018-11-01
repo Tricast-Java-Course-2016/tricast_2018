@@ -2,18 +2,16 @@ package com.tricast.managers;
 
 import java.util.List;
 
-import com.tricast.repositories.entities.Bet;
+import com.tricast.controllers.requests.BetRequest;
+import com.tricast.controllers.responses.BetResponse;
 
 public interface BetManager {
 
-    List<Bet> findAll();
+    List<BetResponse> findAll();
 
-    Bet findById(Long id);
+    BetResponse findById(Long id);
 
-    Bet create(Bet bet);
+    //BetResponse create(BetRequest newBet);
 
-    Bet update(Bet bet);
-
-    void deleteById(Long id);
 
 }
