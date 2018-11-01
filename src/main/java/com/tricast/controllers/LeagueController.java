@@ -1,8 +1,10 @@
 package com.tricast.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,22 +29,31 @@ public class LeagueController {
     }
 
     // Should be query params, both of them.
-	@GetMapping(path="/list/{search}/{page}")
-    public List<LeagueResponse> findAll(String search ,int page) {
+	@GetMapping(path="/list/{search}")
+    public List<LeagueResponse> findAll(String search) {
+        return null;
+    }
+	
+	@GetMapping(path="/list")
+    public List<LeagueResponse> findAll() {
         return null;
     }
 
     // A Response would not hurt
 	@PostMapping
-	public void create(LeagueRequest leagueRequest) {
-
+	public LeagueResponse create(LeagueRequest leagueRequest) {
+        return null;
 	}
 
     // Response with the new object is mandatory!
 	@PutMapping(path="/{id}")
-	public void update(LeagueRequest leagueRequest) {
-
+	public LeagueResponse update(long id, LeagueRequest leagueRequest) {
+        return null;
 	}
 
     // Delete would be useful
+	@DeleteMapping(path="/{id}")
+	public void delete(long id) {
+
+	}
 }
