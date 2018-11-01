@@ -1,81 +1,70 @@
 package com.tricast.controllers.responses;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
-import com.tricast.repositories.entities.EventType;
+import com.tricast.repositories.entities.EventStatusTypes;
 
 public class EventResponse implements Serializable {
 
 	private static final long serialVersionUID = 4538977295592317848L;
 
     // Use primitive
-	private Long id;
-	private EventType eventTypeId;
+	private long id;
+	private long eventTypeId;
     // Use primitive
-	private Long leagueId;
+	private long leagueId;
 	private String description;
     // Use Enum
-	private String status;
+	private EventStatusTypes status;
     // Use OffsetDateTime
-	private Date startTime;
+	private OffsetDateTime startTime;
     // Full list of competitors would be better
 	private List<Long> competitorIds;
-
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
-	public EventType getEventTypeId() {
+	public long getEventTypeId() {
 		return eventTypeId;
 	}
-
-	public void setEventTypeId(EventType eventTypeId) {
+	public void setEventTypeId(long eventTypeId) {
 		this.eventTypeId = eventTypeId;
 	}
-
-	public Long getLeagueId() {
+	public long getLeagueId() {
 		return leagueId;
 	}
-
-	public void setLeagueId(Long leagueId) {
+	public void setLeagueId(long leagueId) {
 		this.leagueId = leagueId;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public String getStatus() {
+	public EventStatusTypes getStatus() {
 		return status;
 	}
-
-	public void setStatus(String status) {
+	public void setStatus(EventStatusTypes status) {
 		this.status = status;
 	}
-
-	public Date getStartTime() {
+	public OffsetDateTime getStartTime() {
 		return startTime;
 	}
-
-	public void setStartTime(Date startTime) {
+	public void setStartTime(OffsetDateTime startTime) {
 		this.startTime = startTime;
 	}
-
 	public List<Long> getCompetitorIds() {
 		return competitorIds;
 	}
-
 	public void setCompetitorIds(List<Long> competitorIds) {
 		this.competitorIds = competitorIds;
 	}
+
+	
 }

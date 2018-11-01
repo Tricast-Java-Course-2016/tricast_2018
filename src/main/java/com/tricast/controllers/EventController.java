@@ -28,7 +28,7 @@ public class EventController {
 
     // The $ sign has a meaning in Java, remove it.
 	@GetMapping(path="/{id}")
-    public EventResponse findById(@PathVariable("id") Long $id) {
+    public EventResponse findById(@PathVariable("id") long id) {
         return null;
     }
 
@@ -48,14 +48,14 @@ public class EventController {
 
     // A Response would not hurt
 	@PostMapping
-	public void create(EventRequest eventRequest) {
-
+	public EventResponse create(EventRequest eventRequest) {
+		return null;
 	}
 
     // Response with the new object is mandatory!
 	@PutMapping(path="/{id}")
-	public void update(EventRequest eventRequest) {
-
+	public EventResponse update(long id, EventRequest eventRequest) {
+		return null;
 	}
 
     @GetMapping(path = "statusList")
