@@ -11,7 +11,7 @@ public interface BetManager {
 
     BetResponse findById(Long id);
 
-    //BetResponse create(BetRequest newBet);
+    BetResponse create(BetRequest newBet);
 
 
 }

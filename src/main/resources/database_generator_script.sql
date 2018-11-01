@@ -275,6 +275,8 @@ CREATE TABLE tricast.sports (
 
 ALTER TABLE ONLY tricast.accounts ALTER COLUMN id SET DEFAULT nextval('tricast.accounts_id_seq'::regclass);
 
+ALTER TABLE ONLY tricast.betoutcomemap ALTER COLUMN id SET DEFAULT nextval('tricast.betoutcomemap_id_seq'::regclass);
+
 ALTER TABLE ONLY tricast.bets ALTER COLUMN id SET DEFAULT nextval('tricast.bets_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.competitors ALTER COLUMN id SET DEFAULT nextval('tricast.competitors_id_seq'::regclass);

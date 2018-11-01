@@ -2,14 +2,14 @@ package com.tricast.managers;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetResponse;
+import com.tricast.managers.mappers.BetRequestMapper;
 import com.tricast.managers.mappers.BetResponseMapper;
+import com.tricast.repositories.AccountRepository;
 import com.tricast.repositories.BetOutcomeMapRepository;
 import com.tricast.repositories.BetRepository;
 import com.tricast.repositories.BetTypeRepository;
@@ -29,6 +29,7 @@ public class BetManagerImpl implements BetManager {
     private OutcomeRepository outcomeRepository;
     private MarketRepository marketRepository;
     private EventRepository eventRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     public BetManagerImpl(BetRepository betRepository, 
@@ -37,7 +38,8 @@ public class BetManagerImpl implements BetManager {
     		BetOutcomeMapRepository betoutcomemapRepository,
     		OutcomeRepository outcomeRepository,
     		MarketRepository marketRepository,
-    		EventRepository eventRepository) {
+    		EventRepository eventRepository,
+    		AccountRepository accountRepository) {
     	
         this.betRepository = betRepository;
         this.transactionRepository = transactionRepository;
@@ -46,6 +48,7 @@ public class BetManagerImpl implements BetManager {
         this.outcomeRepository = outcomeRepository;
         this.marketRepository = marketRepository;
         this.eventRepository = eventRepository;
+        this.accountRepository=accountRepository;
     }
     
   
@@ -80,12 +83,20 @@ public class BetManagerImpl implements BetManager {
     }
 
 
-    /*@Override
+   
+    @Override
     public BetResponse create(BetRequest newBet) {
-		Bet bet = BetRequestMapper.mapToEntity(betRequest, new Bet());
+		List <Bet> bets = BetRequestMapper.mapToEntity(newBet,
+	    		betRepository, 
+	    		accountRepository, 
+	    		bettypeRepository,
+	    		betoutcomemapRepository,
+	    		outcomeRepository,
+	    		transactionRepository,
+	    		eventRepository,
+	    		marketRepository);
 		
-		return BetResponseMapper.mapToResponse(betRepository.save(bet));
-
-    }*/
+		return null;
+    }
     
 }

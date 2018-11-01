@@ -13,7 +13,7 @@ public class BetRequest implements Serializable {
     
 	private long bettypeId;
 	private long accountId;
-	private long betStake;
+	private double betStake;
 	private Map<Long, Double> outcomeOdds;
 	
 	public long getBettypeId() {
@@ -28,10 +28,10 @@ public class BetRequest implements Serializable {
 	public void setAccountId(long accountId) {
 		this.accountId = accountId;
 	}
-	public long getBetStake() {
+	public double getBetStake() {
 		return betStake;
 	}
-	public void setBetStake(long betStake) {
+	public void setBetStake(double betStake) {
 		this.betStake = betStake;
 	}
 	public Map<Long, Double> getOutcomeOdds() {
