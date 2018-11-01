@@ -7,15 +7,15 @@ public class CompetitorResponse implements Serializable {
 
 	private static final long serialVersionUID = 6809698961726889351L;
 
-	private Long id;
+	private long id;
 	private String description;
     // List of Leagues would be better
 	private List<Long> leagueIds;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getDescription() {

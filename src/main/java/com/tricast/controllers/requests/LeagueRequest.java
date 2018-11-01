@@ -10,29 +10,25 @@ public class LeagueRequest implements Serializable {
 	private String description;
 	private List<Long> competitorIds;
     // Use primitive
-	private Long sportId;
-
+	private long sportId;
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public List<Long> getCompetitorIds() {
 		return competitorIds;
 	}
-
 	public void setCompetitorIds(List<Long> competitorIds) {
 		this.competitorIds = competitorIds;
 	}
-
-	public Long getSportId() {
+	public long getSportId() {
 		return sportId;
 	}
-
-	public void setSportId(Long sportId) {
+	public void setSportId(long sportId) {
 		this.sportId = sportId;
 	}
+
+	
 }

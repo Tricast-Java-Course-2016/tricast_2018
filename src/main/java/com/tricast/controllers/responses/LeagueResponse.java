@@ -8,43 +8,34 @@ public class LeagueResponse implements Serializable {
 	private static final long serialVersionUID = -7016467317642235818L;
 
     // Use primitive
-	private Long id;
+	private long id;
 	private String description;
     // Use primitive
-	private Long sportId;
+	private long sportId;
     // List of Competitors instead
 	private List<Long> competitorIds;
-
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Long getSportId() {
+	public long getSportId() {
 		return sportId;
 	}
-
-	public void setSportId(Long sportId) {
+	public void setSportId(long sportId) {
 		this.sportId = sportId;
 	}
-
 	public List<Long> getCompetitorIds() {
 		return competitorIds;
 	}
-
 	public void setCompetitorIds(List<Long> competitorIds) {
 		this.competitorIds = competitorIds;
 	}
-
 }
