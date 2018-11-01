@@ -3,6 +3,7 @@ package com.tricast.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,27 +23,36 @@ public class CompetitorController {
 	private CompetitorManager competitorManager;
 
 	@GetMapping(path="/{id}")
-    public CompetitorResponse findById(@PathVariable("id") Long $id) {
+    public CompetitorResponse findById(@PathVariable("id") long $id) {
         return null;
     }
 
     // Should be query params, both of them.
-	@GetMapping(path="/list/{search}/{page}")
-    public List<CompetitorResponse> findAll(String search ,int page) {
+	@GetMapping(path="/list/{search}")
+    public List<CompetitorResponse> findAll(String search) {
+        return null;
+    }
+	
+	@GetMapping(path="/list}")
+    public List<CompetitorResponse> findAll() {
         return null;
     }
 
     // A Response would not hurt
 	@PostMapping
-	public void create(CompetitorRequest competitorRequest) {
-
+	public CompetitorResponse create(CompetitorRequest competitorRequest) {
+		return null;
 	}
 
     // Response with the new object is mandatory!
 	@PutMapping(path="/{id}")
-	public void update(CompetitorRequest competitorRequest) {
-
+	public CompetitorResponse update(long id, CompetitorRequest competitorRequest) {
+		return null;
 	}
 
     // Delete would be useful
+	@DeleteMapping(path="/{id}")
+	public void delete(long id) {
+
+	}
 }
