@@ -36,11 +36,11 @@ public class BetResponseMapper {
         /*Needs more work (toString) when Event status Enum is done.*/
         List<String> statuses = new ArrayList<String>();
         
-        for(int i=0;i<numberOfOutcomes;i++) {
+        /*for(int i=0;i<numberOfOutcomes;i++) {
         	statuses.add(eventRepository.findById(marketRepository.findById(outcomeRepository.findById(
             		betoutcomemapRepository.findByBet(
             				entityObject).get(i).getOutcomeID().getId()).getMarketId().getId()).getId()).getStatus());
-        }
+        }*/
         
         responseObject.setBetStatus(statuses);
         

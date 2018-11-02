@@ -39,19 +39,16 @@ public class LeagueController {
         return null;
     }
 
-    // A Response would not hurt
 	@PostMapping
 	public LeagueResponse create(LeagueRequest leagueRequest) {
         return null;
 	}
 
-    // Response with the new object is mandatory!
 	@PutMapping(path="/{id}")
 	public LeagueResponse update(long id, LeagueRequest leagueRequest) {
         return null;
 	}
 
-    // Delete would be useful
 	@DeleteMapping(path="/{id}")
 	public void delete(long id) {
 

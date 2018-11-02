@@ -1,6 +1,8 @@
 package com.tricast.repositories.entities;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -37,7 +39,7 @@ public class Event implements Serializable {
 	private String status;
 	
 	@Column(name="starttime")
-	private Date startTime;
+	private Calendar startTime;
 
 	public Long getId() {
 		return id;
@@ -79,12 +81,11 @@ public class Event implements Serializable {
 		this.status = status;
 	}
 
-	public Date getStartTime() {
+	public Calendar getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Date startTime) {
+	public void setStartTime(Calendar startTime) {
 		this.startTime = startTime;
 	}
-	
 }

@@ -11,13 +11,11 @@ public class EventRequest implements Serializable {
 	private static final long serialVersionUID = 2889848440680242716L;
 
 	private long eventTypeId;
-    // Mandatory, use primitive long
 	private long leagueId;
     // For Horse Racing only, Football should be generated from the Competitors
 	private String description;
     // This should be an Enum. Should only be used in an Update.
 	private EventStatusTypes status;
-    // Should be OffsetDateTime
 	private OffsetDateTime startTime;
 	private List<Long> competitorIds;
 	public long getEventTypeId() {

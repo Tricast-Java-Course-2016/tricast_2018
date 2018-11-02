@@ -10,4 +10,6 @@ public interface LeagueRepository extends CrudRepository<League, Long> {
 
 	@Override
 	List<League> findAll();
+	
+	League findByDescriptionLike(String description);
 }

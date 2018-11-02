@@ -7,10 +7,8 @@ public class LeagueResponse implements Serializable {
 
 	private static final long serialVersionUID = -7016467317642235818L;
 
-    // Use primitive
 	private long id;
 	private String description;
-    // Use primitive
 	private long sportId;
     // List of Competitors instead
 	private List<Long> competitorIds;

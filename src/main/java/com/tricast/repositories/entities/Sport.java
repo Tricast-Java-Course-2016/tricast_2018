@@ -26,8 +26,7 @@ public class Sport implements Serializable {
     private Long id;
 	
     @Column(name = "description")
-    @Convert(converter = SportsConverter.class)
-    private Sports description;
+    private String description;
 
 
 	public Long getId() {
@@ -38,11 +37,11 @@ public class Sport implements Serializable {
 		this.id = id;
 	}
 
-	public Sports getDescription() {
+	public String getDescription() {
 		return this.description;
 	}
 
-	public void setDescription(Sports description){
+	public void setDescription(String description){
 		this.description=description;
 	}
 }	

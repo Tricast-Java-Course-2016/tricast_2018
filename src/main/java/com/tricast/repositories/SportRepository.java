@@ -13,4 +13,5 @@ public interface SportRepository extends CrudRepository<Sport, Long>{
 
     Sport findById(Long id);
 
+    Sport findByDescriptionLike(String description);
 }

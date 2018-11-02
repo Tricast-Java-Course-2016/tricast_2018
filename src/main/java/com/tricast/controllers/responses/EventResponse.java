@@ -2,6 +2,7 @@ package com.tricast.controllers.responses;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,16 +12,14 @@ public class EventResponse implements Serializable {
 
 	private static final long serialVersionUID = 4538977295592317848L;
 
-    // Use primitive
 	private long id;
 	private long eventTypeId;
-    // Use primitive
 	private long leagueId;
 	private String description;
     // Use Enum
-	private EventStatusTypes status;
+	private String status;
     // Use OffsetDateTime
-	private OffsetDateTime startTime;
+	private Calendar startTime;
     // Full list of competitors would be better
 	private List<Long> competitorIds;
 	public long getId() {
@@ -47,16 +46,16 @@ public class EventResponse implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public EventStatusTypes getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(EventStatusTypes status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	public OffsetDateTime getStartTime() {
+	public Calendar getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(OffsetDateTime startTime) {
+	public void setStartTime(Calendar startTime) {
 		this.startTime = startTime;
 	}
 	public List<Long> getCompetitorIds() {

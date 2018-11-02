@@ -9,7 +9,6 @@ public class LeagueRequest implements Serializable {
 
 	private String description;
 	private List<Long> competitorIds;
-    // Use primitive
 	private long sportId;
 	public String getDescription() {
 		return description;

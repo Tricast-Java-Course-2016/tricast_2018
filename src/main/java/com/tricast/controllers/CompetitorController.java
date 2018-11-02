@@ -38,19 +38,16 @@ public class CompetitorController {
         return null;
     }
 
-    // A Response would not hurt
 	@PostMapping
 	public CompetitorResponse create(CompetitorRequest competitorRequest) {
 		return null;
 	}
 
-    // Response with the new object is mandatory!
 	@PutMapping(path="/{id}")
 	public CompetitorResponse update(long id, CompetitorRequest competitorRequest) {
 		return null;
 	}
 
-    // Delete would be useful
 	@DeleteMapping(path="/{id}")
 	public void delete(long id) {
 
