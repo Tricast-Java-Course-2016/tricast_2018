@@ -63,7 +63,7 @@ public class BetRequestMapper {
         	transactions.get(i).setBetId(bets.get(i));        	
         	transactions.get(i).setDescription("Description.......");
         	transactions.get(i).setType("Type.........");
-        	transactions.get(i).setCreatedDate(OffsetDateTime.now());
+        	//transactions.get(i).setCreatedDate(OffsetDateTime.now());
         	transactionRepository.save(transactions.get(i));
         	
         }
