@@ -16,6 +16,7 @@ public class OutcomeResponse implements Serializable{
 	public String getMarketDescription() {
 		return marketDescription;
 	}
+	
 	public void setMarketDescription(String marketDescription) {
 		this.marketDescription = marketDescription;
 	}

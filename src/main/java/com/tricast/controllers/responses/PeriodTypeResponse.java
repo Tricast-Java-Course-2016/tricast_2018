@@ -14,7 +14,7 @@ public class PeriodTypeResponse implements Serializable{
 	public String getPeriodTypeDescription() {
 		return periodTypeDescription;
 	}
-
+	
 	public void setPeriodTypeDescription(String periodTypeDescription) {
 		this.periodTypeDescription = periodTypeDescription;
 	}

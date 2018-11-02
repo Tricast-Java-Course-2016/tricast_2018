@@ -18,6 +18,7 @@ public class MarketResponse implements Serializable{
 	public String getEventDescription() {
 		return eventDescription;
 	}
+	
 	public void setEventDescription(String eventDescription) {
 		this.eventDescription = eventDescription;
 	}
