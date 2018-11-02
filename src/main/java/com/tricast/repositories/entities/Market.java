@@ -26,7 +26,7 @@ public class Market implements Serializable {
 
 	@ManyToOne
     @JoinColumn(name = "eventid")
-    private Event event;
+    private Event eventId;
 	
 	@ManyToOne
 	@JoinColumn(name="markettypeid")
@@ -47,12 +47,12 @@ public class Market implements Serializable {
 		this.id = id;
 	}
 
-	public Event getEvent() {
-		return event;
+	public Event getEventId() {
+		return eventId;
 	}
 
-	public void setEvent(Event event) {
-		this.event = event;
+	public void setEventId(Event eventId) {
+		this.eventId = eventId;
 	}
 
 	public MarketType getMarketTypeId() {
