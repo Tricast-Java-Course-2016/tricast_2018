@@ -10,12 +10,17 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tricast.builders.EventDetailResponseBuilder;
 import com.tricast.builders.EventResponseBuilder;
+import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
 import com.tricast.repositories.EventRepository;
 import com.tricast.repositories.LeagueRepository;
 import com.tricast.repositories.SportRepository;
 import com.tricast.repositories.CompetitorRepository;
+import com.tricast.repositories.OutcomeRepository;
+import com.tricast.repositories.MarketRepository;
+import com.tricast.repositories.PeriodTypeRepository;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.League;
@@ -35,6 +40,15 @@ public class EventManagerImpl implements EventManager {
     
     @Autowired
     private CompetitorRepository CompetitorRepository;
+    
+    @Autowired
+    private OutcomeRepository OutcomeRepository;
+    
+    @Autowired
+    private MarketRepository MarketRepository;
+    
+    @Autowired
+    private PeriodTypeRepository PeriodTypeRepository;
 
     @Override
     public List<Event> findAll() {
@@ -96,5 +110,10 @@ public class EventManagerImpl implements EventManager {
 		}
 		return eventResponses;
 	}
+    
+    @Override
+    public EventDetailResponse detail(Long id) {
+    	return EventDetailResponseBuilder.build(id, EventRepository, MarketRepository, OutcomeRepository, PeriodTypeRepository);
+    }
 
 }

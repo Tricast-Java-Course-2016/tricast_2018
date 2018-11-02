@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.EventRequest;
+import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
 import com.tricast.controllers.responses.EventStatusResponse;
 import com.tricast.managers.EventManager;
@@ -53,8 +54,8 @@ public class EventController {
     }
 
     @GetMapping(path = "/{id}/detail")
-    public List<EventResponse> detail(@PathVariable("id") long id) {
-        return null;
+    public EventDetailResponse detail(@PathVariable("id") long id) {
+    	return eventManager.detail(id);
     }
 
 	@PostMapping
