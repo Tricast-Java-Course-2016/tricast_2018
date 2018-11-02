@@ -1,6 +1,7 @@
 package com.tricast.repositories.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Date;
@@ -22,82 +23,82 @@ public class Transaction implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "betid")
     private Bet bet;
 
     @Column(name = "createddate")
-    private Date createdDate;
+    private OffsetDateTime createdDate;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "amount")
-    private Double amount;
+    private BigDecimal amount;
 
     @ManyToOne
     @JoinColumn(name = "accountid")
     private Account account;
 
     @Column(name = "type")
-    private String type;
+    private TransactionTypes type;
 
-    public Long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public Bet getBetId() {
-        return bet;
-    }
+	public Bet getBet() {
+		return bet;
+	}
 
-    public void setBetId(Bet bet) {
-        this.bet = bet;
-    }
+	public void setBet(Bet bet) {
+		this.bet = bet;
+	}
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
+	public OffsetDateTime getCreatedDate() {
+		return createdDate;
+	}
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
+	public void setCreatedDate(OffsetDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public Double getAmount() {
-        return amount;
-    }
+	public BigDecimal getAmount() {
+		return amount;
+	}
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
 
-    public Account getAccount() {
-        return account;
-    }
+	public Account getAccount() {
+		return account;
+	}
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public TransactionTypes getType() {
+		return type;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setType(TransactionTypes type) {
+		this.type = type;
+	}
 
 }
