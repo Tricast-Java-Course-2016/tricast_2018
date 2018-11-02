@@ -1,6 +1,7 @@
 package com.tricast.repositories.entities;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
