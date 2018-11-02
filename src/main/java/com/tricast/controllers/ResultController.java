@@ -1,5 +1,7 @@
 package com.tricast.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,7 @@ public class ResultController {
 
     // Instead of this, get a list of results for the screen, by eventId.
     @GetMapping(path = "{id}")
-    public ResultResponse findById(@PathVariable("id") Long id) {
+    public List <ResultResponse> findById(@PathVariable("id") Long id) {
         return null;
     }
 

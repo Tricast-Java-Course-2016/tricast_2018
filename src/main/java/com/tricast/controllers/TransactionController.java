@@ -23,14 +23,14 @@ public class TransactionController {
 
     @Autowired
     private TransactionManager transactionManager;
-
+    
     @GetMapping
     public List<TransactionResponse> findAll() {
         return null;
     }
 
     // ID URL enough
-    @GetMapping(path = "findById/{id}")
+    @GetMapping(path = "/{id}")
     public TransactionResponse findById(@PathVariable("id") Long id) {
         return null;
     }
@@ -42,17 +42,16 @@ public class TransactionController {
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
         return null;
     }
-
-    // Empty URL is fine
-    @PostMapping(path="???")
-    public TransactionResponse createTransaction(TransactionRequest request) {
-    	return null;
-    }
-
-
+    
     // Should be merged with the other
     @GetMapping(path = "listByAccountId/{accountid}")
     public List <TransactionResponse> listByAcccountId(@PathVariable("accountid") Long id) {
         return null;
+    }
+
+    // Empty URL is fine
+    @PostMapping
+    public TransactionResponse createTransaction(TransactionRequest request) {
+    	return null;
     }
 }
