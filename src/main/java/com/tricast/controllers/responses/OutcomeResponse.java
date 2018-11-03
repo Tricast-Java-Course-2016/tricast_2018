@@ -11,7 +11,7 @@ public class OutcomeResponse implements Serializable{
 	
 	private String marketDescription;
 	private String outcomeDescription;
-	private long odds;
+	private double odds;
 	
 	public String getMarketDescription() {
 		return marketDescription;
@@ -26,10 +26,10 @@ public class OutcomeResponse implements Serializable{
 	public void setOutcomeDescription(String outcomeDescription) {
 		this.outcomeDescription = outcomeDescription;
 	}
-	public long getOdds() {
+	public double getOdds() {
 		return odds;
 	}
-	public void setOdds(long odds) {
+	public void setOdds(double odds) {
 		this.odds = odds;
 	}
 	
