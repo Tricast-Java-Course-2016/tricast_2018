@@ -3,6 +3,7 @@ package com.tricast.controllers.responses;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Calendar;
 import java.util.Date;
 
 import com.tricast.repositories.entities.TransactionTypes;
@@ -19,7 +20,7 @@ public class TransactionResponse implements Serializable{
 	
 	private long betId;
     // OffsetDateTime
-	private OffsetDateTime createdDate;
+	private Calendar createdDate;
 	
 	private String description;
     // BigDecimal
@@ -40,10 +41,10 @@ public class TransactionResponse implements Serializable{
 	public void setBetId(long betId) {
 		this.betId = betId;
 	}
-	public OffsetDateTime getCreatedDate() {
+	public Calendar getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(OffsetDateTime createdDate) {
+	public void setCreatedDate(Calendar createdDate) {
 		this.createdDate = createdDate;
 	}
 	public String getDescription() {

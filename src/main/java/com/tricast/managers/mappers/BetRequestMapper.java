@@ -2,8 +2,10 @@ package com.tricast.managers.mappers;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import com.tricast.controllers.requests.BetRequest;
@@ -62,8 +64,8 @@ public class BetRequestMapper {
         	transactions.get(i).setAmount(requestObject.getBetStake().negate());
         	transactions.get(i).setBet(bets.get(i));        	
         	transactions.get(i).setDescription("Description.......");
-        	transactions.get(i).setType(TransactionTypes.Bet);
-        	transactions.get(i).setCreatedDate(OffsetDateTime.now());
+        	transactions.get(i).setType(TransactionTypes.BET);
+        	transactions.get(i).setCreatedDate(Calendar.getInstance(Locale.getDefault()));
         	transactionRepository.save(transactions.get(i));
         	
         }
