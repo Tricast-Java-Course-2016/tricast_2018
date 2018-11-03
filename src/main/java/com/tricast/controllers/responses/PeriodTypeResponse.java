@@ -2,6 +2,8 @@ package com.tricast.controllers.responses;
 
 import java.io.Serializable;
 
+import com.tricast.repositories.entities.PeriodType;
+
 public class PeriodTypeResponse implements Serializable{
 
 	/**
@@ -14,10 +16,12 @@ public class PeriodTypeResponse implements Serializable{
 	public String getPeriodTypeDescription() {
 		return periodTypeDescription;
 	}
-	
+
 	public void setPeriodTypeDescription(String periodTypeDescription) {
 		this.periodTypeDescription = periodTypeDescription;
 	}
-    
+
+	
+	
     
 }
