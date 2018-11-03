@@ -39,14 +39,13 @@ public class TransactionController {
 
     @GetMapping(path = "/filter")
     public List<TransactionResponse> byFilter(
-            @RequestParam(value = "transactionType", required = false) TransactionTypes transactionType,
+           // @RequestParam(value = "transactionType", required = false, defaultValue = "") TransactionTypes transactionType,
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
         
-    	if("null".equals(transactionType))
-    		transactionType = null;
-    	//return null;
-    	return this.transactionManager.filter(transactionType, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
+    	/*if("".equals(transactionType))
+    		transactionType = null;*/
+    	return this.transactionManager.filter(/*transactionType, */OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
     
     // Should be merged with the other

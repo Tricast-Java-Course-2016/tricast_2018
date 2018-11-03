@@ -11,12 +11,16 @@ public class TransactionResponseBuilder {
 		TransactionResponse transactionResponse = new TransactionResponse();
 		
 		transactionResponse.setTransactionId(transaction.getId());
-		transactionResponse.setBetId(transaction.getBet().getId());
+		try {
+			transactionResponse.setBetId(transaction.getBet().getId());
+		}catch (NullPointerException npe) {
+			transactionResponse.setBetId(0);
+		}
 		transactionResponse.setCreatedDate(transaction.getCreatedDate());
 		transactionResponse.setDescription(transaction.getDescription());
 		transactionResponse.setAmount(transaction.getAmount());
 		transactionResponse.setAccountId(transaction.getAccount().getId());
-		transactionResponse.setType(transaction.getType());
+		//transactionResponse.setType(transaction.getType());
         
 		return transactionResponse;
     }

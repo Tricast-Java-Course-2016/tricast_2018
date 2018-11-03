@@ -18,18 +18,13 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 	Transaction findById(Long id);
 	Transaction findByBet(Bet bet);
 	
-	Transaction findByTransactionType(TransactionTypes transactionType);
+	Transaction findByType(TransactionTypes transactionType);
 	
     @Query(value = "SELECT * FROM tricast.transactions WHERE "
-    		+ "createdDate BETWEEN :fromDate AND :toDate AND"
-    		+ "(type = :transactionType)", nativeQuery = true)
+    		+ "createdDate BETWEEN :fromDate AND :toDate", nativeQuery = true)
     
-	static List<Transaction> filter(
-    		@Param("transactionType") TransactionTypes transactionType, 
+	List<Transaction> filter(
+    		//@Param("transactionType") TransactionTypes transactionType, 
     		@Param("fromDate") Calendar fromDate,
-    		@Param("toDate") Calendar toDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+    		@Param("toDate") Calendar toDate);
 }
