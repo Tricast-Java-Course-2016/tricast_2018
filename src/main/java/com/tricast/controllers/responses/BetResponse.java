@@ -1,6 +1,7 @@
 package com.tricast.controllers.responses;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class BetResponse implements Serializable{
@@ -18,10 +19,10 @@ public class BetResponse implements Serializable{
 	private List <String> event;
 	private List <String> marketDescription;
 	private String betType;
-	private double stake;
+	private BigDecimal stake;
 	private List <Double> odds;
 	private double sumOdds;
-	private double potentialWin;
+	private BigDecimal potentialWin;
 	
 	public long getBettypeId() {
 		return bettypeId;
@@ -65,10 +66,10 @@ public class BetResponse implements Serializable{
 	public void setBetType(String betType) {
 		this.betType = betType;
 	}
-	public double getStake() {
+	public BigDecimal getStake() {
 		return stake;
 	}
-	public void setStake(double stake) {
+	public void setStake(BigDecimal stake) {
 		this.stake = stake;
 	}
 	public List<Double> getOdds() {
@@ -83,10 +84,10 @@ public class BetResponse implements Serializable{
 	public void setSumOdds(double sumOdds) {
 		this.sumOdds = sumOdds;
 	}
-	public double getPotentialWin() {
+	public BigDecimal getPotentialWin() {
 		return potentialWin;
 	}
-	public void setPotentialWin(double potentialWin) {
+	public void setPotentialWin(BigDecimal potentialWin) {
 		this.potentialWin = potentialWin;
 	}
 	

@@ -1,6 +1,7 @@
 package com.tricast.controllers.requests;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Map;
 
 public class BetRequest implements Serializable {
@@ -13,7 +14,7 @@ public class BetRequest implements Serializable {
     
 	private long bettypeId;
 	private long accountId;
-	private double betStake;
+	private BigDecimal betStake;
 	private Map<Long, Double> outcomeOdds;
 	
 	public long getBettypeId() {
@@ -28,10 +29,10 @@ public class BetRequest implements Serializable {
 	public void setAccountId(long accountId) {
 		this.accountId = accountId;
 	}
-	public double getBetStake() {
+	public BigDecimal getBetStake() {
 		return betStake;
 	}
-	public void setBetStake(double betStake) {
+	public void setBetStake(BigDecimal betStake) {
 		this.betStake = betStake;
 	}
 	public Map<Long, Double> getOutcomeOdds() {

@@ -1,5 +1,6 @@
 package com.tricast.managers.mappers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class BetResponseMapper {
         
         
         
-        responseObject.setStake(transactionRepository.findByBet(entityObject).getAmount()*-1);
+        responseObject.setStake(transactionRepository.findByBet(entityObject).getAmount());
         
         List<Double> odds = new ArrayList<Double>();
         Double sumodds=1.;
@@ -90,7 +91,7 @@ public class BetResponseMapper {
         
         responseObject.setSumOdds(sumodds);
         
-        responseObject.setPotentialWin(responseObject.getStake()*responseObject.getSumOdds());
+        responseObject.setPotentialWin(responseObject.getStake().multiply(BigDecimal.valueOf(responseObject.getSumOdds())));
         
         return responseObject;
     }
