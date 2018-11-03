@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tricast.controllers.requests.TransactionRequest;
 import com.tricast.controllers.responses.TransactionResponse;
 import com.tricast.managers.TransactionManager;
+import com.tricast.managers.helpers.OffsetDateTimeToCalendar;
+import com.tricast.repositories.entities.TransactionTypes;
 
 @RestController
 @RequestMapping(path = "transactions")
@@ -37,10 +39,14 @@ public class TransactionController {
 
     @GetMapping(path = "/filter")
     public List<TransactionResponse> byFilter(
-            @RequestParam(value = "transactionType", required = false) String transactionType,
+            @RequestParam(value = "transactionType", required = false) TransactionTypes transactionType,
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
-        return null;
+        
+    	if("null".equals(transactionType))
+    		transactionType = null;
+    	//return null;
+    	return this.transactionManager.filter(transactionType, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
     
     // Should be merged with the other

@@ -1,9 +1,11 @@
 package com.tricast.managers;
 
+import java.util.Calendar;
 import java.util.List;
 
 import com.tricast.controllers.requests.TransactionRequest;
 import com.tricast.controllers.responses.TransactionResponse;
+import com.tricast.repositories.entities.TransactionTypes;
 
 
 public interface TransactionManager {
@@ -17,5 +19,7 @@ public interface TransactionManager {
     TransactionResponse update(TransactionRequest player);
 
     void deleteById(Long id);
+    
+    List<TransactionResponse> filter(TransactionTypes transactionType, Calendar fromDate, Calendar toDate);
 
 }
