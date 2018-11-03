@@ -20,7 +20,7 @@ public class TransactionResponseBuilder {
 		transactionResponse.setDescription(transaction.getDescription());
 		transactionResponse.setAmount(transaction.getAmount());
 		transactionResponse.setAccountId(transaction.getAccount().getId());
-		//transactionResponse.setType(transaction.getType());
+		transactionResponse.setType(transaction.getType());
         
 		return transactionResponse;
     }

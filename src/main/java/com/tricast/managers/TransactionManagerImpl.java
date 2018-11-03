@@ -47,19 +47,13 @@ public class TransactionManagerImpl implements TransactionManager {
     }
     
     @Override
-	public List<TransactionResponse> filter(Calendar fromDate, Calendar toDate) {
-    	
-    	List<Transaction> transactions = transactionRepository.filter(fromDate, toDate);
-    	
-    	
-    	/*
-		List<Transaction> transactions = TransactionRepository.filter(
-				transactionType == null ? "" : transactionType, 
+	public List<TransactionResponse> filter(String transactionType, Calendar fromDate, Calendar toDate) {
+    	List<Transaction> transactions = transactionRepository.filter(
+    			transactionType == null ? "%" : transactionType,
 				fromDate,
 				toDate
 			);
-			
-		*/
+    	
 		List<TransactionResponse> transactionResponses = new ArrayList<TransactionResponse>();
 		for (Transaction transaction : transactions) {
 			transactionResponses.add(TransactionResponseBuilder.build(transaction));

@@ -19,6 +19,8 @@ import com.tricast.managers.TransactionManager;
 import com.tricast.managers.helpers.OffsetDateTimeToCalendar;
 import com.tricast.repositories.entities.TransactionTypes;
 
+import net.bytebuddy.implementation.bytecode.constant.DefaultValue;
+
 @RestController
 @RequestMapping(path = "transactions")
 public class TransactionController {
@@ -39,13 +41,14 @@ public class TransactionController {
 
     @GetMapping(path = "/filter")
     public List<TransactionResponse> byFilter(
-           // @RequestParam(value = "transactionType", required = false, defaultValue = "") TransactionTypes transactionType,
+    		@RequestParam(value = "transactionType", required = false, defaultValue = "") String transactionType,
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
         
-    	/*if("".equals(transactionType))
-    		transactionType = null;*/
-    	return this.transactionManager.filter(/*transactionType, */OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
+    	if("".equals(transactionType))
+    		transactionType = null;
+    	
+    	return this.transactionManager.filter(transactionType, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
     
     // Should be merged with the other

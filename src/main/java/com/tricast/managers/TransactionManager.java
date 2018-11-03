@@ -20,6 +20,6 @@ public interface TransactionManager {
 
     void deleteById(Long id);
     
-    List<TransactionResponse> filter(/*TransactionTypes transactionType, */Calendar fromDate, Calendar toDate);
+    List<TransactionResponse> filter(String transactionType, Calendar fromDate, Calendar toDate);
 
 }

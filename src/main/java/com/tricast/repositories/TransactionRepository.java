@@ -20,11 +20,13 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 	
 	Transaction findByType(TransactionTypes transactionType);
 	
-    @Query(value = "SELECT * FROM tricast.transactions WHERE "
-    		+ "createdDate BETWEEN :fromDate AND :toDate", nativeQuery = true)
-    
+	
+	    @Query(value = "SELECT * FROM tricast.transactions WHERE "
+	    		+ "createdDate BETWEEN :fromDate AND :toDate AND "
+	    		+ "(type ILIKE :transactionType)", nativeQuery = true)
+	    
 	List<Transaction> filter(
-    		//@Param("transactionType") TransactionTypes transactionType, 
+    		@Param("transactionType") String transactionType, 
     		@Param("fromDate") Calendar fromDate,
     		@Param("toDate") Calendar toDate);
 }
