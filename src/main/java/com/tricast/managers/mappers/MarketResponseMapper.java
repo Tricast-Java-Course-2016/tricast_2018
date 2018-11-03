@@ -1,14 +1,12 @@
 package com.tricast.managers.mappers;
 
 import com.tricast.controllers.responses.MarketResponse;
-import com.tricast.repositories.BetRepository;
 import com.tricast.repositories.EventRepository;
 import com.tricast.repositories.entities.Market;
 
 public class MarketResponseMapper {
 
 	  public static MarketResponse mapToResponse(Market entityObject, 
-			  	BetRepository betRepository, 
 	    		EventRepository eventRepository) {
 	        if(entityObject == null) {
 	            return null;

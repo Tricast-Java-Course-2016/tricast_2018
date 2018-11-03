@@ -1,8 +1,8 @@
 package com.tricast.controllers.responses;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.tricast.repositories.entities.PeriodMarkets;
@@ -16,7 +16,7 @@ public class EventDetailResponse  implements Serializable{
 	
 	
 	private String eventDescription;
-	private OffsetDateTime eventStartTime;
+	private Calendar eventStartTime;
 	private List <PeriodMarkets> periodMarketsList= new ArrayList <PeriodMarkets>();
 	
 	public String getEventDescription() {
@@ -25,10 +25,10 @@ public class EventDetailResponse  implements Serializable{
 	public void setEventDescription(String eventDescription) {
 		this.eventDescription = eventDescription;
 	}
-	public OffsetDateTime getEventStartTime() {
+	public Calendar getEventStartTime() {
 		return eventStartTime;
 	}
-	public void setEventStartTime(OffsetDateTime eventStartTime) {
+	public void setEventStartTime(Calendar eventStartTime) {
 		this.eventStartTime = eventStartTime;
 	}
 	public List<PeriodMarkets> getPeriodMarketsList() {

@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tricast.controllers.responses.MarketResponse;
+import com.tricast.controllers.responses.OutcomeResponse;
+import com.tricast.controllers.responses.PeriodTypeResponse;
+
 public class PeriodMarkets implements Serializable{
 
 	
@@ -11,38 +15,38 @@ public class PeriodMarkets implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -2350306662021994138L;
-		private PeriodType period;
-		private Market market;
-		List <Outcome> outcomes;
+		private PeriodTypeResponse period;
+		private MarketResponse market;
+		List <OutcomeResponse> outcomes;
 		
 		public PeriodMarkets(){
-			period=new PeriodType();
-			market=new Market();
-			outcomes=new ArrayList<Outcome>();	
+			period=new PeriodTypeResponse();
+			market=new MarketResponse();
+			outcomes=new ArrayList<OutcomeResponse>();	
 		}
 
-		public PeriodType getPeriod() {
+		public PeriodTypeResponse getPeriod() {
 			return period;
 		}
 
-		public void setPeriod(PeriodType period) {
+		public void setPeriod(PeriodTypeResponse period) {
 			this.period = period;
 		}
 
-		public Market getMarket() {
+		public MarketResponse getMarket() {
 			return market;
 		}
 
-		public void setMarket(Market market) {
+		public void setMarket(MarketResponse market) {
 			this.market = market;
 		}
 
-		public List<Outcome> getOutcomes() {
+		public List<OutcomeResponse> getOutcomes() {
 			return outcomes;
 		}
 
-		public void setOutcomes(List<Outcome> outcomes) {
+		public void setOutcomes(List<OutcomeResponse> outcomes) {
 			this.outcomes = outcomes;
 		}
-		
+
 	}
