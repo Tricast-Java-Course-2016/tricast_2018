@@ -1,6 +1,6 @@
 package com.tricast.managers.mappers;
 
-import java.time.OffsetDateTime;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -9,6 +9,8 @@ import java.util.Locale;
 import java.util.Set;
 
 import com.tricast.controllers.requests.BetRequest;
+import com.tricast.controllers.responses.BetPlacementResponse;
+import com.tricast.controllers.responses.BetResponse;
 import com.tricast.repositories.AccountRepository;
 import com.tricast.repositories.BetOutcomeMapRepository;
 import com.tricast.repositories.BetRepository;
@@ -24,7 +26,7 @@ import com.tricast.repositories.entities.TransactionTypes;
 
 public class BetRequestMapper {
 
-    public static List <Bet> mapToEntity(BetRequest requestObject,
+    public static BetPlacementResponse mapToEntity(BetRequest requestObject,
     		BetRepository betRepository, 
     		AccountRepository accountRepository, 
     		BetTypeRepository bettypeRepository,
@@ -38,6 +40,11 @@ public class BetRequestMapper {
             return null;
         }
         
+        BetPlacementResponse betPlacementResponse = new BetPlacementResponse();
+        betPlacementResponse.setSumStake(BigDecimal.valueOf(0.));
+        betPlacementResponse.setSumPotentialWin(BigDecimal.valueOf(0.));
+        
+        List <BetResponse> betResponses=new ArrayList <BetResponse>();
         int NumberOfOutcomes=requestObject.getOutcomeOdds().size();
         List <Bet> bets=new ArrayList <Bet>();
         List <Transaction> transactions=new ArrayList <Transaction>();
@@ -68,9 +75,19 @@ public class BetRequestMapper {
         	transactions.get(i).setCreatedDate(Calendar.getInstance(Locale.getDefault()));
         	transactionRepository.save(transactions.get(i));
         	
+        	betResponses.add(BetResponseMapper.mapToResponse(bets.get(i), betRepository, 
+        			transactionRepository, bettypeRepository, 
+        			betoutcomemapRepository, outcomeRepository, 
+        			marketRepository, eventRepository));
+        	betPlacementResponse.setSumStake(betPlacementResponse.getSumStake().add(requestObject.getBetStake()));
+        	betPlacementResponse.setSumPotentialWin(betPlacementResponse.getSumPotentialWin().add(
+        			betResponses.get(betResponses.size()-1).getPotentialWin()));
+        	
         }
+        betPlacementResponse.setListOfBetResponses(betResponses);
         
-		return null;
+        
+		return betPlacementResponse;
 
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tricast.controllers.requests.BetRequest;
+import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.mappers.BetRequestMapper;
 import com.tricast.managers.mappers.BetResponseMapper;
@@ -85,8 +86,8 @@ public class BetManagerImpl implements BetManager {
 
    
     @Override
-    public BetResponse create(BetRequest newBet) {
-		List <Bet> bets = BetRequestMapper.mapToEntity(newBet,
+    public BetPlacementResponse create(BetRequest newBet) {
+		BetPlacementResponse betPlacementResponse = BetRequestMapper.mapToEntity(newBet,
 	    		betRepository, 
 	    		accountRepository, 
 	    		bettypeRepository,
@@ -96,7 +97,7 @@ public class BetManagerImpl implements BetManager {
 	    		eventRepository,
 	    		marketRepository);
 		
-		return null;
+		return betPlacementResponse;
     }
     
 }

@@ -3,6 +3,7 @@ package com.tricast.managers;
 import java.util.List;
 
 import com.tricast.controllers.requests.BetRequest;
+import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
 
 public interface BetManager {
@@ -11,7 +12,7 @@ public interface BetManager {
 
     BetResponse findById(Long id);
 
-    BetResponse create(BetRequest newBet);
+    BetPlacementResponse create(BetRequest newBet);
 
 
 }

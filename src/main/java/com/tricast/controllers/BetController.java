@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.BetRequest;
+import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.BetManager;
 
@@ -43,12 +44,11 @@ public class BetController {
 		log.trace("Trying to create bet for: AccountId: " + newBet.getAccountId());
 		
 		try {
-			BetResponse bet = betManager.create(newBet);
+			BetPlacementResponse bet = betManager.create(newBet);
 			return ResponseEntity.ok(bet);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
 
 }
