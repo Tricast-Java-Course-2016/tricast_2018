@@ -41,20 +41,21 @@ public class BetRequestMapper {
             return null;
         }
         
+        BetPlacementResponse betPlacementResponse = new BetPlacementResponse();
+        betPlacementResponse.setSumStake(BigDecimal.valueOf(0.));
+        betPlacementResponse.setSumPotentialWin(BigDecimal.valueOf(0.));
+        
+        List <BetResponse> betResponses=new ArrayList <BetResponse>();
+        int NumberOfOutcomes=requestObject.getOutcomeOdds().size();
+        List <Bet> bets=new ArrayList <Bet>();
+        List <Transaction> transactions=new ArrayList <Transaction>();
+        List <BetOutcomeMap> betOutcomeMap=new ArrayList <BetOutcomeMap>();
+        Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet(); 
+    	Long currentId;
+    	Iterator <Long> iterator=outcomeIds.iterator();
+        
         if(bettypeRepository.findById(requestObject.getBettypeId()).getDescription().equals(BetTypes.Single)) {
-            BetPlacementResponse betPlacementResponse = new BetPlacementResponse();
-            betPlacementResponse.setSumStake(BigDecimal.valueOf(0.));
-            betPlacementResponse.setSumPotentialWin(BigDecimal.valueOf(0.));
-            
-            List <BetResponse> betResponses=new ArrayList <BetResponse>();
-            int NumberOfOutcomes=requestObject.getOutcomeOdds().size();
-            List <Bet> bets=new ArrayList <Bet>();
-            List <Transaction> transactions=new ArrayList <Transaction>();
-            List <BetOutcomeMap> betOutcomeMap=new ArrayList <BetOutcomeMap>();
-            Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet(); 
-        	Long currentId;
-            
-        	Iterator <Long> iterator=outcomeIds.iterator();
+        	
             for(int i=0;i<NumberOfOutcomes;i++) {
             	currentId=iterator.next();
             	bets.add(new Bet());
@@ -96,7 +97,57 @@ public class BetRequestMapper {
         	return null;
         }
         else if(bettypeRepository.findById(requestObject.getBettypeId()).getDescription().equals(BetTypes.Treble)) {
-        	return null;
+        	
+        	if(NumberOfOutcomes!=3) {
+        		/*You can only place a treble bet with 3 outcomes. Needs some Exception.*/
+        		return null;
+        	}
+        	else {
+        		/*Check needed, so that you can't bet on multiple outcomes of the same market.*/
+        		
+            	bets.add(new Bet());
+            	bets.get(bets.size()-1).setAccountId(accountRepository.findById(requestObject.getAccountId()));
+            	bets.get(bets.size()-1).setBetTypeId(bettypeRepository.findById(requestObject.getBettypeId()));
+            	betRepository.save(bets.get(bets.size()-1));
+            	
+            	transactions.add(new Transaction());
+            	transactions.get(transactions.size()-1).setDescription(
+            			bettypeRepository.findById(requestObject.getBettypeId()).getDescription().getValue()+
+            			" Bet ");
+            	
+                for(int i=0;i<NumberOfOutcomes;i++) {
+                	currentId=iterator.next();
+
+                	betOutcomeMap.add(new BetOutcomeMap());
+                	betOutcomeMap.get(i).setBetId(bets.get(bets.size()-1));
+                	betOutcomeMap.get(i).setOutcomeID(outcomeRepository.findById(currentId));
+                	betOutcomeMap.get(i).setOdds(requestObject.getOutcomeOdds().get(currentId));
+                	betoutcomemapRepository.save(betOutcomeMap.get(i));
+                	transactions.get(transactions.size()-1).setDescription(transactions.get(transactions.size()-1).getDescription()
+                		+outcomeRepository.findById(currentId).getDescription()+ " @ "+
+            			outcomeRepository.findById(currentId).getOdds() +" ");
+                	            	
+                }
+               	transactions.get(transactions.size()-1).setAccount(accountRepository.findById(requestObject.getAccountId()));
+            	transactions.get(transactions.size()-1).setAmount(requestObject.getBetStake().negate());
+            	transactions.get(transactions.size()-1).setBet(bets.get(bets.size()-1));      
+            	
+            	transactions.get(transactions.size()-1).setType(TransactionTypes.BET);
+            	transactions.get(transactions.size()-1).setCreatedDate(Calendar.getInstance(Locale.getDefault()));
+            	transactionRepository.save(transactions.get(transactions.size()-1));
+            	
+            	betResponses.add(BetResponseMapper.mapToResponse(bets.get(bets.size()-1), betRepository, 
+            			transactionRepository, bettypeRepository, 
+            			betoutcomemapRepository, outcomeRepository, 
+            			marketRepository, eventRepository));
+            	betPlacementResponse.setSumStake(betPlacementResponse.getSumStake().add(requestObject.getBetStake()));
+            	betPlacementResponse.setSumPotentialWin(betPlacementResponse.getSumPotentialWin().add(
+            			betResponses.get(betResponses.size()-1).getPotentialWin()));
+                
+                betPlacementResponse.setListOfBetResponses(betResponses);
+     
+        		return betPlacementResponse;
+        	}
         }
         else return null;
 
