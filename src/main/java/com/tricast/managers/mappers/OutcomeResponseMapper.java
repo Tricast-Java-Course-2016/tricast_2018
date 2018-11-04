@@ -18,6 +18,7 @@ public class OutcomeResponseMapper {
         responseObject.setOutcomeDescription(entityObject.getDescription());
         responseObject.setOdds(entityObject.getOdds());
         responseObject.setMarketDescription(marketRepository.findById(entityObject.getMarketId().getId()).getDescription());
+        responseObject.setOutcomeId(entityObject.getId());
         
         return responseObject;
 	}
