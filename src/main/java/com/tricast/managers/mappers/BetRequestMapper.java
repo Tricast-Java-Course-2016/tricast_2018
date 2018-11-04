@@ -3,6 +3,7 @@ package com.tricast.managers.mappers;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -103,9 +104,22 @@ public class BetRequestMapper {
         		return null;
         	}
         	else {
-        		/*Check needed, so that you can't bet on multiple outcomes of the same market.*/
+        		/*Check, so that you can't bet on multiple outcomes of the same market.*/
+        		Set <Long> marketIds=new HashSet <Long>();
+        		for(int i=0;i<NumberOfOutcomes;i++) {
+        			currentId=iterator.next();
+        			if(marketIds.contains(outcomeRepository.findById(currentId).getMarketId().getId())) {
+        				/*Market already used*/
+        				return null;
+        			}
+        			else {
+        				marketIds.add(outcomeRepository.findById(currentId).getMarketId().getId());
+        			}
+        		}
         		
-            	bets.add(new Bet());
+            	
+        		iterator=outcomeIds.iterator();
+        		bets.add(new Bet());
             	bets.get(bets.size()-1).setAccountId(accountRepository.findById(requestObject.getAccountId()));
             	bets.get(bets.size()-1).setBetTypeId(bettypeRepository.findById(requestObject.getBettypeId()));
             	betRepository.save(bets.get(bets.size()-1));
@@ -149,6 +163,7 @@ public class BetRequestMapper {
         		return betPlacementResponse;
         	}
         }
+        /*Bad BetTypeId*/
         else return null;
 
     }
