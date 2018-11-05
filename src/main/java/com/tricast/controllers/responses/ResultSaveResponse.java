@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ResultSaveResponse implements Serializable {
-
+	
 	private static final long serialVersionUID = -2135419002780681228L;
 	
 	private long id;

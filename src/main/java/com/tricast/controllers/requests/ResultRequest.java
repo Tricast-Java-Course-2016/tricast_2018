@@ -14,8 +14,9 @@ public class ResultRequest implements Serializable {
     private int result;
     private long periodTypeId;
     
-    private List<Event> events;
-    private List<Competitor> competitors;
+    private long eventId;
+    private long competitorId;
+    
 	public long getResultTypeId() {
 		return resultTypeId;
 	}
@@ -34,18 +35,16 @@ public class ResultRequest implements Serializable {
 	public void setPeriodTypeId(long periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
-	public List<Event> getEvents() {
-		return events;
+	public long getEventId() {
+		return eventId;
 	}
-	public void setEvents(List<Event> events) {
-		this.events = events;
+	public void setEventId(long eventId) {
+		this.eventId = eventId;
 	}
-	public List<Competitor> getCompetitors() {
-		return competitors;
+	public long getCompetitorId() {
+		return competitorId;
 	}
-	public void setCompetitors(List<Competitor> competitors) {
-		this.competitors = competitors;
+	public void setCompetitorId(long competitorId) {
+		this.competitorId = competitorId;
 	}
-    
-    
 }

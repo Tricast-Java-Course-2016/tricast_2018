@@ -1,13 +1,13 @@
 package com.tricast.controllers.responses;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 
 public class ResultResponse implements Serializable{
-	
 	private static final long serialVersionUID = 2646725308970295770L;
 
 	private long id;
@@ -16,8 +16,8 @@ public class ResultResponse implements Serializable{
     private int result;
     private long periodTypeId;
     
-    private List<Event> events;
-    private List<Competitor> competitors;
+    private List<Event> events = new ArrayList<Event>();
+    private List<Competitor> competitors = new ArrayList<Competitor>();
     
 	public long getId() {
 		return id;
@@ -56,5 +56,4 @@ public class ResultResponse implements Serializable{
 		this.competitors = competitors;
 	}
     
-	
 }
