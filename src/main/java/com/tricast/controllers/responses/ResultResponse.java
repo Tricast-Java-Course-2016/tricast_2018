@@ -1,32 +1,60 @@
 package com.tricast.controllers.responses;
 
+import java.io.Serializable;
 import java.util.List;
 
-import com.tricast.repositories.entities.Result;
+import com.tricast.repositories.entities.Competitor;
+import com.tricast.repositories.entities.Event;
 
-public class ResultResponse {
-    private Long id;
-    private String description;
-    private List<Result> results;
+public class ResultResponse implements Serializable{
+	
+	private static final long serialVersionUID = 2646725308970295770L;
 
-    public ResultResponse(Long id, String description){
-        this.description=description;
-        this.id=id;
-    }
-
-    public void addResult(Result resultCreateResponse){
-        results.add(resultCreateResponse);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<Result> getResults() {
-        return results;
-    }
+	private long id;
+    
+    private long resultTypeId;
+    private int result;
+    private long periodTypeId;
+    
+    private List<Event> events;
+    private List<Competitor> competitors;
+    
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public long getResultTypeId() {
+		return resultTypeId;
+	}
+	public void setResultTypeId(long resultTypeId) {
+		this.resultTypeId = resultTypeId;
+	}
+	public int getResult() {
+		return result;
+	}
+	public void setResult(int result) {
+		this.result = result;
+	}
+	public long getPeriodTypeId() {
+		return periodTypeId;
+	}
+	public void setPeriodTypeId(long periodTypeId) {
+		this.periodTypeId = periodTypeId;
+	}
+	public List<Event> getEvents() {
+		return events;
+	}
+	public void setEvents(List<Event> events) {
+		this.events = events;
+	}
+	public List<Competitor> getCompetitors() {
+		return competitors;
+	}
+	public void setCompetitors(List<Competitor> competitors) {
+		this.competitors = competitors;
+	}
+    
+	
 }
