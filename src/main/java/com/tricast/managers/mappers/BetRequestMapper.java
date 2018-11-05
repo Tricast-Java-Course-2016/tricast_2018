@@ -1,6 +1,7 @@
 package com.tricast.managers.mappers;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -78,7 +79,7 @@ public class BetRequestMapper {
             			" Bet "+outcomeRepository.findById(currentId).getDescription()+ " @ "+
             			outcomeRepository.findById(currentId).getOdds());
             	transactions.get(i).setType(TransactionTypes.BET);
-            	transactions.get(i).setCreatedDate(Calendar.getInstance(Locale.getDefault()));
+            	transactions.get(i).setCreatedDate(OffsetDateTime.now());
             	transactionRepository.save(transactions.get(i));
             	
             	betResponses.add(BetResponseMapper.mapToResponse(bets.get(i), betRepository, 
@@ -143,7 +144,7 @@ public class BetRequestMapper {
                 			outcomeRepository.findById(combinations.get(i).get(1)).getDescription()+ " @ "+
                 			outcomeRepository.findById(combinations.get(i).get(1)).getOdds());
                 	transactions.get(i).setType(TransactionTypes.BET);
-                	transactions.get(i).setCreatedDate(Calendar.getInstance(Locale.getDefault()));
+                	transactions.get(i).setCreatedDate(OffsetDateTime.now());
                 	transactionRepository.save(transactions.get(i));
                 	
                 	
@@ -211,7 +212,7 @@ public class BetRequestMapper {
             	transactions.get(transactions.size()-1).setBet(bets.get(bets.size()-1));      
             	
             	transactions.get(transactions.size()-1).setType(TransactionTypes.BET);
-            	transactions.get(transactions.size()-1).setCreatedDate(Calendar.getInstance(Locale.getDefault()));
+            	transactions.get(transactions.size()-1).setCreatedDate(OffsetDateTime.now());
             	transactionRepository.save(transactions.get(transactions.size()-1));
             	
             	betResponses.add(BetResponseMapper.mapToResponse(bets.get(bets.size()-1), betRepository, 
