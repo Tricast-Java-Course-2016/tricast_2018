@@ -95,7 +95,71 @@ public class BetRequestMapper {
     		return betPlacementResponse;	
         }
         else if(bettypeRepository.findById(requestObject.getBettypeId()).getDescription().equals(BetTypes.Double)) {
-        	return null;
+        	ArrayList <ArrayList<Long>> combinations;
+        	ArrayList <Long> idList = new ArrayList<Long>();
+        	BetOutcomeMap currentBetOutcomeMap;
+        	
+        	for(int i=0;i<NumberOfOutcomes;i++) {
+        		currentId=iterator.next();
+        		idList.add(currentId);
+        	}
+        	
+        	combinations=getCombinations(idList);
+        	
+        	for(int i=0;i<combinations.size();i++) {
+        		if(marketRepository.findById(outcomeRepository.findById(combinations.get(i).get(0)).getMarketId().getId())
+            			==	marketRepository.findById(outcomeRepository.findById(combinations.get(i).get(1)).getMarketId().getId())) {
+        				combinations.remove(i);
+            		}
+        	}
+        	if(combinations.size()==1) combinations.clear();
+        	
+        	for(int i=0;i<combinations.size();i++) {
+        			bets.add(new Bet());
+                	bets.get(i).setAccountId(accountRepository.findById(requestObject.getAccountId()));
+                	bets.get(i).setBetTypeId(bettypeRepository.findById(requestObject.getBettypeId()));
+                	betRepository.save(bets.get(i));
+                	
+                	currentBetOutcomeMap=new BetOutcomeMap();
+                	currentBetOutcomeMap.setBetId(bets.get(i));
+                	currentBetOutcomeMap.setOutcomeID(outcomeRepository.findById(combinations.get(i).get(0)));
+                	currentBetOutcomeMap.setOdds(requestObject.getOutcomeOdds().get(combinations.get(i).get(0)));                	
+                	betoutcomemapRepository.save(currentBetOutcomeMap);
+                	
+                	currentBetOutcomeMap=new BetOutcomeMap();
+                	currentBetOutcomeMap.setBetId(bets.get(i));
+                	currentBetOutcomeMap.setOutcomeID(outcomeRepository.findById(combinations.get(i).get(1)));
+                	currentBetOutcomeMap.setOdds(requestObject.getOutcomeOdds().get(combinations.get(i).get(1)));                	
+                	betoutcomemapRepository.save(currentBetOutcomeMap);
+                	
+                	
+                	transactions.add(new Transaction());
+                	transactions.get(i).setAccount(accountRepository.findById(requestObject.getAccountId()));
+                	transactions.get(i).setAmount(requestObject.getBetStake().negate());
+                	transactions.get(i).setBet(bets.get(i));      
+                	transactions.get(i).setDescription(bettypeRepository.findById(requestObject.getBettypeId()).getDescription().getValue()+
+                			" Bet "+outcomeRepository.findById(combinations.get(i).get(0)).getDescription()+ " @ "+
+                			outcomeRepository.findById(combinations.get(i).get(0)).getOdds()+" "+
+                			outcomeRepository.findById(combinations.get(i).get(1)).getDescription()+ " @ "+
+                			outcomeRepository.findById(combinations.get(i).get(1)).getOdds());
+                	transactions.get(i).setType(TransactionTypes.BET);
+                	transactions.get(i).setCreatedDate(Calendar.getInstance(Locale.getDefault()));
+                	transactionRepository.save(transactions.get(i));
+                	
+                	
+                	betResponses.add(BetResponseMapper.mapToResponse(bets.get(i), betRepository, 
+                			transactionRepository, bettypeRepository, 
+                			betoutcomemapRepository, outcomeRepository, 
+                			marketRepository, eventRepository));
+                	betPlacementResponse.setSumStake(betPlacementResponse.getSumStake().add(requestObject.getBetStake()));
+                	betPlacementResponse.setSumPotentialWin(betPlacementResponse.getSumPotentialWin().add(
+                			betResponses.get(betResponses.size()-1).getPotentialWin()));
+        			     		
+        	}
+        	
+        	betPlacementResponse.setListOfBetResponses(betResponses);
+        	
+      		return betPlacementResponse;	
         }
         else if(bettypeRepository.findById(requestObject.getBettypeId()).getDescription().equals(BetTypes.Treble)) {
         	
@@ -165,6 +229,21 @@ public class BetRequestMapper {
         }
         /*Bad BetTypeId*/
         else return null;
-
+        
+    }
+    
+    private static ArrayList <ArrayList<Long>> getCombinations(ArrayList <Long> idList){
+		ArrayList <ArrayList <Long>> combinations=new ArrayList <ArrayList<Long>>(); 
+		ArrayList <Long> current;
+    	
+    	for(int i=0;i<idList.size()-1;i++) {
+    		for(int  j=i+1;j<idList.size();j++) {
+    			current=new ArrayList <Long>();
+    			current.add(idList.get(i));
+    			current.add(idList.get(j));
+    			combinations.add(current);
+    		}
+    	}
+    	return combinations;	
     }
 }
