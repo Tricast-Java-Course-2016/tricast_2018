@@ -48,7 +48,7 @@ public class TransactionController {
     	if("".equals(transactionType))
     		transactionType = null;
     	
-    	return this.transactionManager.filter(transactionType, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
+    	return this.transactionManager.filter(transactionType, fromDate, toDate);
     }
     
     // Should be merged with the other

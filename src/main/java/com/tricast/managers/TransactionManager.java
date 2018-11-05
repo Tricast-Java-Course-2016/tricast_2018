@@ -1,5 +1,6 @@
 package com.tricast.managers;
 
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,6 +21,6 @@ public interface TransactionManager {
 
     void deleteById(Long id);
     
-    List<TransactionResponse> filter(String transactionType, Calendar fromDate, Calendar toDate);
+    List<TransactionResponse> filter(String transactionType, OffsetDateTime fromDate, OffsetDateTime toDate);
 
 }

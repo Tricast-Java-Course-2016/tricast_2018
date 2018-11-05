@@ -1,5 +1,6 @@
 package com.tricast.repositories;
 
+import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.List;
 
@@ -27,6 +28,6 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 	    
 	List<Transaction> filter(
     		@Param("transactionType") String transactionType, 
-    		@Param("fromDate") Calendar fromDate,
-    		@Param("toDate") Calendar toDate);
+    		@Param("fromDate") OffsetDateTime fromDate,
+    		@Param("toDate") OffsetDateTime toDate);
 }

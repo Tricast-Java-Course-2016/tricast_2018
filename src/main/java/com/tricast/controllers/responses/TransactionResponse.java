@@ -20,7 +20,7 @@ public class TransactionResponse implements Serializable{
 	
 	private long betId;
     // OffsetDateTime
-	private Calendar createdDate;
+	private OffsetDateTime createdDate;
 	
 	private String description;
     // BigDecimal
@@ -41,10 +41,10 @@ public class TransactionResponse implements Serializable{
 	public void setBetId(long betId) {
 		this.betId = betId;
 	}
-	public Calendar getCreatedDate() {
+	public OffsetDateTime getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(Calendar createdDate) {
+	public void setCreatedDate(OffsetDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
 	public String getDescription() {

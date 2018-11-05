@@ -36,7 +36,7 @@ public class Transaction implements Serializable {
     private Bet bet;
 
     @Column(name = "createddate")
-    private Calendar createdDate;
+    private OffsetDateTime createdDate;
 
     @Column(name = "description")
     private String description;
@@ -68,11 +68,11 @@ public class Transaction implements Serializable {
 		this.bet = bet;
 	}
 
-	public Calendar getCreatedDate() {
+	public OffsetDateTime getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Calendar createdDate) {
+	public void setCreatedDate(OffsetDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
 

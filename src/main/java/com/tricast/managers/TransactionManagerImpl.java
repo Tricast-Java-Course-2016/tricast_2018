@@ -1,5 +1,6 @@
 package com.tricast.managers;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -47,7 +48,7 @@ public class TransactionManagerImpl implements TransactionManager {
     }
     
     @Override
-	public List<TransactionResponse> filter(String transactionType, Calendar fromDate, Calendar toDate) {
+	public List<TransactionResponse> filter(String transactionType, OffsetDateTime fromDate, OffsetDateTime toDate) {
     	List<Transaction> transactions = transactionRepository.filter(
     			transactionType == null ? "%" : transactionType,
 				fromDate,
