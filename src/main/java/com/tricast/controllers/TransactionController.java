@@ -16,10 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tricast.controllers.requests.TransactionRequest;
 import com.tricast.controllers.responses.TransactionResponse;
 import com.tricast.managers.TransactionManager;
-import com.tricast.managers.helpers.OffsetDateTimeToCalendar;
-import com.tricast.repositories.entities.TransactionTypes;
-
-import net.bytebuddy.implementation.bytecode.constant.DefaultValue;
 
 @RestController
 @RequestMapping(path = "transactions")
@@ -27,7 +23,7 @@ public class TransactionController {
 
     @Autowired
     private TransactionManager transactionManager;
-    
+
     @GetMapping
     public List<TransactionResponse> findAll() {
         return null;
@@ -44,13 +40,20 @@ public class TransactionController {
     		@RequestParam(value = "transactionType", required = false, defaultValue = "") String transactionType,
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
-        
-    	if("".equals(transactionType))
-    		transactionType = null;
-    	
+
+        // AKOS valahonnét mindenképp kell egy account id is különben minden felahsználó transakcióját visszaadjuk pedig
+        // nekünk csak az adott felhasználóé kellenek
+        // akár jöhet http headerből is, valahogy így:
+        // https://stackoverflow.com/questions/19556039/how-to-get-access-to-http-header-information-in-spring-mvc-rest-controller
+
+        // AKOS nem kell default értek és ez az ellenőrzés felesleges
+    	if("".equals(transactionType)) {
+            transactionType = null;
+        }
+
     	return this.transactionManager.filter(transactionType, fromDate, toDate);
     }
-    
+
     // Should be merged with the other
     @GetMapping(path = "listByAccountId/{accountid}")
     public List <TransactionResponse> listByAcccountId(@PathVariable("accountid") Long id) {
