@@ -17,12 +17,15 @@ public class EventResponseBuilder {
         eventResponse.setLeagueId(event.getLeagueId().getId());
         eventResponse.setStartTime(event.getStartTime());
         eventResponse.setStatus(event.getStatus());
-        List<Long> competitorIds = new ArrayList<Long>();
+        List<Long> competitorIds = new ArrayList<>();
+
+        // AKOS jobb lenne olyan adatokat is visszaküldeni amit még meg akarunk jeleníteni a résztvevőkről
+        // (description mondjuk?)
         for (Competitor competitor : competitors) {
 			competitorIds.add(competitor.getId());
 		}
         eventResponse.setCompetitorIds(competitorIds);
 		return eventResponse;
     }
-	
+
 }

@@ -2,6 +2,7 @@ package com.tricast.controllers;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -39,17 +40,25 @@ public class EventController {
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate,
             @RequestParam(value = "search", required = false, defaultValue = "null") String search) {
-        
-    	if("null".equals(sport))
-    		sport = null;
-    	
-    	if("null".equals(league))
-    		league = null;
-    	
-    	
-    	if("null".equals(search))
-    		search = null;
-    	
+
+        // AKOS: nem kell default
+        // ez itt mind felesleges
+
+        // AKOS: inkább sport id és league id-t kéne küldeni
+
+    	if("null".equals(sport)) {
+            sport = null;
+        }
+
+    	if("null".equals(league)) {
+            league = null;
+        }
+
+
+    	if("null".equals(search)) {
+            search = null;
+        }
+
     	return this.eventManager.filter(search, sport, league, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
 

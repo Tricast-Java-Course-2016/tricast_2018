@@ -1,16 +1,19 @@
 package com.tricast.repositories.entities;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -27,19 +30,23 @@ public class Event implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "eventtypeid")
     private EventType eventTypeId;
-	
+
 	@ManyToOne
 	@JoinColumn(name="leagueid")
 	private League leagueId;
-	
+
 	@Column(name="description")
 	private String description;
 
 	@Column(name="status")
 	private String status;
-	
+
 	@Column(name="starttime")
 	private Calendar startTime;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+    @JoinTable(name = "EVENTCOMPETITORMAP", joinColumns = @JoinColumn(name = "eventid", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "competitorid", referencedColumnName = "id"))
+    private List<Competitor> competitors;
 
 	public Long getId() {
 		return id;
@@ -88,4 +95,12 @@ public class Event implements Serializable {
 	public void setStartTime(Calendar startTime) {
 		this.startTime = startTime;
 	}
+
+    public List<Competitor> getCompetitors() {
+        return competitors;
+    }
+
+    public void setCompetitors(List<Competitor> competitors) {
+        this.competitors = competitors;
+    }
 }
