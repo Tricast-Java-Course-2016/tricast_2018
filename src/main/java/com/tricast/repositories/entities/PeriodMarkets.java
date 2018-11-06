@@ -22,7 +22,7 @@ public class PeriodMarkets implements Serializable{
 		public PeriodMarkets(){
 			period=new PeriodTypeResponse();
 			market=new MarketResponse();
-			outcomes=new ArrayList<OutcomeResponse>();	
+			outcomes=new ArrayList<>();	
 		}
 
 		public PeriodTypeResponse getPeriod() {
