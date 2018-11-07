@@ -3,11 +3,9 @@ package com.tricast.managers.mappers;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import com.tricast.controllers.requests.BetRequest;

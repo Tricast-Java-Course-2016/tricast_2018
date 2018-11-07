@@ -14,7 +14,8 @@ public class BetResponse implements Serializable{
     private long bettypeId;
 	private long accountId;
 	
-	private List <String> betStatus;
+	private List <String> eventStatusList;
+	private String betStatus;
 	private List <String> outcome;
 	private List <String> event;
 	private List <String> marketDescription;
@@ -35,12 +36,6 @@ public class BetResponse implements Serializable{
 	}
 	public void setAccountId(long accountId) {
 		this.accountId = accountId;
-	}
-	public List<String> getBetStatus() {
-		return betStatus;
-	}
-	public void setBetStatus(List<String> betStatus) {
-		this.betStatus = betStatus;
 	}
 	public List<String> getOutcome() {
 		return outcome;
@@ -90,6 +85,17 @@ public class BetResponse implements Serializable{
 	public void setPotentialWin(BigDecimal potentialWin) {
 		this.potentialWin = potentialWin;
 	}
+	public List<String> getEventStatusList() {
+		return eventStatusList;
+	}
+	public void setEventStatusList(List<String> eventStatusList) {
+		this.eventStatusList = eventStatusList;
+	}
+	public String getBetStatus() {
+		return betStatus;
+	}
+	public void setBetStatus(String betStatus) {
+		this.betStatus = betStatus;
+	}
 	
-
 }

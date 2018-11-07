@@ -13,6 +13,7 @@ import com.tricast.repositories.MarketRepository;
 import com.tricast.repositories.OutcomeRepository;
 import com.tricast.repositories.TransactionRepository;
 import com.tricast.repositories.entities.Bet;
+import com.tricast.repositories.entities.BetOutcomeMap;
 
 
 public class BetResponseMapper {
@@ -28,69 +29,51 @@ public class BetResponseMapper {
             return null;
         }
 
-        int numberOfOutcomes=betoutcomemapRepository.findByBet(entityObject).size();
+        List <BetOutcomeMap> betOutcomeMap = betoutcomemapRepository.findByBet_Id(entityObject.getId());
+        
+        List<String> outcomes = new ArrayList<String>();
+        List<String> events = new ArrayList<String>();
+        List<String> markets = new ArrayList<String>();
+        List<String> statuses = new ArrayList<String>();
+        List<Double> odds = new ArrayList<Double>();
+        Double sumodds=1.;
+        
         
         BetResponse responseObject = new BetResponse();
         responseObject.setBettypeId(entityObject.getBetTypeId().getId());
         responseObject.setAccountId(entityObject.getAccountId().getId());
         
+        
         /*Needs more work (toString) when Event status Enum is done.*/
-        List<String> statuses = new ArrayList<String>();
-        
-        /*for(int i=0;i<numberOfOutcomes;i++) {
+        responseObject.setBetStatus("CLOSED");
+        for(BetOutcomeMap currentMap : betOutcomeMap) {
         	statuses.add(eventRepository.findById(marketRepository.findById(outcomeRepository.findById(
-            		betoutcomemapRepository.findByBet(
-            				entityObject).get(i).getOutcomeID().getId()).getMarketId().getId()).getId()).getStatus());
-        }*/
-        
-        responseObject.setBetStatus(statuses);
-        
-        List<String> outcomes = new ArrayList<String>();
-        
-        for(int i=0;i<numberOfOutcomes;i++) {
-        	outcomes.add(betoutcomemapRepository.findByBet(
-        			entityObject).get(i).getOutcomeID().getDescription());
-        }
-        responseObject.setOutcome(outcomes);
-        
-        
-        List<String> events = new ArrayList<String>();
-        
-        for(int i=0;i<numberOfOutcomes;i++) {
+            		currentMap.getOutcomeID().getId()).getMarket().getId()).getId()).getStatus());
+        	
+        	outcomes.add(currentMap.getOutcomeID().getDescription());
+        	
         	events.add(eventRepository.findById(marketRepository.findById(outcomeRepository.findById(
-        		betoutcomemapRepository.findByBet(
-        				entityObject).get(i).getOutcomeID().getId()).getMarket().getId()).getEvent().getId()).getDescription());
-        }
-        responseObject.setEvent(events);
-       
-        
-        List<String> markets = new ArrayList<String>();
-        
-        for(int i=0;i<numberOfOutcomes;i++) {
+            		currentMap.getOutcomeID().getId()).getMarket().getId()).getEvent().getId()).getDescription());
+        	
         	markets.add(marketRepository.findById(outcomeRepository.findById(
-        		betoutcomemapRepository.findByBet(
-        				entityObject).get(i).getOutcomeID().getId()).getMarket().getId()).getDescription());
+            		currentMap.getOutcomeID().getId()).getMarket().getId()).getDescription());
+        	
+        	odds.add(currentMap.getOdds());
+        	sumodds*=currentMap.getOdds();	
         }
+        
+        for(String status : statuses) {
+        	if(status.equals("OPEN")) responseObject.setBetStatus("OPEN");
+        }
+        
+        responseObject.setEventStatusList(statuses);
+        responseObject.setOutcome(outcomes);
+        responseObject.setEvent(events);
         responseObject.setMarketDescription(markets);
-        
-        
         responseObject.setBetType(bettypeRepository.findById(entityObject.getBetTypeId().getId()).getDescription().getValue());
-        
-        
-        
         responseObject.setStake(transactionRepository.findByBet(entityObject).getAmount());
-        
-        List<Double> odds = new ArrayList<Double>();
-        Double sumodds=1.;
-        
-        for(int i=0;i<numberOfOutcomes;i++) {
-        	odds.add(betoutcomemapRepository.findByBet(entityObject).get(i).getOdds());
-        	sumodds*=betoutcomemapRepository.findByBet(entityObject).get(i).getOdds();
-        }
-        responseObject.setOdds(odds);
-        
+        responseObject.setOdds(odds);      
         responseObject.setSumOdds(sumodds);
-        
         responseObject.setPotentialWin(responseObject.getStake().multiply(BigDecimal.valueOf(responseObject.getSumOdds())));
         
         return responseObject;
