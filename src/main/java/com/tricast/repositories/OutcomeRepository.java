@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.tricast.repositories.entities.Market;
 import com.tricast.repositories.entities.Outcome;
 
 public interface OutcomeRepository extends CrudRepository<Outcome, Long> {
@@ -14,6 +13,6 @@ public interface OutcomeRepository extends CrudRepository<Outcome, Long> {
 
     Outcome findById(Long id);
     
-    List <Outcome> findByMarketId(Market Market);
+    List <Outcome> findByMarket_Id(Long marketId);
 
 }

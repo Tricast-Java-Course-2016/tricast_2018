@@ -13,11 +13,10 @@ public class MarketResponseMapper {
 	        }
 
 	        MarketResponse responseObject = new MarketResponse();
+	        responseObject.setMarketId(entityObject.getId());
 	        responseObject.setMarketDescription(entityObject.getDescription());
 	        responseObject.setMarketTypeDescription(entityObject.getMarketTypeId().getDescription().getValue());
-	        responseObject.setPeriodTypeDescription(entityObject.getPeriodTypeId().getDescription().getValue());
-	        responseObject.setStatus(eventRepository.findById(entityObject.getEventId().getId()).getStatus());
-	        responseObject.setEventDescription(eventRepository.findById(entityObject.getEventId().getId()).getDescription());
+	        responseObject.setStatus(eventRepository.findById(entityObject.getEvent().getId()).getStatus());
 	        
 	        return responseObject;
 

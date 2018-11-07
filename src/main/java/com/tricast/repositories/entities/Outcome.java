@@ -26,7 +26,7 @@ public class Outcome implements Serializable {
 
 	@ManyToOne
     @JoinColumn(name = "marketid")
-    private Market marketId;
+    private Market market;
 	
 	@Column(name="outcomecode")
 	private String outcomeCode;
@@ -48,12 +48,12 @@ public class Outcome implements Serializable {
 		this.id = id;
 	}
 
-	public Market getMarketId() {
-		return marketId;
+	public Market getMarket() {
+		return market;
 	}
 
-	public void setMarketId(Market marketId) {
-		this.marketId = marketId;
+	public void setMarket(Market market) {
+		this.market = market;
 	}
 
 	public String getOutcomeCode() {

@@ -59,7 +59,7 @@ public class BetResponseMapper {
         for(int i=0;i<numberOfOutcomes;i++) {
         	events.add(eventRepository.findById(marketRepository.findById(outcomeRepository.findById(
         		betoutcomemapRepository.findByBet(
-        				entityObject).get(i).getOutcomeID().getId()).getMarketId().getId()).getEventId().getId()).getDescription());
+        				entityObject).get(i).getOutcomeID().getId()).getMarket().getId()).getEvent().getId()).getDescription());
         }
         responseObject.setEvent(events);
        
@@ -69,7 +69,7 @@ public class BetResponseMapper {
         for(int i=0;i<numberOfOutcomes;i++) {
         	markets.add(marketRepository.findById(outcomeRepository.findById(
         		betoutcomemapRepository.findByBet(
-        				entityObject).get(i).getOutcomeID().getId()).getMarketId().getId()).getDescription());
+        				entityObject).get(i).getOutcomeID().getId()).getMarket().getId()).getDescription());
         }
         responseObject.setMarketDescription(markets);
         

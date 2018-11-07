@@ -3,8 +3,6 @@ package com.tricast.controllers.responses;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.Calendar;
-import java.util.Date;
 
 import com.tricast.repositories.entities.TransactionTypes;
 

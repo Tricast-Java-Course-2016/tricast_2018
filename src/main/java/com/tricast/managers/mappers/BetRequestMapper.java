@@ -108,8 +108,8 @@ public class BetRequestMapper {
         	combinations=getCombinations(idList);
         	
         	for(int i=0;i<combinations.size();i++) {
-        		if(marketRepository.findById(outcomeRepository.findById(combinations.get(i).get(0)).getMarketId().getId())
-            			==	marketRepository.findById(outcomeRepository.findById(combinations.get(i).get(1)).getMarketId().getId())) {
+        		if(marketRepository.findById(outcomeRepository.findById(combinations.get(i).get(0)).getMarket().getId())
+            			==	marketRepository.findById(outcomeRepository.findById(combinations.get(i).get(1)).getMarket().getId())) {
         				combinations.remove(i);
             		}
         	}
@@ -173,12 +173,12 @@ public class BetRequestMapper {
         		Set <Long> marketIds=new HashSet <Long>();
         		for(int i=0;i<NumberOfOutcomes;i++) {
         			currentId=iterator.next();
-        			if(marketIds.contains(outcomeRepository.findById(currentId).getMarketId().getId())) {
+        			if(marketIds.contains(outcomeRepository.findById(currentId).getMarket().getId())) {
         				/*Market already used*/
         				return null;
         			}
         			else {
-        				marketIds.add(outcomeRepository.findById(currentId).getMarketId().getId());
+        				marketIds.add(outcomeRepository.findById(currentId).getMarket().getId());
         			}
         		}
         		
