@@ -37,7 +37,7 @@ public class TransactionController {
 
     @GetMapping(path = "/filter")
     public List<TransactionResponse> byFilter(
-    		@RequestParam(value = "transactionType", required = false, defaultValue = "") String transactionType,
+    		@RequestParam(value = "transactionType", required = false) String transactionType,
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
 
@@ -47,10 +47,7 @@ public class TransactionController {
         // https://stackoverflow.com/questions/19556039/how-to-get-access-to-http-header-information-in-spring-mvc-rest-controller
 
         // AKOS nem kell default értek és ez az ellenőrzés felesleges
-    	if("".equals(transactionType)) {
-            transactionType = null;
-        }
-
+    	
     	return this.transactionManager.filter(transactionType, fromDate, toDate);
     }
 

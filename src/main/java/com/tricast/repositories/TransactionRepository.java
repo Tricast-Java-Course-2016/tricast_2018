@@ -1,11 +1,8 @@
 package com.tricast.repositories;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import com.tricast.repositories.entities.Bet;
 import com.tricast.repositories.entities.Transaction;
@@ -19,15 +16,4 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
 	Transaction findByBet(Bet bet);
 
 	Transaction findByType(TransactionTypes transactionType);
-
-
-    // AKOS lásd TransactionRepositoryCustomImpl.java
-	    @Query(value = "SELECT * FROM tricast.transactions WHERE "
-	    		+ "createdDate BETWEEN :fromDate AND :toDate AND "
-	    		+ "(type ILIKE :transactionType)", nativeQuery = true)
-
-	List<Transaction> filter(
-    		@Param("transactionType") String transactionType,
-    		@Param("fromDate") OffsetDateTime fromDate,
-    		@Param("toDate") OffsetDateTime toDate);
 }

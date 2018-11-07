@@ -16,10 +16,9 @@ public class TransactionResponseBuilder {
         // (ez igaz minden runtime exceptionre)
         // helyete inkább ellenőrizd null-t ad-e vissza a transaction.getBet() hívás
         // ha nem akkor állísd be az id-t
-		try {
+		
+		if(transaction.getBet() != null) {
 			transactionResponse.setBetId(transaction.getBet().getId());
-		}catch (NullPointerException npe) {
-			transactionResponse.setBetId(0);
 		}
 		transactionResponse.setCreatedDate(transaction.getCreatedDate());
 		transactionResponse.setDescription(transaction.getDescription());
