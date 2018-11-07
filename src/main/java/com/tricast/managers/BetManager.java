@@ -12,7 +12,7 @@ public interface BetManager {
 
     BetResponse findById(Long id);
 
-    BetPlacementResponse create(BetRequest newBet);
+    BetPlacementResponse create(BetRequest requestObject);
 
 
 }
