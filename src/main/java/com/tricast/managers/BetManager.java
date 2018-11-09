@@ -5,6 +5,7 @@ import java.util.List;
 import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
+import com.tricast.managers.exceptions.SportsbookException;
 
 public interface BetManager {
 
@@ -12,7 +13,7 @@ public interface BetManager {
 
     BetResponse findById(Long id);
 
-    BetPlacementResponse create(BetRequest requestObject);
+    BetPlacementResponse create(BetRequest requestObject)  throws SportsbookException;
 
 
 }
