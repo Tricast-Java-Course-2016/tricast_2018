@@ -2,7 +2,9 @@ package com.tricast.managers;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -126,7 +128,20 @@ public class EventManagerImpl implements EventManager {
     
     @Override
     public EventDetailResponse updateOdds(OddsRequest oddsRequest) {
-    	return null;
+    	Set <Long> outcomeIds = oddsRequest.getOutcomeIdOdds().keySet();
+    	Iterator <Long> iterator = outcomeIds.iterator();
+    	Double currentOdds;
+    	
+    	while(iterator.hasNext()) {
+    		iterator.next();
+    		currentOdds = oddsRequest.getOutcomeIdOdds().get(iterator);
+    		
+    		/*OutcomeRepositoryCustom.updateOdds(iterator,currentOdds)*/
+    	}
+    	
+    	return EventDetailResponseBuilder.build(oddsRequest.getEventId()
+    			, EventRepository, MarketRepository, OutcomeRepository, PeriodTypeRepository);
+
     }
 
 }
