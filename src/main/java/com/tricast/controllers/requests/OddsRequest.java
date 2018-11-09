@@ -11,8 +11,7 @@ public class OddsRequest implements Serializable{
 	 */
 	private static final long serialVersionUID = -1334052711374875079L;
 
-	private long eventId;
-	private List<Double> odds;
+	private long eventId;	
 	private Map<Long, Double> outcomeIdOdds;
 	
 	public long getEventId() {
@@ -20,13 +19,7 @@ public class OddsRequest implements Serializable{
 	}
 	public void setEventId(long eventId) {
 		this.eventId = eventId;
-	}
-	public List<Double> getOdds() {
-		return odds;
-	}
-	public void setOdds(List<Double> odds) {
-		this.odds = odds;
-	}
+	}	
 	public Map<Long, Double> getOutcomeIdOdds() {
 		return outcomeIdOdds;
 	}
