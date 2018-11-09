@@ -130,28 +130,27 @@ public class EventManagerImpl implements EventManager {
     }
     
     @Override
-    public EventDetailResponse updateOdds(OddsRequest oddsRequest) throws SportsbookException {
+    public EventDetailResponse updateOdds(OddsRequest oddsRequest,Long eventId) throws SportsbookException {
     	Set <Long> outcomeIds = oddsRequest.getOutcomeIdOdds().keySet();
     	Iterator <Long> iterator = outcomeIds.iterator();
     	Double currentOdds;
     	Long currentId;
     	Outcome currentOutcome;
-    	Long eventId;
     	
-    	if(iterator.hasNext()) {
-    		currentId=iterator.next();
-    		eventId=marketRepository.findById(outcomeRepository.findById(currentId).getMarket().getId()).getEvent().getId();
-        	while(iterator.hasNext()) {
-        		currentId=iterator.next();
-        		if(eventId != marketRepository.findById(outcomeRepository.findById(currentId).getMarket().getId()).getEvent().getId()) {
-        			throw new SportsbookException("Bad OutcomeIds, or some of them do not belong to the same event.");
-        		}
-        	}
-    	} 
-    		
 
+        while(iterator.hasNext()) {
+        	currentId=iterator.next();
+        	if(outcomeRepository.findById(currentId)==null) {
+        		throw new SportsbookException("Bad OutcomeIds.");
+        	}
+        	else {
+            	if(eventId != marketRepository.findById(outcomeRepository.findById(currentId).getMarket().getId()).getEvent().getId()) {
+        			throw new SportsbookException("Bad OutcomeIds, some of them do not belong to the event you're trying to edit: ("+eventId+").");
+            	}
+        	}
+        }
     	
-    	iterator = outcomeIds.iterator();
+	iterator = outcomeIds.iterator();
     	while(iterator.hasNext()) {
     		currentId=iterator.next();
     		currentOdds = oddsRequest.getOutcomeIdOdds().get(currentId);

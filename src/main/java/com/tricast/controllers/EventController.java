@@ -90,9 +90,10 @@ public class EventController {
     }
     
     @PostMapping(path="/{id}/odds")
-	public ResponseEntity<?> updateOdds(@RequestBody OddsRequest oddsRequest) {
+	public ResponseEntity<?> updateOdds(@RequestBody OddsRequest oddsRequest,@PathVariable("id") long id) {
 		try {
-			EventDetailResponse response = eventManager.updateOdds(oddsRequest);
+			if(oddsRequest.getEventId()!=id) throw new SportsbookException("URL, EventID mismatch.");
+			EventDetailResponse response = eventManager.updateOdds(oddsRequest,id);
 			return ResponseEntity.ok(response);
 		} catch (SportsbookException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
