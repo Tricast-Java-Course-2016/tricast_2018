@@ -1,7 +1,6 @@
 package com.tricast.controllers.requests;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 public class OddsRequest implements Serializable{

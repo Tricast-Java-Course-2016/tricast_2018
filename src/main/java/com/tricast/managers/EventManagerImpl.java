@@ -24,6 +24,7 @@ import com.tricast.repositories.SportRepository;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.League;
+import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Sport;
 
 @Service
@@ -44,6 +45,7 @@ public class EventManagerImpl implements EventManager {
 
     @Autowired
     private OutcomeRepository OutcomeRepository;
+    
 
     @Autowired
     private MarketRepository MarketRepository;
@@ -131,12 +133,18 @@ public class EventManagerImpl implements EventManager {
     	Set <Long> outcomeIds = oddsRequest.getOutcomeIdOdds().keySet();
     	Iterator <Long> iterator = outcomeIds.iterator();
     	Double currentOdds;
+    	Long currentId;
+    	Outcome currentOutcome;
     	
     	while(iterator.hasNext()) {
-    		iterator.next();
-    		currentOdds = oddsRequest.getOutcomeIdOdds().get(iterator);
+    		currentId=iterator.next();
+    		currentOdds = oddsRequest.getOutcomeIdOdds().get(currentId);
     		
-    		/*OutcomeRepositoryCustom.updateOdds(iterator,currentOdds)*/
+    		currentOutcome=OutcomeRepository.findById(currentId);
+    		currentOutcome.setOdds(currentOdds);
+    		
+    		OutcomeRepository.save(currentOutcome);
+    		
     	}
     	
     	return EventDetailResponseBuilder.build(oddsRequest.getEventId()
