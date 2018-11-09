@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.EventRequest;
+import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
 import com.tricast.controllers.responses.EventStatusResponse;
@@ -81,4 +82,9 @@ public class EventController {
     public List<EventStatusResponse> getAllStatus() {
         return null;
     }
+    
+    @PutMapping(path="/{id}/odds")
+	public EventDetailResponse updateOdds(OddsRequest oddsRequest) {
+		return null;
+	}
 }

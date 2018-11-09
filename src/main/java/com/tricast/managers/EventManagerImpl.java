@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.tricast.builders.EventDetailResponseBuilder;
 import com.tricast.builders.EventResponseBuilder;
+import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
 import com.tricast.repositories.CompetitorRepository;
@@ -121,6 +122,11 @@ public class EventManagerImpl implements EventManager {
     @Override
     public EventDetailResponse detail(Long id) {
     	return EventDetailResponseBuilder.build(id, EventRepository, MarketRepository, OutcomeRepository, PeriodTypeRepository);
+    }
+    
+    @Override
+    public EventDetailResponse updateOdds(OddsRequest oddsRequest) {
+    	return null;
     }
 
 }
