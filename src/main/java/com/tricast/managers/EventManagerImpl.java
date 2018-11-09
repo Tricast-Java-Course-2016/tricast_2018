@@ -14,6 +14,7 @@ import com.tricast.builders.EventResponseBuilder;
 import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
+import com.tricast.managers.exceptions.SportsbookException;
 import com.tricast.repositories.CompetitorRepository;
 import com.tricast.repositories.EventRepository;
 import com.tricast.repositories.LeagueRepository;
@@ -32,52 +33,52 @@ public class EventManagerImpl implements EventManager {
 
     // AKOS: kis kezdőbetűs nevek
 	@Autowired
-    private EventRepository EventRepository;
+    private EventRepository eventRepository;
 
     @Autowired
-    private SportRepository SportRepository;
+    private SportRepository sportRepository;
 
     @Autowired
-    private LeagueRepository LeagueRepository;
+    private LeagueRepository leagueRepository;
 
     @Autowired
-    private CompetitorRepository CompetitorRepository;
+    private CompetitorRepository competitorRepository;
 
     @Autowired
-    private OutcomeRepository OutcomeRepository;
+    private OutcomeRepository outcomeRepository;
     
 
     @Autowired
-    private MarketRepository MarketRepository;
+    private MarketRepository marketRepository;
 
     @Autowired
-    private PeriodTypeRepository PeriodTypeRepository;
+    private PeriodTypeRepository periodTypeRepository;
 
     @Override
     public List<Event> findAll() {
-        return EventRepository.findAll();
+        return eventRepository.findAll();
     }
 
     @Override
     public EventResponse findById(Long id) {
-    	Event event = EventRepository.findById(id);
-    	List<Competitor> competitor = CompetitorRepository.findByEventId(id);
+    	Event event = eventRepository.findById(id);
+    	List<Competitor> competitor = competitorRepository.findByEventId(id);
         return EventResponseBuilder.build(event, competitor);
     }
 
     @Override
     public Event create(Event event) {
-        return EventRepository.save(event);
+        return eventRepository.save(event);
     }
 
     @Override
     public Event update(Event event) {
-        return EventRepository.save(event);
+        return eventRepository.save(event);
     }
 
     @Override
     public void deleteById(Long id) {
-        EventRepository.delete(id);
+        eventRepository.delete(id);
     }
 
     @Override
@@ -89,7 +90,7 @@ public class EventManagerImpl implements EventManager {
         // AKOS inkább id-t küldeni de ha a Leaguen lenne sport akkor nem kéne külön betölteni (custom repoban)
 
     	if(sportName != null) {
-        	Sport sport = this.SportRepository.findByDescriptionLike(sportName);
+        	Sport sport = this.sportRepository.findByDescriptionLike(sportName);
         	if(sport == null) {
                 // AKOS lehet jobb lenne hibát dobni hogy ilyen nem létezik
                 return new ArrayList<>();
@@ -100,7 +101,7 @@ public class EventManagerImpl implements EventManager {
     	long leagueId = -1;
 
     	if(leagueName != null) {
-	    	League league = this.LeagueRepository.findByDescriptionLike(leagueName);
+	    	League league = this.leagueRepository.findByDescriptionLike(leagueName);
 	    	if(league == null) {
                 // AKOS lehet jobb lenne hibát dobni hogy ilyen nem létezik
                 return new ArrayList<>();
@@ -108,7 +109,7 @@ public class EventManagerImpl implements EventManager {
 	    	leagueId = league.getId();
     	}
 
-		List<Event> events = EventRepository.filter(
+		List<Event> events = eventRepository.filter(
 				search == null ? "%" :"%"+search+"%",
 				sportId,
 				leagueId,
@@ -118,37 +119,52 @@ public class EventManagerImpl implements EventManager {
 		List<EventResponse> eventResponses = new ArrayList<>();
 		for (Event event : events) {
             eventResponses
-                    .add(EventResponseBuilder.build(event, this.CompetitorRepository.findByEventId(event.getId())));
+                    .add(EventResponseBuilder.build(event, this.competitorRepository.findByEventId(event.getId())));
 		}
 		return eventResponses;
 	}
 
     @Override
     public EventDetailResponse detail(Long id) {
-    	return EventDetailResponseBuilder.build(id, EventRepository, MarketRepository, OutcomeRepository, PeriodTypeRepository);
+    	return EventDetailResponseBuilder.build(id, eventRepository, marketRepository, outcomeRepository, periodTypeRepository);
     }
     
     @Override
-    public EventDetailResponse updateOdds(OddsRequest oddsRequest) {
+    public EventDetailResponse updateOdds(OddsRequest oddsRequest) throws SportsbookException {
     	Set <Long> outcomeIds = oddsRequest.getOutcomeIdOdds().keySet();
     	Iterator <Long> iterator = outcomeIds.iterator();
     	Double currentOdds;
     	Long currentId;
     	Outcome currentOutcome;
+    	Long eventId;
     	
+    	if(iterator.hasNext()) {
+    		currentId=iterator.next();
+    		eventId=marketRepository.findById(outcomeRepository.findById(currentId).getMarket().getId()).getEvent().getId();
+        	while(iterator.hasNext()) {
+        		currentId=iterator.next();
+        		if(eventId != marketRepository.findById(outcomeRepository.findById(currentId).getMarket().getId()).getEvent().getId()) {
+        			throw new SportsbookException("Bad OutcomeIds, or some of them do not belong to the same event.");
+        		}
+        	}
+    	} 
+    		
+
+    	
+    	iterator = outcomeIds.iterator();
     	while(iterator.hasNext()) {
     		currentId=iterator.next();
     		currentOdds = oddsRequest.getOutcomeIdOdds().get(currentId);
     		
-    		currentOutcome=OutcomeRepository.findById(currentId);
+    		currentOutcome=outcomeRepository.findById(currentId);
     		currentOutcome.setOdds(currentOdds);
     		
-    		OutcomeRepository.save(currentOutcome);
+    		outcomeRepository.save(currentOutcome);
     		
     	}
     	
     	return EventDetailResponseBuilder.build(oddsRequest.getEventId()
-    			, EventRepository, MarketRepository, OutcomeRepository, PeriodTypeRepository);
+    			, eventRepository, marketRepository, outcomeRepository, periodTypeRepository);
 
     }
 
