@@ -12,9 +12,9 @@ public class EventResponseBuilder {
 	public static EventResponse build(Event event, List<Competitor> competitors) {
         EventResponse eventResponse = new EventResponse();
         eventResponse.setId(event.getId());
-        eventResponse.setEventTypeId(event.getEventTypeId().getId());
+        eventResponse.setEventTypeId(event.getEventType().getId());
         eventResponse.setDescription(event.getDescription());
-        eventResponse.setLeagueId(event.getLeagueId().getId());
+        eventResponse.setLeagueId(event.getLeague().getId());
         eventResponse.setStartTime(event.getStartTime());
         eventResponse.setStatus(event.getStatus());
         List<Long> competitorIds = new ArrayList<>();

@@ -40,30 +40,13 @@ public class EventController {
 
     @GetMapping(path = "/filter")
     public List<EventResponse> byFilter(
-    		@RequestParam(value = "sport", required = false, defaultValue = "null") String sport,
-            @RequestParam(value = "league", required = false, defaultValue = "null") String league,
+    		@RequestParam(value = "sport", required = false) String sport,
+            @RequestParam(value = "league", required = false) String league,
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate,
-            @RequestParam(value = "search", required = false, defaultValue = "null") String search) {
+            @RequestParam(value = "search", required = false) String search) throws SportsbookException {
 
-        // AKOS: nem kell default
-        // ez itt mind felesleges
-
-        // AKOS: inkább sport id és league id-t kéne küldeni
-
-    	if("null".equals(sport)) {
-            sport = null;
-        }
-
-    	if("null".equals(league)) {
-            league = null;
-        }
-
-
-    	if("null".equals(search)) {
-            search = null;
-        }
-
+    	
     	return this.eventManager.filter(search, sport, league, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
 
@@ -74,7 +57,7 @@ public class EventController {
 
 	@PostMapping
 	public EventResponse create(EventRequest eventRequest) {
-		return null;
+		return eventManager.create(eventRequest);
 	}
 
 	@PutMapping(path="/{id}")
