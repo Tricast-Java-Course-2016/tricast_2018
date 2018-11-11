@@ -65,7 +65,10 @@ public class CompetitorManagerImpl implements CompetitorManager {
     		leagueCompetitorMapRepository.save(leagueCompetitorMap);
 		}
     	
-        return this.findById(competitor.getId());
+    	CompetitorResponse competitorResponse = this.entityToResponse( competitor );
+    	competitorResponse.setLeagueIds(competitorRequest.getLeagueIds());
+    	
+        return competitorResponse;
     }
 
     @Override
