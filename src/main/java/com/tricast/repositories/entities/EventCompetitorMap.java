@@ -10,8 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "EventCompetitorMap")
+@Table(name = "EVENTCOMPETITORMAP")
 public class EventCompetitorMap implements Serializable { 
+	
 	private static final long serialVersionUID = -104291198253556317L;
 
 	@Id

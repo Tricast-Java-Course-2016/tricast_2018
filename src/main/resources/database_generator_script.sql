@@ -96,13 +96,13 @@ CREATE SEQUENCE tricast.competitors_id_seq
 ALTER SEQUENCE tricast.competitors_id_seq OWNED BY tricast.competitors.id;
 
 CREATE TABLE tricast.eventcompetitormap (
-    id bigint NOT NULL,
+    id integer NOT NULL,
     competitorid integer NOT NULL,
     eventid integer NOT NULL
 );
 
 CREATE SEQUENCE tricast.eventcompetitormap_id_seq
-    AS bigint
+    AS integer
     START WITH 100
     INCREMENT BY 1
     NO MINVALUE
@@ -282,6 +282,10 @@ ALTER TABLE ONLY tricast.bets ALTER COLUMN id SET DEFAULT nextval('tricast.bets_
 ALTER TABLE ONLY tricast.competitors ALTER COLUMN id SET DEFAULT nextval('tricast.competitors_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.events ALTER COLUMN id SET DEFAULT nextval('tricast.events_id_seq'::regclass);
+
+ALTER TABLE ONLY tricast.eventcompetitormap ALTER COLUMN id SET DEFAULT nextval('tricast.eventcompetitormap_id_seq'::regclass);
+
+ALTER TABLE ONLY tricast.leaguecompetitormap ALTER COLUMN id SET DEFAULT nextval('tricast.leaguecompetitormap_id_seq'::regclass);
 
 ALTER TABLE ONLY tricast.leagues ALTER COLUMN id SET DEFAULT nextval('tricast.leagues_id_seq'::regclass);
 

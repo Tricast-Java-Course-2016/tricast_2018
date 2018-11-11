@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "LeagueCompetitorMap")
+@Table(name = "LEAGUECOMPETITORMAP")
 public class LeagueCompetitorMap implements Serializable { 
 	private static final long serialVersionUID = 1937203066527260124L;
 
