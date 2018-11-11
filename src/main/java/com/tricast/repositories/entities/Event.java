@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,13 +28,13 @@ public class Event implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@ManyToOne
+	@OneToOne
     @JoinColumn(name = "eventtypeid")
-    private EventType eventTypeId;
+    private EventType eventType;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="leagueid")
-	private League leagueId;
+	private League league;
 
 	@Column(name="description")
 	private String description;
@@ -56,20 +57,20 @@ public class Event implements Serializable {
 		this.id = id;
 	}
 
-	public EventType getEventTypeId() {
-		return eventTypeId;
+	public EventType getEventType() {
+		return eventType;
 	}
 
-	public void setEventTypeId(EventType eventTypeId) {
-		this.eventTypeId = eventTypeId;
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
 	}
 
-	public League getLeagueId() {
-		return leagueId;
+	public League getLeague() {
+		return league;
 	}
 
-	public void setLeagueId(League leagueId) {
-		this.leagueId = leagueId;
+	public void setLeague(League league) {
+		this.league = league;
 	}
 
 	public String getDescription() {
@@ -98,9 +99,5 @@ public class Event implements Serializable {
 
     public List<Competitor> getCompetitors() {
         return competitors;
-    }
-
-    public void setCompetitors(List<Competitor> competitors) {
-        this.competitors = competitors;
     }
 }

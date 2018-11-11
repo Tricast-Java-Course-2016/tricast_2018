@@ -51,9 +51,5 @@ public class Competitor implements Serializable {
 	public Set<League> getLeagues() {
 		return leagues;
 	}
-
-	public void setLeagues(Set<League> leagues) {
-		this.leagues = leagues;
-	}
     
 }

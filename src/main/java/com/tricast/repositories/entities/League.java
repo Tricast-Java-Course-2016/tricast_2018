@@ -43,10 +43,6 @@ public class League implements Serializable {
         return competitors;
     }
 
-    public void setCompetitors(Set<Competitor> competitors) {
-        this.competitors = competitors;
-    }
-
     public Long getId() {
         return id;
     }
