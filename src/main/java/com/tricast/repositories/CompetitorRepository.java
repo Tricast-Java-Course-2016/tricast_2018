@@ -24,5 +24,7 @@ public interface CompetitorRepository extends CrudRepository<Competitor, Long> {
     		+ "WHERE eventcompetitormap.eventid = :eventId)", nativeQuery = true)
     List<Competitor> findByEventId(@Param("eventId") long eventId);
     
-    List<Competitor> findByDescriptionIgnoreCaseLike(String description);
+    @Query(value = "SELECT * FROM tricast.competitors WHERE "
+    		+ " description ILIKE CONCAT('%', :description, '%')", nativeQuery = true)
+    List<Competitor> findByDescriptionIgnoreCaseLike(@Param("description") String description);
 }
