@@ -28,6 +28,7 @@ import com.tricast.repositories.MarketRepository;
 import com.tricast.repositories.OutcomeRepository;
 import com.tricast.repositories.PeriodTypeRepository;
 import com.tricast.repositories.SportRepository;
+import com.tricast.repositories.customs.EventRepositoryCustom;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.EventCompetitorMap;
@@ -40,6 +41,9 @@ public class EventManagerImpl implements EventManager {
 
 	@Autowired
     private EventCompetitorMapRepository eventCompetitorMapRepository;
+	
+	@Autowired
+    private EventRepositoryCustom eventRepositoryCustom;
 	
 	@Autowired
     private EventRepository eventRepository;
@@ -120,7 +124,7 @@ public class EventManagerImpl implements EventManager {
 	public List<EventResponse> filter(String search, String sportName, String leagueName, Calendar fromDate,
 			Calendar toDate) throws SportsbookException {
 
-    	long sportId = -1;
+    	Long sportId = null;
 
 
     	if(sportName != null) {
@@ -131,7 +135,7 @@ public class EventManagerImpl implements EventManager {
         	sportId = sport.getId();
     	}
 
-    	long leagueId = -1;
+    	Long leagueId = null;
 
     	if(leagueName != null) {
 	    	League league = this.leagueRepository.findByDescriptionLike(leagueName);
@@ -141,11 +145,10 @@ public class EventManagerImpl implements EventManager {
 	    	leagueId = league.getId();
     	}
 
-		List<Event> events = eventRepository.filter( search, sportId, leagueId, fromDate, toDate );
+		List<Event> events = eventRepositoryCustom.filter( search, sportId, leagueId, fromDate, toDate );
 		List<EventResponse> eventResponses = new ArrayList<>();
 		for (Event event : events) {
-            eventResponses
-                    .add(EventResponseBuilder.build(event, this.competitorRepository.findByEventId(event.getId())));
+            eventResponses.add(EventResponseBuilder.build(event, this.competitorRepository.findByEventId(event.getId())));
 		}
 		return eventResponses;
 	}

@@ -34,15 +34,15 @@ public class EventRepositoryCustomImpl extends QueryDslRepositorySupport impleme
             query = query.where(descriptionFilter);
         }
 
-        /*if (sportId != null) {
-            BooleanExpression sportFilter = event.leagueId().sportId.eq(sportId);
+        if (sportId != null) {
+            BooleanExpression sportFilter = event.league().sportId.eq(sportId);
             query = query.where(sportFilter);
         }
 
         if (leagueId != null) {
-            BooleanExpression leagueFilter = event.leagueId().id.eq(leagueId);
+            BooleanExpression leagueFilter = event.league().id.eq(leagueId);
             query = query.where(leagueFilter);
-        }*/
+        }
 
         return query.fetch();
     }
