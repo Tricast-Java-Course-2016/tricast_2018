@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.Calendar;
 import java.util.List;
 
+import com.tricast.controllers.requests.EventRequest;
 import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
@@ -16,7 +17,7 @@ public interface EventManager {
 
     EventResponse findById(Long id);
 
-    Event create(Event event);
+    EventResponse create(EventRequest event);
 
     Event update(Event event);
 
@@ -24,7 +25,7 @@ public interface EventManager {
     
     EventDetailResponse detail(Long id);
 
-	List<EventResponse> filter(String search, String sport, String league, Calendar fromDate, Calendar toDate);
+	List<EventResponse> filter(String search, String sport, String league, Calendar fromDate, Calendar toDate) throws SportsbookException;
 
 	EventDetailResponse updateOdds(OddsRequest oddsRequest,Long eventId) throws SportsbookException;
 }

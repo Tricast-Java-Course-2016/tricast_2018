@@ -6,17 +6,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.jdo.annotations.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tricast.builders.EventDetailResponseBuilder;
 import com.tricast.builders.EventResponseBuilder;
+import com.tricast.controllers.requests.EventRequest;
 import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
 import com.tricast.managers.exceptions.SportsbookException;
+import com.tricast.managers.helpers.OffsetDateTimeToCalendar;
 import com.tricast.repositories.CompetitorRepository;
+import com.tricast.repositories.EventCompetitorMapRepository;
 import com.tricast.repositories.EventRepository;
+import com.tricast.repositories.EventTypeRepository;
 import com.tricast.repositories.LeagueRepository;
 import com.tricast.repositories.MarketRepository;
 import com.tricast.repositories.OutcomeRepository;
@@ -24,6 +30,7 @@ import com.tricast.repositories.PeriodTypeRepository;
 import com.tricast.repositories.SportRepository;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
+import com.tricast.repositories.entities.EventCompetitorMap;
 import com.tricast.repositories.entities.League;
 import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Sport;
@@ -31,10 +38,15 @@ import com.tricast.repositories.entities.Sport;
 @Service
 public class EventManagerImpl implements EventManager {
 
-    // AKOS: kis kezdőbetűs nevek
+	@Autowired
+    private EventCompetitorMapRepository eventCompetitorMapRepository;
+	
 	@Autowired
     private EventRepository eventRepository;
 
+	@Autowired
+    private EventTypeRepository eventTypeRepository;
+	
     @Autowired
     private SportRepository sportRepository;
 
@@ -66,9 +78,32 @@ public class EventManagerImpl implements EventManager {
         return EventResponseBuilder.build(event, competitor);
     }
 
+    
     @Override
-    public Event create(Event event) {
-        return eventRepository.save(event);
+    public EventResponse create(EventRequest eventRequest) {
+    	Event event = new Event();
+    	
+    	event.setDescription(eventRequest.getDescription());
+
+    	event.setStartTime( OffsetDateTimeToCalendar.convert(eventRequest.getStartTime()) );
+    	event.setStatus(eventRequest.getStatus().toString());
+    	event.setEventType(eventTypeRepository.findById( eventRequest.getEventTypeId() ));
+    	event.setLeague( leagueRepository.findOne(eventRequest.getLeagueId()) );
+    	
+    	event = eventRepository.save(event);
+    	
+    	List<Competitor> competitors = new ArrayList<Competitor>();
+    	for (Long competitorId : eventRequest.getCompetitorIds()) {
+			competitors.add(competitorRepository.findById(competitorId));
+			
+			EventCompetitorMap eventCompetitorMap = new EventCompetitorMap();
+			eventCompetitorMap.setEventId(event.getId());
+			eventCompetitorMap.setCompetitorId(competitorId);
+			
+			eventCompetitorMapRepository.save(eventCompetitorMap);
+		}
+    		
+        return EventResponseBuilder.build(event, competitors);
     }
 
     @Override
@@ -83,17 +118,15 @@ public class EventManagerImpl implements EventManager {
 
     @Override
 	public List<EventResponse> filter(String search, String sportName, String leagueName, Calendar fromDate,
-			Calendar toDate) {
+			Calendar toDate) throws SportsbookException {
 
     	long sportId = -1;
 
-        // AKOS inkább id-t küldeni de ha a Leaguen lenne sport akkor nem kéne külön betölteni (custom repoban)
 
     	if(sportName != null) {
         	Sport sport = this.sportRepository.findByDescriptionLike(sportName);
         	if(sport == null) {
-                // AKOS lehet jobb lenne hibát dobni hogy ilyen nem létezik
-                return new ArrayList<>();
+        		throw new SportsbookException("Hibás sport lett megadva. ("+ sportName +")");
             }
         	sportId = sport.getId();
     	}
@@ -103,19 +136,12 @@ public class EventManagerImpl implements EventManager {
     	if(leagueName != null) {
 	    	League league = this.leagueRepository.findByDescriptionLike(leagueName);
 	    	if(league == null) {
-                // AKOS lehet jobb lenne hibát dobni hogy ilyen nem létezik
-                return new ArrayList<>();
+        		throw new SportsbookException("Hibás liga lett megadva. ("+ leagueName +")");
             }
 	    	leagueId = league.getId();
     	}
 
-		List<Event> events = eventRepository.filter(
-				search == null ? "%" :"%"+search+"%",
-				sportId,
-				leagueId,
-				fromDate,
-				toDate
-			);
+		List<Event> events = eventRepository.filter( search, sportId, leagueId, fromDate, toDate );
 		List<EventResponse> eventResponses = new ArrayList<>();
 		for (Event event : events) {
             eventResponses

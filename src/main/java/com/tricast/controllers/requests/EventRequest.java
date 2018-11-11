@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 import com.tricast.repositories.entities.EventStatusTypes;
 
 public class EventRequest implements Serializable {
@@ -18,36 +21,43 @@ public class EventRequest implements Serializable {
 	private EventStatusTypes status;
 	private OffsetDateTime startTime;
 	private List<Long> competitorIds;
+	
 	public long getEventTypeId() {
 		return eventTypeId;
 	}
 	public void setEventTypeId(long eventTypeId) {
 		this.eventTypeId = eventTypeId;
 	}
+	
 	public long getLeagueId() {
 		return leagueId;
 	}
 	public void setLeagueId(long leagueId) {
 		this.leagueId = leagueId;
 	}
+	
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	public EventStatusTypes getStatus() {
 		return status;
 	}
 	public void setStatus(EventStatusTypes status) {
 		this.status = status;
 	}
+	
 	public OffsetDateTime getStartTime() {
 		return startTime;
 	}
+	@DateTimeFormat(iso = ISO.DATE_TIME)
 	public void setStartTime(OffsetDateTime startTime) {
 		this.startTime = startTime;
 	}
+	
 	public List<Long> getCompetitorIds() {
 		return competitorIds;
 	}

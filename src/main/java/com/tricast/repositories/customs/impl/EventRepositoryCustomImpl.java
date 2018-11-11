@@ -34,7 +34,7 @@ public class EventRepositoryCustomImpl extends QueryDslRepositorySupport impleme
             query = query.where(descriptionFilter);
         }
 
-        if (sportId != null) {
+        /*if (sportId != null) {
             BooleanExpression sportFilter = event.leagueId().sportId.eq(sportId);
             query = query.where(sportFilter);
         }
@@ -42,7 +42,7 @@ public class EventRepositoryCustomImpl extends QueryDslRepositorySupport impleme
         if (leagueId != null) {
             BooleanExpression leagueFilter = event.leagueId().id.eq(leagueId);
             query = query.where(leagueFilter);
-        }
+        }*/
 
         return query.fetch();
     }
