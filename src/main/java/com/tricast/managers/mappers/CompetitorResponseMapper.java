@@ -16,22 +16,14 @@ public class CompetitorResponseMapper {
 	@Autowired
 	private LeagueManager leagueManager;
 	
-<<<<<<< HEAD
 	public CompetitorResponse entityToResponse(Competitor competitor) {
-=======
-	public static CompetitorResponse entityToResponse(Competitor competitor) {
->>>>>>> SB-42 Résztvevő létrehozása
 		CompetitorResponse response = new CompetitorResponse();
 		response.setId(competitor.getId());
 		response.setDescription(competitor.getDescription());
 		return response;
 	}
 	
-<<<<<<< HEAD
 	public Competitor requestToEntity(CompetitorRequest competitorRequest) {
-=======
-	public static Competitor requestToEntity(CompetitorRequest competitorRequest) {
->>>>>>> SB-42 Résztvevő létrehozása
 		Competitor competitor = new Competitor();
 		competitor.setDescription(competitorRequest.getDescription());
 		
