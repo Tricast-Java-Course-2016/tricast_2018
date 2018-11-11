@@ -5,22 +5,24 @@ import java.util.List;
 
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
+import com.tricast.repositories.entities.PeriodType;
+import com.tricast.repositories.entities.ResultType;
+import com.tricast.repositories.entities.ResultTypes;
 
 public class ResultRequest implements Serializable {
 
 	private static final long serialVersionUID = -6817451528421899276L;
 
-    private long resultTypeId;
+    private ResultType resultTypeId;
     private int result;
-    private long periodTypeId;
+    private PeriodType periodTypeId;
     
-    private long eventId;
-    private long competitorId;
+    private long eventCompetitorMapId;
     
-	public long getResultTypeId() {
+	public ResultType getResultTypeId() {
 		return resultTypeId;
 	}
-	public void setResultTypeId(long resultTypeId) {
+	public void setResultTypeId(ResultType resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
 	public int getResult() {
@@ -29,22 +31,16 @@ public class ResultRequest implements Serializable {
 	public void setResult(int result) {
 		this.result = result;
 	}
-	public long getPeriodTypeId() {
+	public PeriodType getPeriodTypeId() {
 		return periodTypeId;
 	}
-	public void setPeriodTypeId(long periodTypeId) {
+	public void setPeriodTypeId(PeriodType periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
-	public long getEventId() {
-		return eventId;
+	public long getEventCompetitorMapId() {
+		return eventCompetitorMapId;
 	}
-	public void setEventId(long eventId) {
-		this.eventId = eventId;
-	}
-	public long getCompetitorId() {
-		return competitorId;
-	}
-	public void setCompetitorId(long competitorId) {
-		this.competitorId = competitorId;
+	public void setEventCompetitorMapId(long eventCompetitorMapId) {
+		this.eventCompetitorMapId = eventCompetitorMapId;
 	}
 }

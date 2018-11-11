@@ -2,6 +2,8 @@ package com.tricast.managers;
 
 import java.util.List;
 
+import com.tricast.controllers.requests.ResultRequest;
+import com.tricast.controllers.responses.ResultResponse;
 import com.tricast.repositories.entities.Result;
 
 public interface ResultManager {

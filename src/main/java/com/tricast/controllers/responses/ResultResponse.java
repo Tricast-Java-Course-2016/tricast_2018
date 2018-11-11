@@ -6,18 +6,22 @@ import java.util.List;
 
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
+import com.tricast.repositories.entities.PeriodType;
+import com.tricast.repositories.entities.ResultType;
 
 public class ResultResponse implements Serializable{
 	private static final long serialVersionUID = 2646725308970295770L;
 
 	private long id;
     
-    private long resultTypeId;
+    private ResultType resultTypeId;
     private int result;
-    private long periodTypeId;
+    private PeriodType periodTypeId;
     
-    private List<Event> events = new ArrayList<Event>();
-    private List<Competitor> competitors = new ArrayList<Competitor>();
+    //private List<Event> events = new ArrayList<Event>();
+    //private List<Competitor> competitors = new ArrayList<Competitor>();
+    
+    private long eventCompetitorMapId;
     
 	public long getId() {
 		return id;
@@ -25,10 +29,11 @@ public class ResultResponse implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getResultTypeId() {
+
+	public ResultType getResultTypeId() {
 		return resultTypeId;
 	}
-	public void setResultTypeId(long resultTypeId) {
+	public void setResultTypeId(ResultType resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
 	public int getResult() {
@@ -37,23 +42,17 @@ public class ResultResponse implements Serializable{
 	public void setResult(int result) {
 		this.result = result;
 	}
-	public long getPeriodTypeId() {
+	public PeriodType getPeriodTypeId() {
 		return periodTypeId;
 	}
-	public void setPeriodTypeId(long periodTypeId) {
+	public void setPeriodTypeId(PeriodType periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
-	public List<Event> getEvents() {
-		return events;
+	public long getEventCompetitorMapId() {
+		return eventCompetitorMapId;
 	}
-	public void setEvents(List<Event> events) {
-		this.events = events;
-	}
-	public List<Competitor> getCompetitors() {
-		return competitors;
-	}
-	public void setCompetitors(List<Competitor> competitors) {
-		this.competitors = competitors;
+	public void setEventCompetitorMapId(long eventCompetitorMapId) {
+		this.eventCompetitorMapId = eventCompetitorMapId;
 	}
     
 }
