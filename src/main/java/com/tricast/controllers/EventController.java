@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.requests.EventRequest;
 import com.tricast.controllers.requests.OddsRequest;
-import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
 import com.tricast.controllers.responses.EventStatusResponse;
@@ -87,6 +85,11 @@ public class EventController {
     @GetMapping(path = "statusList")
     public List<EventStatusResponse> getAllStatus() {
         return null;
+    }
+    
+    @GetMapping(path = "/{id}/odds")
+    public EventDetailResponse showOdds(@PathVariable("id") long id) {
+    	return eventManager.detail(id);
     }
     
     @PostMapping(path="/{id}/odds")
