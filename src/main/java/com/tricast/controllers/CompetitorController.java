@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tricast.controllers.requests.CompetitorRequest;
 import com.tricast.controllers.responses.CompetitorResponse;
 import com.tricast.managers.CompetitorManager;
-import com.tricast.managers.LeagueManager;
-import com.tricast.repositories.entities.Competitor;
-import com.tricast.repositories.entities.League;
 
 @RestController
 @RequestMapping(path = "competitors")
@@ -24,45 +21,26 @@ public class CompetitorController {
 
 	@Autowired
 	private CompetitorManager competitorManager;
-	@Autowired
-	private LeagueManager leagueManager;
+	
 
 	@GetMapping(path="/{id}")
-    public CompetitorResponse findById(@PathVariable("id") long $id) {
-        return null;
+    public CompetitorResponse findById(@PathVariable("id") long id) {
+        return competitorManager.findById(id);
     }
 
-    // Should be query params, both of them.
 	@GetMapping(path="/list/{search}")
-    public List<CompetitorResponse> findAll(String search) {
-        return null;
+    public List<CompetitorResponse> findAll(@PathVariable("search") String search) {
+        return competitorManager.search(search);
     }
 	
-	@GetMapping(path="/list}")
+	@GetMapping(path="/list")
     public List<CompetitorResponse> findAll() {
-        return null;
+		return competitorManager.findAll();
     }
 
 	@PostMapping
 	public CompetitorResponse create(CompetitorRequest competitorRequest) {
-		Competitor competitor = new Competitor();
-		competitor.setDescription(competitorRequest.getDescription());
-		
-		
-		List<Long> leagueIds = competitorRequest.getLeagueIds();
-		Set<League> leagues = new HashSet<League>();
-		
-		for (Long id : leagueIds) {
-			leagues.add(leagueManager.findById(id));
-		}
-		
-		competitor.setLeagues(leagues);
-		competitor = competitorManager.create(competitor);
-		
-		CompetitorResponse response = new CompetitorResponse();
-		response.setId(competitor.getId());
-		response.setDescription(competitor.getDescription());
-		return response;
+		return competitorManager.create(competitorRequest);
 	}
 
 	@PutMapping(path="/{id}")

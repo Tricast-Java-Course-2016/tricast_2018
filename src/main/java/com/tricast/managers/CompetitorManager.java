@@ -2,18 +2,22 @@ package com.tricast.managers;
 
 import java.util.List;
 
+import com.tricast.controllers.requests.CompetitorRequest;
+import com.tricast.controllers.responses.CompetitorResponse;
 import com.tricast.repositories.entities.Competitor;;
 
 public interface CompetitorManager {
 	
-    List<Competitor> findAll();
+    List<CompetitorResponse> findAll();
 
-    Competitor findById(Long id);
+    CompetitorResponse findById(Long id);
 
-    Competitor create(Competitor player);
+    CompetitorResponse create(CompetitorRequest competitorRequest);
 
     Competitor update(Competitor player);
 
     void deleteById(Long id);
+
+	List<CompetitorResponse> search(String search);
     
 }

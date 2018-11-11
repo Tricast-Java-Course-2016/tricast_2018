@@ -78,7 +78,7 @@ public class EventManagerImpl implements EventManager {
         return EventResponseBuilder.build(event, competitor);
     }
 
-    
+    @Transactional
     @Override
     public EventResponse create(EventRequest eventRequest) {
     	Event event = new Event();
