@@ -3,6 +3,7 @@ package com.tricast.managers;
 import java.time.OffsetDateTime;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ public class AccountManagerImpl implements AccountManager {
         this.encoder = encoder;
     }
 
+    @Transactional
     @Override
     public AccountResponse registerNewAccount(AccountRequest accountRequest) throws SportsbookException {
 

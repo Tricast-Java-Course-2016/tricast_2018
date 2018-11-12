@@ -9,11 +9,15 @@ import com.tricast.repositories.entities.Transaction;
 import com.tricast.repositories.entities.TransactionTypes;
 
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
-	@Override
+
+    @Override
     List<Transaction> findAll();
 
 	Transaction findById(Long id);
+
 	Transaction findByBet(Bet bet);
 
 	Transaction findByType(TransactionTypes transactionType);
+
+    List<Transaction> findByAccount_id(Long id);
 }

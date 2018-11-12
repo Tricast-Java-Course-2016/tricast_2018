@@ -12,11 +12,6 @@ public class TransactionResponseBuilder {
 
 		transactionResponse.setTransactionId(transaction.getId());
 
-        // AKOS a null pointer alapvetően kerülendő és nem készülünk annak az elkapására
-        // (ez igaz minden runtime exceptionre)
-        // helyete inkább ellenőrizd null-t ad-e vissza a transaction.getBet() hívás
-        // ha nem akkor állísd be az id-t
-		
 		if(transaction.getBet() != null) {
 			transactionResponse.setBetId(transaction.getBet().getId());
 		}
