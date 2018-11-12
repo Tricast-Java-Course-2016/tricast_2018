@@ -52,7 +52,7 @@ public class BetController {
 	}
 	
 	@GetMapping(path="eventid/{id}")
-	public BetResponse findByEventId(@PathVariable("id") long id) {
+	public List<BetResponse> findByEventId(@PathVariable("id") long id) {
 		return betManager.findByEventId(id);
 	}
 

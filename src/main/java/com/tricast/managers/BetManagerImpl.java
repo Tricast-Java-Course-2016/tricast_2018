@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tricast.builders.EventResponseBuilder;
 import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
@@ -28,6 +29,10 @@ import com.tricast.repositories.TransactionRepository;
 import com.tricast.repositories.entities.Bet;
 import com.tricast.repositories.entities.BetOutcomeMap;
 import com.tricast.repositories.entities.BetTypes;
+import com.tricast.repositories.entities.Competitor;
+import com.tricast.repositories.entities.Event;
+import com.tricast.repositories.entities.Market;
+import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Transaction;
 import com.tricast.repositories.entities.TransactionTypes;
 
@@ -95,8 +100,32 @@ public class BetManagerImpl implements BetManager {
     }
     
 	@Override
-	public BetResponse findByEventId(long id) {
-		return null;
+	public List<BetResponse> findByEventId(long id) {
+		
+		/*List <Market> marketList = marketRepository.findByEvent_Id(id);
+		List<Bet> betList = new ArrayList<Bet>();
+		List<BetResponse> betResponseList = new ArrayList<BetResponse>();
+		
+		for(Market currentMarket : marketList) {
+			List <Outcome> outcomeList = outcomeRepository.findByMarket_Id(currentMarket.getId());
+			for(Outcome currentOutcome : outcomeList) {
+				List<BetOutcomeMap> betOutcomeMapList = betoutcomemapRepository.findByOutcomeID(currentOutcome.getId());
+				for(BetOutcomeMap currentBetOutcomeMap : betOutcomeMapList) {
+					Bet bet = betRepository.findById(currentBetOutcomeMap.getBetId().getId());
+					betList.add(bet);
+				}
+			}
+		}
+		
+		BetResponse betRespones = new BetResponse();
+		
+		for(Bet currentBet : betList) {
+			betRespones.setAccountId(currentBet.getAccountId().getId());
+			betRespones.setBettypeId(currentBet.getBetTypeId().getId());
+			betResponseList.add(betRespones);
+		}
+		
+		return betResponseList;*/
 	}
 
     @Override

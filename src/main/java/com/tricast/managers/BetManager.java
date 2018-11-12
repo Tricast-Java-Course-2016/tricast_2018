@@ -13,7 +13,7 @@ public interface BetManager {
 
     BetResponse findById(Long id);
     
-    BetResponse findByEventId(long id);
+    List<BetResponse> findByEventId(long id);
 
     BetPlacementResponse create(BetRequest requestObject)  throws SportsbookException;
 
