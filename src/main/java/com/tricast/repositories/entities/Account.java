@@ -53,14 +53,14 @@ public class Account implements Serializable {
     private Date createdDate;
 
     @Column(name = "bankaccountnumber")
-    private String bankaccountnumber;
+    private String bankAccountNumber;
 
     @Column(name = "bankcardnumber")
-    private String bankcardnumber;
+    private String bankCardNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "accounttype")
-    private AccountType accounttype;
+    private AccountType accountType;
 
     @Column(name = "pin")
     private String pin;
@@ -145,28 +145,28 @@ public class Account implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getBankaccountnumber() {
-        return bankaccountnumber;
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
     }
 
-    public void setBankaccountnumber(String bankaccountnumber) {
-        this.bankaccountnumber = bankaccountnumber;
+    public void setBankAccountNumber(String bankaccountnumber) {
+        this.bankAccountNumber = bankaccountnumber;
     }
 
-    public String getBankcardnumber() {
-        return bankcardnumber;
+    public String getBankCardNumber() {
+        return bankCardNumber;
     }
 
-    public void setBankcardnumber(String bankcardnumber) {
-        this.bankcardnumber = bankcardnumber;
+    public void setBankCardNumber(String bankcardnumber) {
+        this.bankCardNumber = bankcardnumber;
     }
 
-    public AccountType getAccounttype() {
-        return accounttype;
+    public AccountType getAccountType() {
+        return accountType;
     }
 
-    public void setAccounttype(AccountType accounttype) {
-        this.accounttype = accounttype;
+    public void setAccountType(AccountType accounttype) {
+        this.accountType = accounttype;
     }
 
     public String getPin() {

@@ -1,11 +1,11 @@
 package com.tricast.managers;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.tricast.controllers.requests.AccountRequest;
+import com.tricast.managers.mappers.AccountMapper;
 import com.tricast.repositories.AccountRepository;
 import com.tricast.repositories.entities.Account;
 
@@ -20,28 +20,34 @@ public class AccountManagerImpl implements AccountManager {
     }
 
     @Override
-    public List<Account> findAll() {
-        return accountRepository.findAll();
-    }
-
-    @Override
     public Account findById(Long id) {
         return accountRepository.findById(id);
     }
 
     @Override
-    public Account create(Account player) {
-        return accountRepository.save(player);
+    public Account create(AccountRequest accountRequest) {
+        Account account = AccountMapper.mapToResponse(accountRequest);
+        // TODO hash the password before save it in the db
+        return accountRepository.save(account);
     }
 
     @Override
-    public Account update(Account player) {
-        return accountRepository.save(player);
+    public Account update(long id, AccountRequest accountRequest) {
+        Account account = AccountMapper.mapToResponse(accountRequest);
+        account.setId(id);
+        return accountRepository.save(account);
     }
 
     @Override
     public void deleteById(Long id) {
         accountRepository.delete(id);
+    }
+
+    @Override
+    public Account login(String username, String password) {
+        // TODO add username and password check and decode password
+        Account account = accountRepository.findByUserName(username);
+        return account;
     }
 
 }

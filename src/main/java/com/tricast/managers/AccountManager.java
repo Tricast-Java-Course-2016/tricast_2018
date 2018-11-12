@@ -1,18 +1,17 @@
 package com.tricast.managers;
 
-import java.util.List;
-
+import com.tricast.controllers.requests.AccountRequest;
 import com.tricast.repositories.entities.Account;
 
 public interface AccountManager {
 
-    List<Account> findAll();
-
     Account findById(Long id);
 
-    Account create(Account player);
+    Account create(AccountRequest accountRequest);
 
-    Account update(Account player);
+    Account update(long id, AccountRequest accountRequest);
+
+    Account login(String userName, String password);
 
     void deleteById(Long id);
 
