@@ -13,7 +13,7 @@ public interface TransactionManager {
 
     TransactionResponse findById(Long id);
 
-    TransactionResponse create(TransactionRequest player);
+    TransactionResponse create(TransactionRequest transactionRequest);
 
     TransactionResponse update(TransactionRequest player);
 

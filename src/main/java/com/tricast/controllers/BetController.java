@@ -50,5 +50,10 @@ public class BetController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
+	
+	@GetMapping(path="eventid/{id}")
+	public BetResponse findByEventId(@PathVariable("id") long id) {
+		return betManager.findByEventId(id);
+	}
 
 }

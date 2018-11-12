@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.tricast.builders.TransactionResponseBuilder;
 import com.tricast.controllers.requests.TransactionRequest;
 import com.tricast.controllers.responses.TransactionResponse;
+import com.tricast.repositories.BetRepository;
 import com.tricast.repositories.customs.impl.TransactionRepositoryCustomImpl;
+import com.tricast.repositories.entities.Bet;
 import com.tricast.repositories.entities.Transaction;
 
 @Service
@@ -19,18 +21,21 @@ public class TransactionManagerImpl implements TransactionManager {
     @Autowired
     private TransactionRepositoryCustomImpl transactionRepositoryCustomImpl;
     
+    @Autowired
+    private BetRepository betRepository;
+   
     @Override
     public List<TransactionResponse> findAll() {
         return null;
     }
 
     @Override
-    public TransactionResponse findById(Long id) {
+    public TransactionResponse findById(Long id) {    	
         return null;
     }
 
     @Override
-    public TransactionResponse create(TransactionRequest player) {
+    public TransactionResponse create(TransactionRequest transactionRequest) {
         return null;
     }
 

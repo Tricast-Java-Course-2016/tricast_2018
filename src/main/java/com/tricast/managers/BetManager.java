@@ -12,6 +12,8 @@ public interface BetManager {
     List<BetResponse> findAll();
 
     BetResponse findById(Long id);
+    
+    BetResponse findByEventId(long id);
 
     BetPlacementResponse create(BetRequest requestObject)  throws SportsbookException;
 

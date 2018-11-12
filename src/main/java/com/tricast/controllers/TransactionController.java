@@ -59,7 +59,7 @@ public class TransactionController {
 
     // Empty URL is fine
     @PostMapping
-    public TransactionResponse createTransaction(TransactionRequest request) {
-    	return null;
+    public void createTransaction(TransactionRequest request) {
+    	transactionManager.create(request);
     }
 }

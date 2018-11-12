@@ -93,9 +93,12 @@ public class BetManagerImpl implements BetManager {
 
 		return betBean;
     }
+    
+	@Override
+	public BetResponse findByEventId(long id) {
+		return null;
+	}
 
-
-   
     @Override
     public BetPlacementResponse create(BetRequest requestObject) throws SportsbookException {
         if(requestObject == null) {
