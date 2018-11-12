@@ -2,9 +2,12 @@ package com.tricast;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.tricast.controllers.filters.AuthenticationFilter;
 
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -30,5 +33,14 @@ public class SportsbookApplication {
         return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors.basePackage("com.tricast.controllers"))
                 .paths(PathSelectors.any()).build();
+    }
+
+    @Bean
+    public FilterRegistrationBean authenticationFilter() {
+        final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new AuthenticationFilter());
+        registrationBean.addUrlPatterns("/*");
+
+        return registrationBean;
     }
 }

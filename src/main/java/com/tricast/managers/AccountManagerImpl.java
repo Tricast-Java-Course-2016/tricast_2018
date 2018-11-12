@@ -1,10 +1,15 @@
 package com.tricast.managers;
 
+import java.time.OffsetDateTime;
+
 import javax.inject.Inject;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tricast.controllers.requests.AccountRequest;
+import com.tricast.controllers.responses.AccountResponse;
+import com.tricast.managers.exceptions.SportsbookException;
 import com.tricast.managers.mappers.AccountMapper;
 import com.tricast.repositories.AccountRepository;
 import com.tricast.repositories.entities.Account;
@@ -12,42 +17,44 @@ import com.tricast.repositories.entities.Account;
 @Service
 public class AccountManagerImpl implements AccountManager {
 
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+    private final PasswordEncoder encoder;
 
     @Inject
-    public AccountManagerImpl(AccountRepository playerRepository) {
+    public AccountManagerImpl(AccountRepository playerRepository, PasswordEncoder encoder) {
         this.accountRepository = playerRepository;
+        this.encoder = encoder;
     }
 
     @Override
-    public Account findById(Long id) {
-        return accountRepository.findById(id);
+    public AccountResponse registerNewAccount(AccountRequest accountRequest) throws SportsbookException {
+
+        validateUsername(accountRequest.getUserName());
+
+        Account account = AccountMapper.mapToEntity(accountRequest);
+        account.setPassword(encoder.encode(accountRequest.getPassword()));
+        account.setCreatedDate(OffsetDateTime.now());
+
+        return AccountMapper.mapToReponse(accountRepository.save(account));
     }
 
     @Override
-    public Account create(AccountRequest accountRequest) {
-        Account account = AccountMapper.mapToResponse(accountRequest);
-        // TODO hash the password before save it in the db
-        return accountRepository.save(account);
+    public AccountResponse login(String username, String password) throws SportsbookException {
+
+        Account foundAccountEntity = accountRepository.findByUserName(username);
+
+        if (foundAccountEntity == null || !encoder.matches(password, foundAccountEntity.getPassword())) {
+            throw new SportsbookException("Wrong username or password: " + username);
+        }
+
+        return AccountMapper.mapToReponse(foundAccountEntity);
     }
 
-    @Override
-    public Account update(long id, AccountRequest accountRequest) {
-        Account account = AccountMapper.mapToResponse(accountRequest);
-        account.setId(id);
-        return accountRepository.save(account);
-    }
+    private void validateUsername(String username) throws SportsbookException {
 
-    @Override
-    public void deleteById(Long id) {
-        accountRepository.delete(id);
+        Account accountFoundByUsername = accountRepository.findByUserName(username);
+        if (accountFoundByUsername != null) {
+            throw new SportsbookException("Username is already occupied");
+        }
     }
-
-    @Override
-    public Account login(String username, String password) {
-        // TODO add username and password check and decode password
-        Account account = accountRepository.findByUserName(username);
-        return account;
-    }
-
 }

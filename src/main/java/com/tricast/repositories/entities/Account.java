@@ -1,7 +1,7 @@
 package com.tricast.repositories.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,7 +50,7 @@ public class Account implements Serializable {
     private String email;
 
     @Column(name = "createddate")
-    private Date createdDate;
+    private OffsetDateTime createdDate;
 
     @Column(name = "bankaccountnumber")
     private String bankAccountNumber;
@@ -137,11 +137,11 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-    public Date getCreatedDate() {
+    public OffsetDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(OffsetDateTime createdDate) {
         this.createdDate = createdDate;
     }
 

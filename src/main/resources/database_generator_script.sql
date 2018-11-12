@@ -18,7 +18,7 @@ SET default_with_oids = false;
 CREATE TABLE tricast.accounts (
     id integer NOT NULL,
     username character varying(30) NOT NULL,
-    password character varying(50) NOT NULL,
+    password character varying(60) NOT NULL,
     firstname character varying(50) NOT NULL,
     lastname character varying(50) NOT NULL,
     dob character varying(8) NOT NULL,
