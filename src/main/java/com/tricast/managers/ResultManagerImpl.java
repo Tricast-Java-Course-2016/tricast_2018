@@ -48,7 +48,19 @@ public class ResultManagerImpl implements ResultManager {
 
 	@Override
 	public ResultResponse create(ResultRequest requestObject) {
-		return null;
+		Result result = new Result();
+		
+		//Mi alapján lesznek majd validálva?
+		result.setResultTypeId(requestObject.getResultTypeId());
+		result.setResult(requestObject.getResult());
+		result.setPeriodTypeId(requestObject.getPeriodTypeId());
+		result.setEventCompetitorMapId(requestObject.getEventCompetitorMapId());
+		
+		result = resultRepository.save(result);
+		
+		ResultResponse resultResponse = this.entityToResponse(result);
+				
+		return resultResponse;
 	}
 
 	@Override

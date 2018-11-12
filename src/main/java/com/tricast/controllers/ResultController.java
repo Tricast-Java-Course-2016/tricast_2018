@@ -28,7 +28,6 @@ public class ResultController {
 
     @PostMapping
     public ResultResponse createResults(ResultRequest newResult) {
-    	//return resultManager.create(newResult);
-    	return null;
+    	return resultManager.create(newResult);
     }
 }
