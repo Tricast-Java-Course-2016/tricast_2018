@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tricast.controllers.requests.TransactionRequest;
 import com.tricast.controllers.responses.TransactionResponse;
+import com.tricast.managers.exceptions.SportsbookException;
 
 
 public interface TransactionManager {
@@ -13,12 +14,11 @@ public interface TransactionManager {
 
     TransactionResponse findById(Long id);
 
-    TransactionResponse create(TransactionRequest transactionRequest);
+    TransactionResponse deposit(long accountId, TransactionRequest req) throws SportsbookException;
 
-    TransactionResponse update(TransactionRequest player);
+    TransactionResponse withdraw(long accountId, TransactionRequest req) throws SportsbookException;
 
-    void deleteById(Long id);
-    
-    List<TransactionResponse> filter(String transactionType, OffsetDateTime fromDate, OffsetDateTime toDate);
+    List<TransactionResponse> filter(long accountId, String transactionType, OffsetDateTime fromDate,
+            OffsetDateTime toDate);
 
 }
