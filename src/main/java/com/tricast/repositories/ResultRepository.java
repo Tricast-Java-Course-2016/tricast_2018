@@ -3,6 +3,8 @@ package com.tricast.repositories;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
+
+import com.tricast.controllers.responses.ResultResponse;
 import com.tricast.repositories.entities.Result;
 
 public interface ResultRepository extends CrudRepository<Result, Long> {
@@ -10,6 +12,6 @@ public interface ResultRepository extends CrudRepository<Result, Long> {
 	@Override
     List<Result> findAll();
 
-	Result findById(Long id);
+	List<ResultResponse> findById(Long id);
 
 }

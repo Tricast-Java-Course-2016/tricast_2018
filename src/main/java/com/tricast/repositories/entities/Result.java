@@ -71,11 +71,11 @@ public class Result implements Serializable {
 		this.periodTypeId = periodTypeId;
 	}
 
-	public Long getEventCompetitorMapId() {
+	public long getEventCompetitorMapId() {
 		return eventCompetitorMapId;
 	}
 
-	public void setEventCompetitorMapId(Long eventCompetitorMapId) {
+	public void setEventCompetitorMapId(long eventCompetitorMapId) {
 		this.eventCompetitorMapId = eventCompetitorMapId;
 	}
 	

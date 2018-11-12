@@ -10,9 +10,9 @@ public interface ResultManager {
 	
     List<Result> findAll();
 
-    Result findById(Long id);
+    List<ResultResponse> findById(Long id);
 
-    Result create(Result result);
+    ResultResponse create(ResultRequest requestObject);
 
     Result update(Result result);
 
