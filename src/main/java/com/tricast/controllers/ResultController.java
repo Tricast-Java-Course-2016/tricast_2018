@@ -14,7 +14,7 @@ import com.tricast.controllers.responses.ResultResponse;
 import com.tricast.managers.ResultManager;
 
 @RestController
-@RequestMapping(path = "results")
+@RequestMapping(path = "api/results")
 public class ResultController {
 
     @Autowired

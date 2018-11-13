@@ -12,7 +12,7 @@ import com.tricast.managers.PeriodTypeManager;
 import com.tricast.repositories.entities.PeriodType;
 
 @RestController
-@RequestMapping(path = "periodtypes")
+@RequestMapping(path = "api/periodtypes")
 public class PeriodTypeController {
 
     @Autowired

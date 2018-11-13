@@ -12,7 +12,7 @@ import com.tricast.managers.OutcomeManager;
 import com.tricast.repositories.entities.Outcome;
 
 @RestController
-@RequestMapping(path = "outcomes")
+@RequestMapping(path = "api/outcomes")
 public class OutcomeController {
 
     @Autowired

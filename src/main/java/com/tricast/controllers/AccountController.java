@@ -27,7 +27,7 @@ import com.tricast.managers.AccountManager;
 import com.tricast.repositories.entities.AccountType;
 
 @RestController
-@RequestMapping(path = "accounts")
+@RequestMapping(path = "api/accounts")
 public class AccountController {
 
     private static final Logger LOG = LogManager.getLogger(AccountController.class);

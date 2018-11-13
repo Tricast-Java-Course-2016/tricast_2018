@@ -27,7 +27,7 @@ import com.tricast.managers.exceptions.SportsbookException;
 import com.tricast.managers.helpers.OffsetDateTimeToCalendar;
 
 @RestController
-@RequestMapping(path = "events")
+@RequestMapping(path = "api/events")
 public class EventController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class EventController {
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate,
             @RequestParam(value = "search", required = false) String search) throws SportsbookException {
 
-    	
+
     	return this.eventManager.filter(search, sport, league, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
 
@@ -69,21 +69,23 @@ public class EventController {
     public List<EventStatusResponse> getAllStatus() {
         return null;
     }
-    
+
     @GetMapping(path = "/{id}/odds")
     public EventDetailResponse showOdds(@PathVariable("id") long id) {
     	return eventManager.detail(id);
     }
-    
+
     @PostMapping(path="/{id}/odds")
 	public ResponseEntity<?> updateOdds(@RequestBody OddsRequest oddsRequest,@PathVariable("id") long id) {
 		try {
-			if(oddsRequest.getEventId()!=id) throw new SportsbookException("URL, EventID mismatch.");
+			if(oddsRequest.getEventId()!=id) {
+                throw new SportsbookException("URL, EventID mismatch.");
+            }
 			EventDetailResponse response = eventManager.updateOdds(oddsRequest,id);
 			return ResponseEntity.ok(response);
 		} catch (SportsbookException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-    
+
 }

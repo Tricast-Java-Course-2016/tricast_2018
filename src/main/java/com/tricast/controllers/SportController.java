@@ -12,9 +12,9 @@ import com.tricast.managers.SportManager;
 import com.tricast.repositories.entities.Sport;
 
 @RestController
-@RequestMapping(path = "sports")
+@RequestMapping(path = "api/sports")
 public class SportController {
-	
+
 	@Autowired
 	private SportManager sportManager;
 
@@ -22,7 +22,7 @@ public class SportController {
 	public List<Sport> findAll() {
 		return sportManager.findAll();
 	}
-	
+
 	@GetMapping(path = "findById/{id}")
 	public Sport findById(@PathVariable("id") Long id) {
 		return sportManager.findById(id);

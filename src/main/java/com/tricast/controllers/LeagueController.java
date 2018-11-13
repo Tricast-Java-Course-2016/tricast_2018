@@ -1,7 +1,6 @@
 package com.tricast.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +16,7 @@ import com.tricast.controllers.responses.LeagueResponse;
 import com.tricast.managers.LeagueManager;
 
 @RestController
-@RequestMapping(path = "leagues")
+@RequestMapping(path = "api/leagues")
 public class LeagueController {
 
 	@Autowired
@@ -33,7 +32,7 @@ public class LeagueController {
     public List<LeagueResponse> findAll(String search) {
         return null;
     }
-	
+
 	@GetMapping(path="/list")
     public List<LeagueResponse> findAll() {
         return null;

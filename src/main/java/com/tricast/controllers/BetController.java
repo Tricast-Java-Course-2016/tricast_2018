@@ -1,9 +1,9 @@
 package com.tricast.controllers;
 
 import java.util.List;
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +20,9 @@ import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.BetManager;
 
 @RestController
-@RequestMapping(path = "bets")
+@RequestMapping(path = "api/bets")
 public class BetController {
-	
+
 	private static final Logger log = LogManager.getLogger(BetController.class);
 
     @Autowired
@@ -40,9 +40,9 @@ public class BetController {
 
 	@PostMapping
 	public ResponseEntity<?> createBet(@RequestBody BetRequest newBet) {
-		
+
 		log.trace("Trying to create bet for: AccountId: " + newBet.getAccountId());
-		
+
 		try {
 			BetPlacementResponse bet = betManager.create(newBet);
 			return ResponseEntity.ok(bet);
@@ -50,7 +50,7 @@ public class BetController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
-	
+
 	@GetMapping(path="eventid/{id}")
 	public List<BetResponse> findByEventId(@PathVariable("id") long id) {
 		return betManager.findByEventId(id);

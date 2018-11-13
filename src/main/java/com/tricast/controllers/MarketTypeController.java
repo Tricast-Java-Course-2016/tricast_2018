@@ -12,7 +12,7 @@ import com.tricast.managers.MarketTypeManager;
 import com.tricast.repositories.entities.MarketType;
 
 @RestController
-@RequestMapping(path = "markettypes")
+@RequestMapping(path = "api/markettypes")
 public class MarketTypeController {
 
     @Autowired

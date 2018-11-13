@@ -1,6 +1,6 @@
 package com.tricast.controllers;
 
-import java.util.*;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,12 +16,12 @@ import com.tricast.controllers.responses.CompetitorResponse;
 import com.tricast.managers.CompetitorManager;
 
 @RestController
-@RequestMapping(path = "competitors")
+@RequestMapping(path = "api/competitors")
 public class CompetitorController {
 
 	@Autowired
 	private CompetitorManager competitorManager;
-	
+
 
 	@GetMapping(path="/{id}")
     public CompetitorResponse findById(@PathVariable("id") long id) {
@@ -32,7 +32,7 @@ public class CompetitorController {
     public List<CompetitorResponse> findAll(@PathVariable("search") String search) {
         return competitorManager.search(search);
     }
-	
+
 	@GetMapping(path="/list")
     public List<CompetitorResponse> findAll() {
 		return competitorManager.findAll();

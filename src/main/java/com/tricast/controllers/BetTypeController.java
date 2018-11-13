@@ -12,7 +12,7 @@ import com.tricast.managers.BetTypeManager;
 import com.tricast.repositories.entities.BetType;
 
 @RestController
-@RequestMapping(path = "bettypes")
+@RequestMapping(path = "api/bettypes")
 public class BetTypeController {
 
     @Autowired

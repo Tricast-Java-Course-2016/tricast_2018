@@ -43,19 +43,18 @@ public class AuthenticationFilter extends GenericFilterBean {
         final String token = authHeader.substring(7); // The part after "Bearer "
         Map<String, Claim> claims = validateToken(token);
 
-        request.setAttribute("accountType", claims.get(AuthenticationSettings.ACCOUNTTYPE));
-        request.setAttribute("accountId", claims.get(AuthenticationSettings.ACCOUNTID));
-        request.setAttribute("username", claims.get(AuthenticationSettings.USERNAME));
+        request.setAttribute("authentication.accountType", claims.get(AuthenticationSettings.ACCOUNTTYPE).asString());
+        request.setAttribute("authentication.accountId", claims.get(AuthenticationSettings.ACCOUNTID).asLong());
+        request.setAttribute("authentication.username", claims.get(AuthenticationSettings.USERNAME).asString());
 
-        chain.doFilter(req, res);
+        chain.doFilter(request, res);
     }
 
     private boolean bypassAuthentication(String uri, String method) {
         // BYPASS ALL FOR NOW
-        return true;
-        // return uri.equals("/sportsbook/accounts") && method.equals("post") ||
-        // uri.equals("/sportsbook/accounts/login")
-        // || uri.equals("/sportsbook/error");
+        // return true;
+        return uri.equals("/sportsbook/api/accounts") && method.equals("post")
+                || uri.equals("/sportsbook/api/accounts/login") || uri.equals("/sportsbook/error");
     }
 
     private Map<String, Claim> validateToken(String token) throws ServletException {

@@ -85,7 +85,7 @@ public class TransactionManagerImpl implements TransactionManager {
         BigDecimal currentBalance =
                 allTransactions.stream().map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        if (currentBalance.subtract(request.getAmount()).compareTo(BigDecimal.ZERO) <= 0) {
+        if (currentBalance.subtract(request.getAmount()).compareTo(BigDecimal.ZERO) < 0) {
             throw new SportsbookException("Negativ balance");
         }
 

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tricast.builders.EventResponseBuilder;
 import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
@@ -29,10 +28,6 @@ import com.tricast.repositories.TransactionRepository;
 import com.tricast.repositories.entities.Bet;
 import com.tricast.repositories.entities.BetOutcomeMap;
 import com.tricast.repositories.entities.BetTypes;
-import com.tricast.repositories.entities.Competitor;
-import com.tricast.repositories.entities.Event;
-import com.tricast.repositories.entities.Market;
-import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Transaction;
 import com.tricast.repositories.entities.TransactionTypes;
 
@@ -49,7 +44,7 @@ public class BetManagerImpl implements BetManager {
     private AccountRepository accountRepository;
 
     @Autowired
-    public BetManagerImpl(BetRepository betRepository, 
+    public BetManagerImpl(BetRepository betRepository,
     		TransactionRepository transactionRepository,
     		BetTypeRepository bettypeRepository,
     		BetOutcomeMapRepository betoutcomemapRepository,
@@ -57,7 +52,7 @@ public class BetManagerImpl implements BetManager {
     		MarketRepository marketRepository,
     		EventRepository eventRepository,
     		AccountRepository accountRepository) {
-    	
+
         this.betRepository = betRepository;
         this.transactionRepository = transactionRepository;
         this.bettypeRepository = bettypeRepository;
@@ -67,13 +62,13 @@ public class BetManagerImpl implements BetManager {
         this.eventRepository = eventRepository;
         this.accountRepository=accountRepository;
     }
-    
-  
+
+
 
     @Override
     public List<BetResponse> findAll() {
-        return BetResponseMapper.mapToBeanList(betRepository.findAll(), 
-        		betRepository, 
+        return BetResponseMapper.mapToBeanList(betRepository.findAll(),
+        		betRepository,
         		transactionRepository,
         		bettypeRepository,
         		betoutcomemapRepository,
@@ -87,8 +82,8 @@ public class BetManagerImpl implements BetManager {
 
 		Bet bet = betRepository.findById(id);
 
-		BetResponse betBean = BetResponseMapper.mapToResponse(bet, 
-				betRepository, 
+		BetResponse betBean = BetResponseMapper.mapToResponse(bet,
+				betRepository,
         		transactionRepository,
         		bettypeRepository,
         		betoutcomemapRepository,
@@ -98,34 +93,26 @@ public class BetManagerImpl implements BetManager {
 
 		return betBean;
     }
-    
+
 	@Override
 	public List<BetResponse> findByEventId(long id) {
-		
-		/*List <Market> marketList = marketRepository.findByEvent_Id(id);
-		List<Bet> betList = new ArrayList<Bet>();
-		List<BetResponse> betResponseList = new ArrayList<BetResponse>();
-		
-		for(Market currentMarket : marketList) {
-			List <Outcome> outcomeList = outcomeRepository.findByMarket_Id(currentMarket.getId());
-			for(Outcome currentOutcome : outcomeList) {
-				List<BetOutcomeMap> betOutcomeMapList = betoutcomemapRepository.findByOutcomeID(currentOutcome.getId());
-				for(BetOutcomeMap currentBetOutcomeMap : betOutcomeMapList) {
-					Bet bet = betRepository.findById(currentBetOutcomeMap.getBetId().getId());
-					betList.add(bet);
-				}
-			}
-		}
-		
-		BetResponse betRespones = new BetResponse();
-		
-		for(Bet currentBet : betList) {
-			betRespones.setAccountId(currentBet.getAccountId().getId());
-			betRespones.setBettypeId(currentBet.getBetTypeId().getId());
-			betResponseList.add(betRespones);
-		}
-		
-		return betResponseList;*/
+
+		/*
+         * List <Market> marketList = marketRepository.findByEvent_Id(id); List<Bet> betList = new ArrayList<Bet>();
+         * List<BetResponse> betResponseList = new ArrayList<BetResponse>();
+         * 
+         * for(Market currentMarket : marketList) { List <Outcome> outcomeList =
+         * outcomeRepository.findByMarket_Id(currentMarket.getId()); for(Outcome currentOutcome : outcomeList) {
+         * List<BetOutcomeMap> betOutcomeMapList = betoutcomemapRepository.findByOutcomeID(currentOutcome.getId());
+         * for(BetOutcomeMap currentBetOutcomeMap : betOutcomeMapList) { Bet bet =
+         * betRepository.findById(currentBetOutcomeMap.getBetId().getId()); betList.add(bet); } } }
+         * 
+         * BetResponse betRespones = new BetResponse();
+         * 
+         * for(Bet currentBet : betList) { betRespones.setAccountId(currentBet.getAccountId().getId());
+         * betRespones.setBettypeId(currentBet.getBetTypeId().getId()); betResponseList.add(betRespones); }
+         */
+        return null;
 	}
 
     @Override
@@ -133,9 +120,9 @@ public class BetManagerImpl implements BetManager {
         if(requestObject == null) {
             return null;
         }
-        
+
         String betType=bettypeRepository.findById(requestObject.getBettypeId()).getDescription().getValue();
-        
+
         if(betType.equals(BetTypes.Single.getValue())) {
         	try {
             	return placeSingleBets(requestObject);
@@ -163,61 +150,61 @@ public class BetManagerImpl implements BetManager {
         }
         else {
         	/*Doesn't work.*/
-        	throw new SportsbookException("Failed to place Treble Bet due to bad BetTypeID.");  
-        }   	
+        	throw new SportsbookException("Failed to place Treble Bet due to bad BetTypeID.");
+        }
     }
-    
-    
+
+
     private static ArrayList <ArrayList<Long>> getCombinations(ArrayList <Long> idList){
-		ArrayList <ArrayList <Long>> combinations=new ArrayList <ArrayList<Long>>(); 
+		ArrayList <ArrayList <Long>> combinations=new ArrayList <>();
 		ArrayList <Long> current;
-    	
+
     	for(int i=0;i<idList.size()-1;i++) {
     		for(int  j=i+1;j<idList.size();j++) {
-    			current=new ArrayList <Long>();
+    			current=new ArrayList <>();
     			current.add(idList.get(i));
     			current.add(idList.get(j));
     			combinations.add(current);
     		}
     	}
-    	return combinations;	
+    	return combinations;
     }
-    
-    @Transactional    
+
+    @Transactional
 	private BetPlacementResponse placeSingleBets(BetRequest requestObject) throws SportsbookException {
-    	
+
     	Bet currentBet;
-    	
+
         BetPlacementResponse betPlacementResponse = new BetPlacementResponse();
         betPlacementResponse.setSumStake(BigDecimal.valueOf(0.));
         betPlacementResponse.setSumPotentialWin(BigDecimal.valueOf(0.));
-        
-        List <BetResponse> betResponses=new ArrayList <BetResponse>();
+
+        List <BetResponse> betResponses=new ArrayList <>();
         int NumberOfOutcomes=requestObject.getOutcomeOdds().size();
-        Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet(); 
+        Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet();
     	Long currentId;
     	Iterator <Long> iterator=outcomeIds.iterator();
     	List <Long> outcomeIdList;
-    	
+
 
         for(int i=0;i<NumberOfOutcomes;i++) {
-        	
+
         	currentId=iterator.next();
 
         	try {
         		currentBet=createBetEntry(requestObject);
         		betRepository.save(currentBet);
-        	
-        		outcomeIdList = new ArrayList <Long>();
+
+        		outcomeIdList = new ArrayList <>();
         		outcomeIdList.add(currentId);
-        	
+
         		betoutcomemapRepository.save(createBetOutcomeMapEntry(currentId,requestObject,currentBet));
         		transactionRepository.save(createTransactionEntry(requestObject,currentBet,outcomeIdList));
-          
 
-        		betResponses.add(BetResponseMapper.mapToResponse(currentBet, betRepository, 
-        				transactionRepository, bettypeRepository, 
-        				betoutcomemapRepository, outcomeRepository, 
+
+        		betResponses.add(BetResponseMapper.mapToResponse(currentBet, betRepository,
+        				transactionRepository, bettypeRepository,
+        				betoutcomemapRepository, outcomeRepository,
         				marketRepository, eventRepository));
         		betPlacementResponse.setSumStake(betPlacementResponse.getSumStake().add(requestObject.getBetStake()));
         		betPlacementResponse.setSumPotentialWin(betPlacementResponse.getSumPotentialWin().add(
@@ -232,34 +219,34 @@ public class BetManagerImpl implements BetManager {
         }
         betPlacementResponse.setListOfBetResponses(betResponses);
 
-		return betPlacementResponse;	
-    	
+		return betPlacementResponse;
+
     }
-    
-    @Transactional  
+
+    @Transactional
     private BetPlacementResponse placeDoubleBets(BetRequest requestObject) throws SportsbookException {
         BetPlacementResponse betPlacementResponse = new BetPlacementResponse();
         betPlacementResponse.setSumStake(BigDecimal.valueOf(0.));
         betPlacementResponse.setSumPotentialWin(BigDecimal.valueOf(0.));
-        
-        List <BetResponse> betResponses=new ArrayList <BetResponse>();
+
+        List <BetResponse> betResponses=new ArrayList <>();
         int NumberOfOutcomes=requestObject.getOutcomeOdds().size();
         Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet();
-        HashSet <Long> marketIds = new HashSet <Long>();
-        
+        HashSet <Long> marketIds = new HashSet <>();
+
         Bet currentBet;
     	Long currentId;
     	Iterator <Long> iterator = outcomeIds.iterator();
     	List <Long> currentIds;
-    	
-    	
+
+
     	ArrayList <ArrayList<Long>> combinations;
-    	ArrayList <Long> idList = new ArrayList<Long>();
+    	ArrayList <Long> idList = new ArrayList<>();
 
     	for(int i=0;i<NumberOfOutcomes;i++) {
     		currentId=iterator.next();
     		idList.add(currentId);
-    		
+
     		try {
     			marketIds.add(outcomeRepository.findById(currentId).getMarket().getId());
     		}catch(Exception e) {
@@ -267,77 +254,79 @@ public class BetManagerImpl implements BetManager {
         		throw exception;
     		}
     	}
-    	
-    	/*Exception*/
-    	if(marketIds.size()!=outcomeIds.size()) throw  new SportsbookException("Failed to place Double Bet due to multiple Outcomes of the same Market.");
-    	
-    	
-    	combinations=getCombinations(idList);
-    	
 
-    	
+    	/*Exception*/
+    	if(marketIds.size()!=outcomeIds.size()) {
+            throw  new SportsbookException("Failed to place Double Bet due to multiple Outcomes of the same Market.");
+        }
+
+
+    	combinations=getCombinations(idList);
+
+
+
     	for(int i=0;i<combinations.size();i++) {
-    			
+
     			currentBet=createBetEntry(requestObject);
-    			
+
     			try {
                 	betRepository.save(currentBet);
-                	
+
                 	betoutcomemapRepository.save(createBetOutcomeMapEntry(combinations.get(i).get(0),requestObject,currentBet));
-    			
+
                 	betoutcomemapRepository.save(createBetOutcomeMapEntry(combinations.get(i).get(1),requestObject,currentBet));
-                	
-                	currentIds = new ArrayList <Long>();
+
+                	currentIds = new ArrayList <>();
                 	currentIds.add(combinations.get(i).get(0));
                 	currentIds.add(combinations.get(i).get(1));
-    			
+
                 	transactionRepository.save(createTransactionEntry(requestObject,currentBet,currentIds));
 
-                	betResponses.add(BetResponseMapper.mapToResponse(currentBet, betRepository, 
-                			transactionRepository, bettypeRepository, 
-                			betoutcomemapRepository, outcomeRepository, 
+                	betResponses.add(BetResponseMapper.mapToResponse(currentBet, betRepository,
+                			transactionRepository, bettypeRepository,
+                			betoutcomemapRepository, outcomeRepository,
                 			marketRepository, eventRepository));
                 	betPlacementResponse.setSumStake(betPlacementResponse.getSumStake().add(requestObject.getBetStake()));
                 	betPlacementResponse.setSumPotentialWin(betPlacementResponse.getSumPotentialWin().add(
                 			betResponses.get(betResponses.size()-1).getPotentialWin()));
-            	
+
             	}catch(SportsbookException e) {
             		throw e;
             	}catch(Exception e) {
             		SportsbookException exception = new SportsbookException("Failed to place Double Bet.");
             		throw exception;
-            	}     		
+            	}
     	}
-    	
+
     	betPlacementResponse.setListOfBetResponses(betResponses);
-    	
-  		return betPlacementResponse;	
+
+  		return betPlacementResponse;
     }
-    
-    @Transactional  
+
+    @Transactional
     private BetPlacementResponse placeTrebleBets(BetRequest requestObject) throws SportsbookException {
         BetPlacementResponse betPlacementResponse = new BetPlacementResponse();
         betPlacementResponse.setSumStake(BigDecimal.valueOf(0.));
         betPlacementResponse.setSumPotentialWin(BigDecimal.valueOf(0.));
-        
-        List <BetResponse> betResponses=new ArrayList <BetResponse>();
+
+        List <BetResponse> betResponses=new ArrayList <>();
         int NumberOfOutcomes=requestObject.getOutcomeOdds().size();
-        Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet(); 
+        Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet();
     	Long currentId;
     	Iterator <Long> iterator=outcomeIds.iterator();
     	Bet currentBet;
-    	List <Long> outcomeIdList = new ArrayList <Long>();
-    	
-    	
-    	
+    	List <Long> outcomeIdList = new ArrayList <>();
+
+
+
     	if(NumberOfOutcomes!=3) {
     		throw new SportsbookException("Treble Bet placement failed. There can only be exactly 3 Outcomes.");
-    		
+
     	}
     	else {
     		/*Check, so that you can't bet on multiple outcomes of the same market.*/
-    		Set <Long> marketIds=new HashSet <Long>();
-    		
+    		Set <Long> marketIds=new HashSet <>();
+
     		try {
     			for(int i=0;i<NumberOfOutcomes;i++) {
     				currentId=iterator.next();
@@ -355,31 +344,31 @@ public class BetManagerImpl implements BetManager {
     		}catch(SportsbookException e) {
     			throw e;
     		}
-    		
-        	
+
+
     		iterator=outcomeIds.iterator();
-    		
+
     		currentBet=createBetEntry(requestObject);
-    		
+
     		try {
     			betRepository.save(currentBet);
                 for(int i=0;i<NumberOfOutcomes;i++) {
                 	currentId=iterator.next();
-                	
+
                     betoutcomemapRepository.save(createBetOutcomeMapEntry(currentId,requestObject,currentBet));
- 
+
                 	outcomeIdList.add(currentId);
-                } 	
+                }
             	transactionRepository.save(createTransactionEntry(requestObject,currentBet,outcomeIdList));
-            	
-            	betResponses.add(BetResponseMapper.mapToResponse(currentBet, betRepository, 
-            			transactionRepository, bettypeRepository, 
-            			betoutcomemapRepository, outcomeRepository, 
+
+            	betResponses.add(BetResponseMapper.mapToResponse(currentBet, betRepository,
+            			transactionRepository, bettypeRepository,
+            			betoutcomemapRepository, outcomeRepository,
             			marketRepository, eventRepository));
             	betPlacementResponse.setSumStake(betPlacementResponse.getSumStake().add(requestObject.getBetStake()));
             	betPlacementResponse.setSumPotentialWin(betPlacementResponse.getSumPotentialWin().add(
             			betResponses.get(betResponses.size()-1).getPotentialWin()));
-                
+
                 betPlacementResponse.setListOfBetResponses(betResponses);
     		}
     		catch(SportsbookException e) {
@@ -388,35 +377,37 @@ public class BetManagerImpl implements BetManager {
     		catch(Exception e) {
     			SportsbookException exception = new SportsbookException("Failed to place Treble Bet.");
         		throw exception;
-    		}	
+    		}
     		return betPlacementResponse;
     	}
     }
-    
+
     private Bet createBetEntry(BetRequest requestObject) throws SportsbookException {
     	Bet bet=new Bet();
 
     	bet.setAccountId(accountRepository.findById(requestObject.getAccountId()));
     	bet.setBetTypeId(bettypeRepository.findById(requestObject.getBettypeId()));
-    	
-    	if(bet.getAccountId()==null || bet.getBetTypeId()==null)
-    		throw new SportsbookException("Failed to place Bet due to bad AccountID.");
-    	
+
+    	if(bet.getAccountId()==null || bet.getBetTypeId()==null) {
+            throw new SportsbookException("Failed to place Bet due to bad AccountID.");
+        }
+
 
     	return bet;
     }
-    
+
     private BetOutcomeMap createBetOutcomeMapEntry(Long currentId, BetRequest requestObject, Bet currentBet) throws SportsbookException {
-    	
-    
+
+
     	BetOutcomeMap map = new BetOutcomeMap();
     	map.setBetId(currentBet);
     	map.setOutcomeID(outcomeRepository.findById(currentId));
     	map.setOdds(requestObject.getOutcomeOdds().get(currentId));
-    	
-    	if(map.getBetId()==null || map.getOutcomeID()==null || map.getOdds()==null)
-    		throw new SportsbookException("Failed to place Treble Bet due to bad OutcomeIDs.");  
-    		
+
+    	if(map.getBetId()==null || map.getOutcomeID()==null || map.getOdds()==null) {
+            throw new SportsbookException("Failed to place Treble Bet due to bad OutcomeIDs.");
+        }
+
         return map;
     }
 
@@ -424,10 +415,10 @@ public class BetManagerImpl implements BetManager {
     	try{
     		Transaction transaction = new Transaction();
     		transaction.setAccount(accountRepository.findById(requestObject.getAccountId()));
-    		
+
     		/*Check account balance*/
     		transaction.setAmount(requestObject.getBetStake().negate());
-    		transaction.setBet(currentBet);      
+    		transaction.setBet(currentBet);
     		transactionDescriptionBuilder(requestObject,outcomeIds,transaction);
     		transaction.setType(TransactionTypes.BET);
     		transaction.setCreatedDate(OffsetDateTime.now());
@@ -441,7 +432,7 @@ public class BetManagerImpl implements BetManager {
 
     private void transactionDescriptionBuilder(BetRequest requestObject, List <Long> outcomeIds, Transaction transaction) {
     	transaction.setDescription(bettypeRepository.findById(requestObject.getBettypeId()).getDescription().getValue()+" Bet ");
-    	
+
     	for(Long currentId : outcomeIds) {
     		transaction.setDescription(transaction.getDescription()
             		+outcomeRepository.findById(currentId).getDescription()+ " @ "+

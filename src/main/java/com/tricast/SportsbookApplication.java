@@ -39,7 +39,7 @@ public class SportsbookApplication {
     public FilterRegistrationBean authenticationFilter() {
         final FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(new AuthenticationFilter());
-        registrationBean.addUrlPatterns("/*");
+        registrationBean.addUrlPatterns("/api/*");
 
         return registrationBean;
     }

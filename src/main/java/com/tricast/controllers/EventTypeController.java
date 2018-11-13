@@ -12,7 +12,7 @@ import com.tricast.controllers.responses.EventTypeResponse;
 import com.tricast.managers.EventTypeManager;
 
 @RestController
-@RequestMapping(path = "eventtypes")
+@RequestMapping(path = "api/eventtypes")
 public class EventTypeController {
 
     @Autowired
