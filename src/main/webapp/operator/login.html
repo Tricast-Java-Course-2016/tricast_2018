@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Sportsbook Manager</title>
+        <meta name="description" content="Sportsbook Manager">
+        <meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		
+        <script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="../js/lib/moment.min.js"></script>	
+        <script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+	
+		<script type="text/javascript" src="../js/utils.js"></script>
+        <script type="text/javascript" src="login.js"></script>
+    </head>
+    <body>
+        <div id="navbar-content"></div>
+    	<div id="loginBox" class="container">
+	    	<form id="login" class="col-sm-5">
+				<h2>Operator Login</h2>
+				<div id="loginMsg"></div>
+				<div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-user"></i></div>
+                        <input id="lgusername" name="userName" class="form-control input-lg" type="text" placeholder="Username" required autofocus autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-group">
+                  	<div class="input-group">
+                       	<div class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></div>
+                        <input id="lgpassword" name="password" class="form-control input-lg" type="password">
+                    </div>
+                </div>
+                <div id="loginControls">
+					<button class="btn btn-primary" type="button" id="loginSubmit">Log in</button>
+                    <a href="registration.html" class="btn btn-primary">Register</a>
+				</div>
+			</form>
+    	</div>
+    	
+    </body>
+</html>

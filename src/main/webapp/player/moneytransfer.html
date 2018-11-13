@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Sportsbook Manager</title>
+        <meta name="description" content="Sportsbook Manager">
+        <meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		
+        <script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+        <script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+    
+        <script type="text/javascript" src="../js/utils.js"></script>
+        <script type="text/javascript" src="moneytransfer.js"></script>
+    </head>
+    <body>
+        <div id="navbar-content"></div>
+    	<div class="container">
+	    	<form id="moneyTransfer" class="col-sm-5">
+				<h2>Money Transfer</h2>
+                <div class="form-group row">
+                    <label for="inputTransactionType" class="col-sm-2 col-form-label">Type</label>
+                    <select class="form-control col-sm-10" id="inputTransactionType">
+                        <option value="TRANSFER">Upload</option>
+                        <option value="WITHDRAWAL">Withdrawal</option>
+                    </select>
+                </div>
+                <div class="form-group row">
+                    <label for="inputAmount" class="col-sm-2 col-form-label">Amount</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" id="inputAmount" required>
+                    </div>
+                </div>
+                <div id="transferControls">
+					<button class="btn btn-primary" type="button" id="sendMoney">Send</button>
+				</div>
+			</form>
+    	</div>
+    	
+    </body>
+</html>
