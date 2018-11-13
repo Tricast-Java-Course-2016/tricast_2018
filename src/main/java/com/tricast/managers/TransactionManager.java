@@ -18,7 +18,7 @@ public interface TransactionManager {
 
     TransactionResponse withdraw(long accountId, TransactionRequest req) throws SportsbookException;
 
-    List<TransactionResponse> filter(long accountId, String transactionType, OffsetDateTime fromDate,
+    List<TransactionResponse> filter(String transactionType, OffsetDateTime fromDate,
             OffsetDateTime toDate);
 
 }

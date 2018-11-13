@@ -61,7 +61,7 @@ public class AccountController {
         try {
             AccountResponse account = accountManager.login(loginRequest.getUserName(), loginRequest.getPassword());
 
-            String token = issueToken(account.getUserName(), account.getAccountType());
+            String token = issueToken(account.getId(), account.getUserName(), account.getAccountType());
 
             HttpHeaders header = new HttpHeaders();
             header.add("Authorization", "Bearer " + token);
@@ -72,12 +72,14 @@ public class AccountController {
         }
     }
 
-    private String issueToken(String username, AccountType accountType) {
+    private String issueToken(long accountId, String username, AccountType accountType) {
         OffsetDateTime exp = OffsetDateTime.now().plusMinutes(10);
-
         Algorithm algorithm = Algorithm.HMAC256(AuthenticationSettings.SECRET_KEY);
 
         return JWT.create().withIssuer(AuthenticationSettings.ISSUER).withExpiresAt(Date.from(exp.toInstant()))
-                .withClaim("aud", username).withClaim("typ", accountType.name()).sign(algorithm);
+                .withClaim(AuthenticationSettings.ACCOUNTID, accountId)
+                .withClaim(AuthenticationSettings.USERNAME, username)
+                .withClaim(AuthenticationSettings.ACCOUNTTYPE, accountType.name())
+                .sign(algorithm);
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,21 +28,26 @@ public class TransactionController {
     @Autowired
     private TransactionManager transactionManager;
 
-    @GetMapping(path = "accounts/{accountId}/transactions/filter")
-    public List<TransactionResponse> byFilter(@PathVariable("accountId") Long accountId,
+    @GetMapping(path = "/accounts/{pathAccountId}/transactions/filter")
+    public List<TransactionResponse> byFilter(@PathVariable("pathAccountId") Long pathAccountId,
             @RequestParam(value = "transactionType", required = false) String transactionType,
             @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
             @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
 
-        return this.transactionManager.filter(accountId, transactionType, fromDate, toDate);
+        return this.transactionManager.filter(transactionType, fromDate, toDate);
     }
 
-    @PostMapping("accounts/{accountId}/transactions/deposit")
-    public ResponseEntity<?> depositTransaction(@PathVariable("accountId") Long accountId,
+    @PostMapping("/accounts/{pathAccountId}/transactions/deposit")
+    public ResponseEntity<?> depositTransaction(@RequestHeader("headerAccountId") Long headerAccountId,
+            @RequestHeader("accountType") String accountType, @PathVariable("pathAccountId") Long pathAccountId,
             @RequestBody TransactionRequest request) {
 
+        // if (!AccountType.valueOf(accountType).equals(AccountType.PLAYER)) {
+        // return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Permission denied");
+        // }
+
         try {
-            TransactionResponse transactionResponse = transactionManager.deposit(accountId, request);
+            TransactionResponse transactionResponse = transactionManager.deposit(pathAccountId, request);
             return ResponseEntity.ok(transactionResponse);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -49,12 +55,17 @@ public class TransactionController {
 
     }
 
-    @PostMapping("accounts/{accountId}/transactions/withdraw")
-    public ResponseEntity<?> withdrawTransaction(@PathVariable("accountId") Long accountId,
+    @PostMapping("/accounts/{pathAccountId}/transactions/withdraw")
+    public ResponseEntity<?> withdrawTransaction(@RequestHeader("headerAccountId") Long headerAccountId,
+            @RequestHeader("accountType") String accountType, @PathVariable("pathAccountId") Long pathAccountId,
             @RequestBody TransactionRequest request) {
 
+        // if (!AccountType.valueOf(accountType).equals(AccountType.PLAYER)) {
+        // return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Permission denied");
+        // }
+
         try {
-            TransactionResponse transactionResponse = transactionManager.withdraw(accountId, request);
+            TransactionResponse transactionResponse = transactionManager.withdraw(pathAccountId, request);
             return ResponseEntity.ok(transactionResponse);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

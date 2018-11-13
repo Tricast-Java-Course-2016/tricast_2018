@@ -42,7 +42,10 @@ public class AuthenticationFilter extends GenericFilterBean {
 
         final String token = authHeader.substring(7); // The part after "Bearer "
         Map<String, Claim> claims = validateToken(token);
-        request.setAttribute("claims", claims);
+
+        request.setAttribute("accountType", claims.get(AuthenticationSettings.ACCOUNTTYPE));
+        request.setAttribute("accountId", claims.get(AuthenticationSettings.ACCOUNTID));
+        request.setAttribute("username", claims.get(AuthenticationSettings.USERNAME));
 
         chain.doFilter(req, res);
     }
@@ -51,7 +54,8 @@ public class AuthenticationFilter extends GenericFilterBean {
         // BYPASS ALL FOR NOW
         return true;
         // return uri.equals("/sportsbook/accounts") && method.equals("post") ||
-        // uri.equals("/sportsbook/accounts/login");
+        // uri.equals("/sportsbook/accounts/login")
+        // || uri.equals("/sportsbook/error");
     }
 
     private Map<String, Claim> validateToken(String token) throws ServletException {
