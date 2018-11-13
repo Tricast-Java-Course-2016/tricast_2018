@@ -15,6 +15,9 @@ import com.tricast.controllers.requests.LeagueRequest;
 import com.tricast.controllers.responses.LeagueResponse;
 import com.tricast.managers.LeagueManager;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+
 @RestController
 @RequestMapping(path = "api/leagues")
 public class LeagueController {
@@ -28,6 +31,8 @@ public class LeagueController {
     }
 
     // Should be query params, both of them.
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	@GetMapping(path="/list/{search}")
     public List<LeagueResponse> findAll(String search) {
         return null;

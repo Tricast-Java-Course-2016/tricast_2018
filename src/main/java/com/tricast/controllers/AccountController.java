@@ -1,7 +1,5 @@
 package com.tricast.controllers;
 
-
-
 import java.time.OffsetDateTime;
 import java.util.Date;
 
@@ -73,13 +71,13 @@ public class AccountController {
     }
 
     private String issueToken(long accountId, String username, AccountType accountType) {
-        OffsetDateTime exp = OffsetDateTime.now().plusMinutes(10);
+        OffsetDateTime exp = OffsetDateTime.now().plusHours(6);
         Algorithm algorithm = Algorithm.HMAC256(AuthenticationSettings.SECRET_KEY);
 
         return JWT.create().withIssuer(AuthenticationSettings.ISSUER).withExpiresAt(Date.from(exp.toInstant()))
-                .withClaim(AuthenticationSettings.ACCOUNTID, accountId)
-                .withClaim(AuthenticationSettings.USERNAME, username)
-                .withClaim(AuthenticationSettings.ACCOUNTTYPE, accountType.name())
+                .withClaim(AuthenticationSettings.CLAIM_ACCOUNTID_IDENTIFIER, accountId)
+                .withClaim(AuthenticationSettings.CLAIM_USERNAME_IDENTIFIER, username)
+                .withClaim(AuthenticationSettings.CLAIM_ACCOUNTTYPE_IDENTIFIER, accountType.name())
                 .sign(algorithm);
     }
 }

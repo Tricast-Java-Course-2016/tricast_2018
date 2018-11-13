@@ -43,9 +43,9 @@ public class AuthenticationFilter extends GenericFilterBean {
         final String token = authHeader.substring(7); // The part after "Bearer "
         Map<String, Claim> claims = validateToken(token);
 
-        request.setAttribute("authentication.accountType", claims.get(AuthenticationSettings.ACCOUNTTYPE).asString());
-        request.setAttribute("authentication.accountId", claims.get(AuthenticationSettings.ACCOUNTID).asLong());
-        request.setAttribute("authentication.username", claims.get(AuthenticationSettings.USERNAME).asString());
+        request.setAttribute("authentication.accountType", claims.get(AuthenticationSettings.CLAIM_ACCOUNTTYPE_IDENTIFIER).asString());
+        request.setAttribute("authentication.accountId", claims.get(AuthenticationSettings.CLAIM_ACCOUNTID_IDENTIFIER).asLong());
+        request.setAttribute("authentication.username", claims.get(AuthenticationSettings.CLAIM_USERNAME_IDENTIFIER).asString());
 
         chain.doFilter(request, res);
     }
