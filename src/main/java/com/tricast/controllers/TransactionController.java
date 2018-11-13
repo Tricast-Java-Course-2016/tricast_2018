@@ -22,9 +22,6 @@ import com.tricast.controllers.responses.TransactionResponse;
 import com.tricast.managers.TransactionManager;
 import com.tricast.repositories.entities.AccountType;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-
 @RestController
 @RequestMapping(path = "api")
 public class TransactionController {
@@ -32,8 +29,6 @@ public class TransactionController {
     @Autowired
     private TransactionManager transactionManager;
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     @GetMapping(path = "/accounts/{accountId}/transactions/filter")
     public List<TransactionResponse> byFilter(@PathVariable("accountId") Long accountId,
             @RequestParam(value = "transactionType", required = false) String transactionType,
@@ -43,8 +38,6 @@ public class TransactionController {
         return this.transactionManager.filter(transactionType, fromDate, toDate);
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     @PostMapping("/accounts/{accountId}/transactions/deposit")
     public ResponseEntity<?> depositTransaction(@RequestAttribute("authentication.accountType") String accountType,
             @RequestAttribute("authentication.accountId") Long attributeAccountId,
@@ -67,8 +60,6 @@ public class TransactionController {
 
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     @PostMapping("/accounts/{accountId}/transactions/withdraw")
     public ResponseEntity<?> withdrawTransaction(@RequestAttribute("authentication.accountType") String accountType,
             @RequestAttribute("authentication.accountId") Long attributeAccountId,

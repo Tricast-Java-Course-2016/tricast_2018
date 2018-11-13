@@ -51,9 +51,7 @@ public class AuthenticationFilter extends GenericFilterBean {
     }
 
     private boolean bypassAuthentication(String uri, String method) {
-        // BYPASS ALL FOR NOW
-        // return true;
-        return uri.equals("/sportsbook/api/accounts") && method.equals("post")
+        return (uri.equals("/sportsbook/api/accounts") && method.equals("post"))
                 || uri.equals("/sportsbook/api/accounts/login") || uri.equals("/sportsbook/error");
     }
 

@@ -26,9 +26,6 @@ import com.tricast.managers.EventManager;
 import com.tricast.managers.exceptions.SportsbookException;
 import com.tricast.managers.helpers.OffsetDateTimeToCalendar;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-
 @RestController
 @RequestMapping(path = "api/events")
 public class EventController {
@@ -36,15 +33,11 @@ public class EventController {
     @Autowired
     private EventManager eventManager;
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	@GetMapping(path="/{id}")
     public EventResponse findById(@PathVariable("id") long id) {
 		return eventManager.findById(id);
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     @GetMapping(path = "/filter")
     public List<EventResponse> byFilter(
     		@RequestParam(value = "sport", required = false) String sport,
@@ -57,15 +50,11 @@ public class EventController {
     	return this.eventManager.filter(search, sport, league, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     @GetMapping(path = "/{id}/detail")
     public EventDetailResponse detail(@PathVariable("id") long id) {
     	return eventManager.detail(id);
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	@PostMapping
 	public EventResponse create(EventRequest eventRequest) {
 		return eventManager.create(eventRequest);
@@ -81,15 +70,11 @@ public class EventController {
         return null;
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     @GetMapping(path = "/{id}/odds")
     public EventDetailResponse showOdds(@PathVariable("id") long id) {
     	return eventManager.detail(id);
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
     @PostMapping(path="/{id}/odds")
 	public ResponseEntity<?> updateOdds(@RequestBody OddsRequest oddsRequest,@PathVariable("id") long id) {
 		try {

@@ -19,9 +19,6 @@ import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.BetManager;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-
 @RestController
 @RequestMapping(path = "api/bets")
 public class BetController {
@@ -41,8 +38,6 @@ public class BetController {
         return betManager.findById(id);
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	@PostMapping
 	public ResponseEntity<?> createBet(@RequestBody BetRequest newBet) {
 
@@ -56,8 +51,6 @@ public class BetController {
 		}
 	}
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 	@GetMapping(path="eventid/{id}")
 	public List<BetResponse> findByEventId(@PathVariable("id") long id) {
 		return betManager.findByEventId(id);
