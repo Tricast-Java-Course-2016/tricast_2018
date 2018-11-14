@@ -121,37 +121,37 @@ public class BetManagerImpl implements BetManager {
             return null;
         }
 
-        String betType=bettypeRepository.findById(requestObject.getBettypeId()).getDescription().getValue();
+        try {
+        	String betType=bettypeRepository.findById(requestObject.getBettypeId()).getDescription().getValue();
+            if(betType.equals(BetTypes.Single.getValue())) {
+            	try {
+                	return placeSingleBets(requestObject);
+            	}
+            	catch(SportsbookException e) {
+            		throw e;
+            	}
 
-        if(betType.equals(BetTypes.Single.getValue())) {
-        	try {
-            	return placeSingleBets(requestObject);
-        	}
-        	catch(SportsbookException e) {
-        		throw e;
-        	}
-
+            }
+            else if(betType.equals(BetTypes.Double.getValue())) {
+            	try {
+                	return placeDoubleBets(requestObject);
+            	}
+            	catch(SportsbookException e) {
+            		throw e;
+            	}
+            }
+            else if(betType.equals(BetTypes.Treble.getValue())) {
+            	try {
+                	return placeTrebleBets(requestObject);
+            	}
+            	catch(SportsbookException e) {
+            		throw e;
+            	}
+            }
+        }catch(Exception e) {
+        	throw new SportsbookException("Failed to place Bet due to bad BetTypeID.");
         }
-        else if(betType.equals(BetTypes.Double.getValue())) {
-        	try {
-            	return placeDoubleBets(requestObject);
-        	}
-        	catch(SportsbookException e) {
-        		throw e;
-        	}
-        }
-        else if(betType.equals(BetTypes.Treble.getValue())) {
-        	try {
-            	return placeTrebleBets(requestObject);
-        	}
-        	catch(SportsbookException e) {
-        		throw e;
-        	}
-        }
-        else {
-        	/*Doesn't work.*/
-        	throw new SportsbookException("Failed to place Treble Bet due to bad BetTypeID.");
-        }
+        return null;
     }
 
 
@@ -405,7 +405,7 @@ public class BetManagerImpl implements BetManager {
     	map.setOdds(requestObject.getOutcomeOdds().get(currentId));
 
     	if(map.getBetId()==null || map.getOutcomeID()==null || map.getOdds()==null) {
-            throw new SportsbookException("Failed to place Treble Bet due to bad OutcomeIDs.");
+            throw new SportsbookException("Failed to place Bet due to bad OutcomeIDs.");
         }
 
         return map;
