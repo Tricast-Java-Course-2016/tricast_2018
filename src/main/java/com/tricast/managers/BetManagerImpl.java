@@ -121,6 +121,9 @@ public class BetManagerImpl implements BetManager {
             return null;
         }
 
+        if(requestObject.getBetStake().compareTo(BigDecimal.valueOf(0))!=1)
+        	throw new SportsbookException("Stake has to be greater than 0.");
+        
         try {
         	String betType=bettypeRepository.findById(requestObject.getBettypeId()).getDescription().getValue();
             if(betType.equals(BetTypes.Single.getValue())) {
@@ -148,7 +151,10 @@ public class BetManagerImpl implements BetManager {
             		throw e;
             	}
             }
-        }catch(Exception e) {
+        }catch(SportsbookException e) {
+        	throw e;
+        }
+        catch(Exception e) {
         	throw new SportsbookException("Failed to place Bet due to bad BetTypeID.");
         }
         return null;
@@ -186,7 +192,9 @@ public class BetManagerImpl implements BetManager {
     	Iterator <Long> iterator=outcomeIds.iterator();
     	List <Long> outcomeIdList;
 
-
+    	if(!checkAccountBalance(requestObject, NumberOfOutcomes))
+    		throw new SportsbookException("Failed to place Bet due to insufficient account balance.");
+    	
         for(int i=0;i<NumberOfOutcomes;i++) {
 
         	currentId=iterator.next();
@@ -263,7 +271,8 @@ public class BetManagerImpl implements BetManager {
 
     	combinations=getCombinations(idList);
 
-
+    	if(!checkAccountBalance(requestObject, combinations.size()))
+    		throw new SportsbookException("Failed to place Bet due to insufficient account balance.");
 
     	for(int i=0;i<combinations.size();i++) {
 
@@ -345,6 +354,8 @@ public class BetManagerImpl implements BetManager {
     			throw e;
     		}
 
+        	if(!checkAccountBalance(requestObject, 1))
+        		throw new SportsbookException("Failed to place Bet due to insufficient account balance.");
 
     		iterator=outcomeIds.iterator();
 
@@ -415,8 +426,7 @@ public class BetManagerImpl implements BetManager {
     	try{
     		Transaction transaction = new Transaction();
     		transaction.setAccount(accountRepository.findById(requestObject.getAccountId()));
-
-    		/*Check account balance*/
+    		
     		transaction.setAmount(requestObject.getBetStake().negate());
     		transaction.setBet(currentBet);
     		transactionDescriptionBuilder(requestObject,outcomeIds,transaction);
@@ -438,5 +448,17 @@ public class BetManagerImpl implements BetManager {
             		+outcomeRepository.findById(currentId).getDescription()+ " @ "+
         			outcomeRepository.findById(currentId).getOdds() +" ");
     	}
+    }
+    
+    private boolean checkAccountBalance(BetRequest requestObject, int number) {
+    	List<Transaction> allTransactions = transactionRepository.findByAccount_id(requestObject.getAccountId());
+        BigDecimal currentBalance =
+                allTransactions.stream().map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        
+        BigDecimal sumStake=requestObject.getBetStake().multiply(BigDecimal.valueOf(number));
+        
+        if(sumStake.compareTo(currentBalance)==1) return false;
+        else return true;
+        
     }
 }
