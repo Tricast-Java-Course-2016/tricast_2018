@@ -34,8 +34,13 @@ public class BetController {
     }
 
     @GetMapping(path="/{id}")
-    public BetResponse findById(@PathVariable("id") Long id) {
-        return betManager.findById(id);
+    public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+        try {
+			BetResponse bet = betManager.findById(id);
+			return ResponseEntity.ok(bet);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
     }
 
 	@PostMapping

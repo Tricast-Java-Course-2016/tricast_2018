@@ -11,7 +11,7 @@ public interface BetManager {
 
     List<BetResponse> findAll();
 
-    BetResponse findById(Long id);
+    BetResponse findById(Long id) throws SportsbookException;
     
     List<BetResponse> findByEventId(long id);
 

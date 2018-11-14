@@ -78,20 +78,24 @@ public class BetManagerImpl implements BetManager {
     }
 
     @Override
-    public BetResponse findById(Long id) {
+    public BetResponse findById(Long id) throws SportsbookException {
 
-		Bet bet = betRepository.findById(id);
+    	try {
+    		Bet bet = betRepository.findById(id);
+    		BetResponse betBean = BetResponseMapper.mapToResponse(bet,
+    				betRepository,
+            		transactionRepository,
+            		bettypeRepository,
+            		betoutcomemapRepository,
+            		outcomeRepository,
+            		marketRepository,
+            		eventRepository);
 
-		BetResponse betBean = BetResponseMapper.mapToResponse(bet,
-				betRepository,
-        		transactionRepository,
-        		bettypeRepository,
-        		betoutcomemapRepository,
-        		outcomeRepository,
-        		marketRepository,
-        		eventRepository);
-
-		return betBean;
+    		return betBean;
+    	}
+    	catch(Exception e) {
+    		throw new SportsbookException("Bad betID.");
+    	}
     }
 
 	@Override
