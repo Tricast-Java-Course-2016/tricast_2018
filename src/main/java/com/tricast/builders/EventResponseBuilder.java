@@ -16,7 +16,7 @@ public class EventResponseBuilder {
         eventResponse.setDescription(event.getDescription());
         eventResponse.setLeagueId(event.getLeague().getId());
         eventResponse.setStartTime(event.getStartTime());
-        eventResponse.setStatus(event.getStatus());
+        eventResponse.setStatus(event.getStatus().getValue());
         List<Long> competitorIds = new ArrayList<>();
 
         // AKOS jobb lenne olyan adatokat is visszaküldeni amit még meg akarunk jeleníteni a résztvevőkről

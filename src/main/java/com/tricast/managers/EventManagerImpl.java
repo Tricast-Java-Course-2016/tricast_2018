@@ -90,7 +90,7 @@ public class EventManagerImpl implements EventManager {
     	event.setDescription(eventRequest.getDescription());
 
     	event.setStartTime( OffsetDateTimeToCalendar.convert(eventRequest.getStartTime()) );
-    	event.setStatus(eventRequest.getStatus().toString());
+    	event.setStatus(eventRequest.getStatus());
     	event.setEventType(eventTypeRepository.findById( eventRequest.getEventTypeId() ));
     	event.setLeague( leagueRepository.findOne(eventRequest.getLeagueId()) );
     	
