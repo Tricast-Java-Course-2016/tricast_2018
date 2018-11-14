@@ -44,7 +44,6 @@ public class BetResponseMapper {
         responseObject.setAccountId(entityObject.getAccountId().getId());
         
         
-        /*Needs more work (toString) when Event status Enum is done.*/
         responseObject.setBetStatus("CLOSED");
         for(BetOutcomeMap currentMap : betOutcomeMap) {
         	statuses.add(eventRepository.findById(marketRepository.findById(outcomeRepository.findById(
@@ -71,7 +70,7 @@ public class BetResponseMapper {
         responseObject.setEvent(events);
         responseObject.setMarketDescription(markets);
         responseObject.setBetType(bettypeRepository.findById(entityObject.getBetTypeId().getId()).getDescription().getValue());
-        responseObject.setStake(transactionRepository.findByBet(entityObject).getAmount());
+        responseObject.setStake(transactionRepository.findByBet(entityObject).getAmount().negate());
         responseObject.setOdds(odds);      
         responseObject.setSumOdds(sumodds);
         responseObject.setPotentialWin(responseObject.getStake().multiply(BigDecimal.valueOf(responseObject.getSumOdds())));
