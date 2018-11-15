@@ -23,8 +23,8 @@ public class LeagueController {
 	private LeagueManager leagueManager;
 
 	@GetMapping(path="/{id}")
-    public LeagueResponse findById(@PathVariable("id") Long $id) {
-        return null;
+    public LeagueResponse findById(@PathVariable("id") Long id) {
+        return leagueManager.findById(id);
     }
 
     // Should be query params, both of them.
@@ -35,7 +35,7 @@ public class LeagueController {
 
 	@GetMapping(path="/list")
     public List<LeagueResponse> findAll() {
-        return null;
+		return leagueManager.findAll();
     }
 
 	@PostMapping

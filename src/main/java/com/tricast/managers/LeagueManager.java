@@ -2,13 +2,14 @@ package com.tricast.managers;
 
 import java.util.List;
 
+import com.tricast.controllers.responses.LeagueResponse;
 import com.tricast.repositories.entities.League;;
 
 public interface LeagueManager {
 
-	List<League> findAll();
+	List<LeagueResponse> findAll();
 
-	League findById(Long id);
+	LeagueResponse findById(Long id);
 
 	League create(League league);
 

@@ -37,6 +37,11 @@ public class EventController {
     public EventResponse findById(@PathVariable("id") long id) {
 		return eventManager.findById(id);
     }
+	
+	@GetMapping(path="list")
+	public List<EventResponse> findAll(){
+		return eventManager.findAll();
+	}
 
     @GetMapping(path = "/filter")
     public List<EventResponse> byFilter(

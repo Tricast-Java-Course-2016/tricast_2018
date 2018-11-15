@@ -71,8 +71,12 @@ public class EventManagerImpl implements EventManager {
     private PeriodTypeRepository periodTypeRepository;
 
     @Override
-    public List<Event> findAll() {
-        return eventRepository.findAll();
+    public List<EventResponse> findAll() {
+    	List<EventResponse> eventResponses = new ArrayList<EventResponse>();
+        for (Event event : eventRepository.findAll()) {
+			eventResponses.add(EventResponseBuilder.build(event, competitorRepository.findByEventId(event.getId())));
+		}
+    	return eventResponses;
     }
 
     @Override

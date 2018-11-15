@@ -13,7 +13,7 @@ import com.tricast.repositories.entities.Event;
 
 public interface EventManager {
 
-    List<Event> findAll();
+    List<EventResponse> findAll();
 
     EventResponse findById(Long id);
 
