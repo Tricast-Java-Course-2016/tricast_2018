@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tricast.controllers.requests.CompetitorRequest;
 import com.tricast.controllers.responses.CompetitorResponse;
-import com.tricast.managers.LeagueManager;
+import com.tricast.repositories.LeagueRepository;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.League;
 
 public class CompetitorResponseMapper {
 	@Autowired
-	private LeagueManager leagueManager;
+	private LeagueRepository leagueRepository;
 	
 	public CompetitorResponse entityToResponse(Competitor competitor) {
 		CompetitorResponse response = new CompetitorResponse();
@@ -31,7 +31,7 @@ public class CompetitorResponseMapper {
 		Set<League> leagues = new HashSet<League>();
 		
 		for (Long id : leagueIds) {
-			leagues.add(leagueManager.findById(id));
+			leagues.add(leagueRepository.findById(id));
 		}
 		return competitor;
 	}
