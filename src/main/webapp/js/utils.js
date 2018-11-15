@@ -58,7 +58,7 @@ window.SB.Utils = {
             errorCallback = SB.Utils.defaultErrorHandling;
         }
         
-        $.ajax({
+        return $.ajax({
             type : 'POST',
             dataType : 'json',
             contentType : "application/json;charset=utf-8",
@@ -80,10 +80,10 @@ window.SB.Utils = {
     getAjax : function getAjax(url, player, successCallback, errorCallback) {
         
         if(!errorCallback) {
-            errorCallback = defaultErrorHandling(xhr);
+            errorCallback = SB.Utils.defaultErrorHandling;
         }
         
-        $.ajax({
+        return $.ajax({
             type : 'GET',
             dataType : 'json',
             contentType : "application/json;charset=utf-8",
