@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Sportsbook Manager</title>
+        <meta name="description" content="Sportsbook Manager">
+        <meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+		
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+        <script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+    
+        <script type="text/javascript" src="../js/utils.js"></script>
+        <script type="text/javascript" src="events.js"></script>
+        <script id="event-row-template" type="text/x-handlebars-template">
+			{{#each events}}
+		    {{#with this}}
+		    	<tr>
+		        	<td>{{title}}</td>
+		            <td>{{league}}</td>
+		            <td>{{startDate}}</td>
+		            <td>{{status}}</td>
+					<td style="padding: 6px 15px" class="text-right"><button data-target="#edit-modal" data-toggle="modal"="modal" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-edit"></button></td>
+		    	</tr>
+		    {{/with}}
+		    {{/each}}
+		</script>
+    </head>
+    <body>
+    	<div class="pb-5" id="navbar-content"></div>
+        <div class="container">
+        	<div class="row">
+		        <div class="col-md-12">
+		          <table id="events-table" class="table pb-0 mb-1">
+		            <thead>
+		              <tr>
+		                <th>Esemény</th>
+		                <th>Liga</th>
+		                <th>Esemény kezdete</th>
+		                <th>Státusza</th>
+		                <th style="padding: 7px 15px" class="text-right"><button style="padding: 7px 9px;" data-target="#edit-modal" data-toggle="modal" class="btn btn-sm btn-default fa fa-plus">
+		                  </button></th>
+		              </tr>
+		            </thead>
+		            <tbody></tbody>
+		          </table>
+		        </div>
+		      </div>
+        </div>
+    </body>
+</html>
