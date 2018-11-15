@@ -49,6 +49,11 @@ public class EventController {
 
     	return this.eventManager.filter(search, sport, league, OffsetDateTimeToCalendar.convert(fromDate), OffsetDateTimeToCalendar.convert(toDate));
     }
+    
+    @GetMapping(path = "/listOpen")
+    public List <EventResponse> listOpen(){
+    	return eventManager.listOpen();
+    }
 
     @GetMapping(path = "/{id}/detail")
     public EventDetailResponse detail(@PathVariable("id") long id) {

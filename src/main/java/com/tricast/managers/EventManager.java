@@ -28,4 +28,6 @@ public interface EventManager {
 	List<EventResponse> filter(String search, String sport, String league, Calendar fromDate, Calendar toDate) throws SportsbookException;
 
 	EventDetailResponse updateOdds(OddsRequest oddsRequest,Long eventId) throws SportsbookException;
+	
+	List <EventResponse> listOpen();
 }

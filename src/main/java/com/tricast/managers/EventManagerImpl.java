@@ -195,5 +195,15 @@ public class EventManagerImpl implements EventManager {
     			, eventRepository, marketRepository, outcomeRepository, periodTypeRepository);
 
     }
+    
+    @Override
+    public List <EventResponse> listOpen(){
+    	List <Event> events = eventRepositoryCustom.listOpen();
+    	List <EventResponse> responses=new ArrayList <EventResponse>();
+    	for(Event currentEvent : events) {
+    		responses.add(EventResponseBuilder.build(currentEvent, this.competitorRepository.findByEventId(currentEvent.getId())));
+    	}
+    	return responses;
+    }
 
 }

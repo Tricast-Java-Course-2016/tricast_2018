@@ -11,6 +11,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.tricast.repositories.customs.EventRepositoryCustom;
 import com.tricast.repositories.entities.Event;
+import com.tricast.repositories.entities.EventStatusTypes;
 import com.tricast.repositories.entities.QEvent;
 
 @Repository
@@ -45,5 +46,19 @@ public class EventRepositoryCustomImpl extends QueryDslRepositorySupport impleme
         }
 
         return query.fetch();
+    }
+    
+    @Override
+    public List <Event> listOpen(){
+    	QEvent event = QEvent.event;
+
+
+        JPQLQuery<Event> query = from(event);
+        
+        BooleanExpression statusFilter = event.status.eq(EventStatusTypes.OPEN);
+        query = query.where(statusFilter);
+        
+        return query.fetch();
+        		
     }
 }
