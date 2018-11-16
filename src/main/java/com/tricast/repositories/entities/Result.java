@@ -36,7 +36,7 @@ public class Result implements Serializable {
 	@JoinColumn(name = "periodtypeid")
 	private PeriodType periodTypeId;
 	
-	@ManyToOne
+	//@ManyToOne
 	@Column(name = "eventcompetitormapid")
 	private Long eventCompetitorMapId;
 
