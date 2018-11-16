@@ -2,6 +2,7 @@ package com.tricast.controllers.requests;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,10 +18,10 @@ public class EventRequest implements Serializable {
 	private long leagueId;
     // For Horse Racing only, Football should be generated from the Competitors
 	private String description;
-    // This should be an Enum. Should only be used in an Update.
 	private EventStatusTypes status;
-	private OffsetDateTime startTime;
+	private Calendar startTime;
 	private List<Long> competitorIds;
+	private List<MarketForEventRequest> markets;
 	
 	public long getEventTypeId() {
 		return eventTypeId;
@@ -50,11 +51,10 @@ public class EventRequest implements Serializable {
 		this.status = status;
 	}
 	
-	public OffsetDateTime getStartTime() {
+	public Calendar getStartTime() {
 		return startTime;
 	}
-	@DateTimeFormat(iso = ISO.DATE_TIME)
-	public void setStartTime(OffsetDateTime startTime) {
+	public void setStartTime(Calendar startTime) {
 		this.startTime = startTime;
 	}
 	
@@ -63,5 +63,12 @@ public class EventRequest implements Serializable {
 	}
 	public void setCompetitorIds(List<Long> competitorIds) {
 		this.competitorIds = competitorIds;
+	}
+	
+	public List<MarketForEventRequest> getMarkets() {
+		return markets;
+	}
+	public void setMarkets(List<MarketForEventRequest> markets) {
+		this.markets = markets;
 	}
 }

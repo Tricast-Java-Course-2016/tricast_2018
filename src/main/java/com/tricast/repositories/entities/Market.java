@@ -15,6 +15,9 @@ import javax.persistence.Table;
 @Table(name = "MARKETS")
 public class Market implements Serializable {
 
+	public static final int ID_WDW = 1;
+	public static final int ID_OUTRIGHT = 9;
+	
 	/**
 	 * 
 	 */

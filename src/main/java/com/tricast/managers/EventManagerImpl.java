@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.tricast.builders.EventDetailResponseBuilder;
 import com.tricast.builders.EventResponseBuilder;
 import com.tricast.controllers.requests.EventRequest;
+import com.tricast.controllers.requests.MarketForEventRequest;
 import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
@@ -25,6 +26,7 @@ import com.tricast.repositories.EventRepository;
 import com.tricast.repositories.EventTypeRepository;
 import com.tricast.repositories.LeagueRepository;
 import com.tricast.repositories.MarketRepository;
+import com.tricast.repositories.MarketTypeRepository;
 import com.tricast.repositories.OutcomeRepository;
 import com.tricast.repositories.PeriodTypeRepository;
 import com.tricast.repositories.SportRepository;
@@ -33,6 +35,7 @@ import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.EventCompetitorMap;
 import com.tricast.repositories.entities.League;
+import com.tricast.repositories.entities.Market;
 import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Sport;
 
@@ -63,6 +66,8 @@ public class EventManagerImpl implements EventManager {
     @Autowired
     private OutcomeRepository outcomeRepository;
     
+    @Autowired
+    private MarketTypeRepository marketTypeRepository;
 
     @Autowired
     private MarketRepository marketRepository;
@@ -88,12 +93,12 @@ public class EventManagerImpl implements EventManager {
 
     @Transactional
     @Override
-    public EventResponse create(EventRequest eventRequest) {
+    public EventResponse create(EventRequest eventRequest) throws SportsbookException {
     	Event event = new Event();
     	
     	event.setDescription(eventRequest.getDescription());
 
-    	event.setStartTime( OffsetDateTimeToCalendar.convert(eventRequest.getStartTime()) );
+    	event.setStartTime( eventRequest.getStartTime() );
     	event.setStatus(eventRequest.getStatus());
     	event.setEventType(eventTypeRepository.findById( eventRequest.getEventTypeId() ));
     	event.setLeague( leagueRepository.findOne(eventRequest.getLeagueId()) );
@@ -111,9 +116,45 @@ public class EventManagerImpl implements EventManager {
 			eventCompetitorMapRepository.save(eventCompetitorMap);
 		}
     		
+    	for (MarketForEventRequest marketData : eventRequest.getMarkets()) {
+			Market market = new Market();
+			market.setEventId(event);
+			market.setMarketTypeId(marketTypeRepository.findById( marketData.getMarketTypeId() ));
+			market.setPeriodTypeId(periodTypeRepository.findById( marketData.getPeriodTypeId() ));
+			market.setDescription(event.getLeague().getDescription() + " - " + event.getDescription() + " - " + market.getMarketTypeId().getDescription() );
+			marketRepository.save(market);
+			
+			
+			switch (market.getMarketTypeId().getId().intValue()) {
+			case Market.ID_WDW:
+				if (competitors.size() != 2)
+					throw new SportsbookException("Pontosan 2 darab csapat szerepelhet egy WDW típusú marketen!");
+				
+				saveOutcome(competitors.get(0).getDescription(), "1", market);
+				saveOutcome("Döntetlen", "X", market);
+				saveOutcome(competitors.get(1).getDescription(), "2", market);
+				break;
+
+			case Market.ID_OUTRIGHT:
+				int index = 1;
+				for (Competitor competitor : competitors) {
+					saveOutcome(competitor.getDescription(), Integer.toString( index++ ), market);
+				}
+				break;
+			}
+		}
+    	
         return EventResponseBuilder.build(event, competitors);
     }
 
+    private void saveOutcome(String description, String outcomeCode, Market market) {
+    	Outcome outcome = new Outcome();
+    	outcome.setDescription(description);
+    	outcome.setOutcomeCode(outcomeCode);
+    	outcome.setMarket(market);
+    	outcomeRepository.save(outcome);
+    }
+    
     @Override
     public Event update(Event event) {
         return eventRepository.save(event);

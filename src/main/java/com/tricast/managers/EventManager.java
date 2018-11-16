@@ -17,7 +17,7 @@ public interface EventManager {
 
     EventResponse findById(Long id);
 
-    EventResponse create(EventRequest event);
+    EventResponse create(EventRequest event) throws SportsbookException;
 
     Event update(Event event);
 
