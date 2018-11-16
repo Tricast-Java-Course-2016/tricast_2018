@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html class="no-js">
-    <head>
-        <meta charset="utf-8"/>
-        <title>Sportsbook Manager</title>
-        <meta name="description" content="Sportsbook Manager">
-        <meta name="viewport" content="width=device-width">
+<head>
+<meta charset="utf-8" />
+<title>Sportsbook Manager</title>
+<meta name="description" content="Sportsbook Manager">
+<meta name="viewport" content="width=device-width">
 
-		<link rel="stylesheet" href="../css/bootstrap.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-		
-        <script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
-        <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
-		<script type="text/javascript" src="../js/lib/moment.min.js"></script>
-        <script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
-    
-        <script type="text/javascript" src="../js/utils.js"></script>
-        <script type="text/javascript" src="events.js"></script>
-        <script id="event-row-template" type="text/x-handlebars-template">
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+	type="text/css">
+
+<script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+<script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="events.js"></script>
+<script id="event-row-template" type="text/x-handlebars-template">
 			{{#each events}}
-		    {{#with this}}
 		    	<tr>
 		        	<td>{{title}}</td>
 		            <td>{{league}}</td>
@@ -26,30 +27,105 @@
 		            <td>{{status}}</td>
 					<td style="padding: 6px 15px" class="text-right"><button data-target="#edit-modal" data-toggle="modal"="modal" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-edit"></button></td>
 		    	</tr>
-		    {{/with}}
 		    {{/each}}
-		</script>
-    </head>
-    <body>
-    	<div class="pb-5" id="navbar-content"></div>
-        <div class="container">
-        	<div class="row">
-		        <div class="col-md-12">
-		          <table id="events-table" class="table pb-0 mb-1">
-		            <thead>
-		              <tr>
-		                <th>Esemény</th>
-		                <th>Liga</th>
-		                <th>Esemény kezdete</th>
-		                <th>Státusza</th>
-		                <th style="padding: 7px 15px" class="text-right"><button style="padding: 7px 9px;" data-target="#edit-modal" data-toggle="modal" class="btn btn-sm btn-default fa fa-plus">
-		                  </button></th>
-		              </tr>
-		            </thead>
-		            <tbody></tbody>
-		          </table>
-		        </div>
-		      </div>
-        </div>
-    </body>
+</script>
+<script id="period-market-type-table-template" type="text/x-handlebars-template">
+	<tr>
+		<td></td>
+		{{#each periods}}
+		<th style="text-align: center;">{{description}}</th>
+		{{/each}}
+	</tr>
+	{{#each marketTypes}}
+	<tr data-sport-id="{{sportId}}" data-market-type-id="{{id}}">
+		<th>{{description}}</th>
+		{{#each ../periods}}
+		<td style="text-align: center;"><input data-period-type-id="{{id}}" type="checkbox"></td>
+		{{/each}}
+	</tr>
+	{{/each}}
+</script>
+</head>
+<body>
+	<div class="pb-5" id="navbar-content"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<table id="events-table" class="table pb-0 mb-5">
+					<thead>
+						<tr>
+							<th>Esemény</th>
+							<th>Liga</th>
+							<th>Esemény kezdete</th>
+							<th>Státusza</th>
+							<th style="padding: 7px 15px" class="text-right">
+								<button style="padding: 7px 9px;" 
+								data-target="#new-event-modal" data-toggle="modal" 
+								class="btn btn-sm btn-default fa fa-plus"></button>
+							</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div id="new-event-modal" class="modal">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Sportesemény létrehozása</h5>
+					<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+				</div>
+				<div class="modal-body">
+					<form id="new-event-form">
+						<div class="form-group">
+							<label>Név:</label> 
+							<input name="description" type="text" class="form-control" placeholder="Sportesemény neve" required>
+						</div>
+						<div class="form-group">
+							<label>Esemény típusa:</label> 
+							<select name="eventTypeId" class="custom-select" required>
+								<option value="">- Válassz esemény típust -</option>
+								<option value="1">GAME EVENT</option>
+								<option value="2">RANK EVENT</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Liga:</label> 
+							<select name="leagueId" class="custom-select" required>
+								<option value="">- Válassz ligát -</option>
+								{{#each leagues}}
+								<option data-sport-id="{{sportId}}" value="{{id}}">{{description}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Résztvevők:</label> 
+							<select class="custom-select" multiple="multiple" data-custom-input="true" data-name="competitorIds" data-input-type="multiple-select" required>
+								{{#each competitors}}
+								<option value="{{id}}">{{description}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="form-group" data-custom-input="true" data-name="startTime" data-input-type="date-time">
+							<label>Dátum:</label> 
+							<input type="date" class="form-control" placeholder="Esemény kezdete" required>
+							<input type="time" class="form-control" placeholder="Esemény kezdete" required>
+						</div>
+						<input type="hidden" name="status" value="CLOSED">
+						<div>
+							<table id="period-market-type-table" class="table table-border pt-2" data-custom-input="true" data-name="markets" data-input-type="period-market-type-matrix"></table>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" form="new-event-form" class="btn btn-primary">Mentés</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
