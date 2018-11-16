@@ -14,16 +14,16 @@ import com.tricast.controllers.responses.ResultResponse;
 import com.tricast.managers.ResultManager;
 
 @RestController
-@RequestMapping(path = "api/results")
+@RequestMapping(path = "api")
 public class ResultController {
 
     @Autowired
     private ResultManager resultManager;
 
     // Instead of this, get a list of results for the screen, by eventId.
-    @GetMapping(path = "eventid/{id}")
-    public List <ResultResponse> findById(@PathVariable("id") long id) {
-        return resultManager.findById(id);
+    @GetMapping(path = "events/{id}/results")
+    public List <ResultResponse> findByEventId(@PathVariable("id") long eventId) {
+        return resultManager.findByEventId(eventId);
     }
 
     @PostMapping

@@ -10,7 +10,7 @@ public interface ResultManager {
 	
     List<Result> findAll();
 
-    List<ResultResponse> findById(Long id);
+    List<ResultResponse> findByEventId(Long eventId);
 
     ResultResponse create(ResultRequest requestObject);
 
