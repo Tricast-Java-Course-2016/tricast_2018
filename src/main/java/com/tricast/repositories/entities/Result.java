@@ -36,9 +36,9 @@ public class Result implements Serializable {
 	@JoinColumn(name = "periodtypeid")
 	private PeriodType periodTypeId;
 	
-	//@ManyToOne
-	@Column(name = "eventcompetitormapid")
-	private Long eventCompetitorMapId;
+	@ManyToOne
+	@JoinColumn(name = "eventcompetitormapid")
+	private EventCompetitorMap eventCompetitorMap;
 
 	public Long getId() {
 		return id;
@@ -72,13 +72,11 @@ public class Result implements Serializable {
 		this.periodTypeId = periodTypeId;
 	}
 
-	public long getEventCompetitorMapId() {
-		return eventCompetitorMapId;
+	public EventCompetitorMap getEventCompetitorMap() {
+		return eventCompetitorMap;
 	}
 
-	public void setEventCompetitorMapId(long eventCompetitorMapId) {
-		this.eventCompetitorMapId = eventCompetitorMapId;
+	public void setEventCompetitorMap(EventCompetitorMap eventCompetitorMap) {
+		this.eventCompetitorMap = eventCompetitorMap;
 	}
-	
-	
 }

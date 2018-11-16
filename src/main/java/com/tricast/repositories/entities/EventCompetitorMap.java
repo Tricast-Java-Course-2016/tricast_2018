@@ -17,35 +17,35 @@ public class EventCompetitorMap implements Serializable {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
 	@Column(name = "competitorid")
-	private Long competitorId;
+	private long competitorId;
 	
 	@Column(name = "eventid")
-	private Long eventId;
+	private long eventId;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Long getCompetitorId() {
+	public long getCompetitorId() {
 		return competitorId;
 	}
 
-	public void setCompetitorId(Long competitorId) {
+	public void setCompetitorId(long competitorId) {
 		this.competitorId = competitorId;
 	}
 
-	public Long getEventId() {
+	public long getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(Long eventId) {
+	public void setEventId(long eventId) {
 		this.eventId = eventId;
 	}
 }

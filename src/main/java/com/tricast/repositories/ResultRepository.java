@@ -14,5 +14,5 @@ public interface ResultRepository extends CrudRepository<Result, Long> {
 
 	List<ResultResponse> findById(Long id);
 	
-	//Result findByEventCompetitorMap_Id(long eventCompetitorMapId);
+	Result findByEventCompetitorMap_Id(long eventCompetitorMapId);
 }
