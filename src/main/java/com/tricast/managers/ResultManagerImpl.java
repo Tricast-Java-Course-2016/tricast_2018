@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tricast.controllers.requests.ResultRequest;
 import com.tricast.controllers.responses.ResultResponse;
+import com.tricast.controllers.responses.ResultsByEventsResponse;
 import com.tricast.managers.mappers.ResultResponseMapper;
 import com.tricast.repositories.CompetitorRepository;
 import com.tricast.repositories.EventCompetitorMapRepository;
@@ -57,9 +58,10 @@ public class ResultManagerImpl implements ResultManager {
 
 
 	@Override
-	public List<ResultResponse> findByEventId(Long eventId) {
+	public List<ResultsByEventsResponse> findByEventId(Long eventId) {
 		List<EventCompetitorMap> eventCompetitorMap = eventCompetitorMapRepository.findByEventId(eventId);
 		List<Competitor> competitors = competitorRepository.findByEventId(eventId);
+		Event event = eventRepository.findById(eventId);
 		
 		List<Result> result = new ArrayList<Result>();
 		
@@ -69,25 +71,24 @@ public class ResultManagerImpl implements ResultManager {
 			}
 		}
 		
-		List<ResultResponse> responseObjectsList = new ArrayList<ResultResponse>();
+		List<ResultsByEventsResponse> responseObjectsList = new ArrayList<ResultsByEventsResponse>();
+		List<ResultResponse> resultResponseList = new ArrayList<ResultResponse>();
 		
-		ResultResponse competitorAndPeriodResponse = new ResultResponse();
 		ResultResponse responseObject;
-		
 		
 		for(Result currentResult : result) {
 			responseObject = new ResultResponse();
 			responseObject.setId(currentResult.getId());
-			responseObject.setPeriodTypeId(currentResult.getPeriodTypeId());
-			responseObject.setResultTypeId(currentResult.getResultTypeId());			
+			responseObject.setComeptitorId(currentResult.getEventCompetitorMap().getCompetitorId());
+			responseObject.setPeriodTypeId(currentResult.getPeriodTypeId().getId());
+			responseObject.setResultTypeId(currentResult.getResultTypeId().getId());			
 			responseObject.setResult(currentResult.getResult());
-			responseObjectsList.add(responseObject);
+			resultResponseList.add(responseObject);
 		}
 		
-		competitorAndPeriodResponse.setCompetitors(competitors);
-		//competitorAndPeriodResponse.setPeriodTypes(periodTypes);
-		
-		responseObjectsList.add(competitorAndPeriodResponse);
+		for(ResultsByEventsResponse currentObject : responseObjectsList) {
+			//responseObjectsList.add(currentObject.setResultResponseList(resultResponseList));
+		}
 		
 		return responseObjectsList;
 	}

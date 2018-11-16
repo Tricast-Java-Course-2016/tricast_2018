@@ -4,13 +4,14 @@ import java.util.List;
 
 import com.tricast.controllers.requests.ResultRequest;
 import com.tricast.controllers.responses.ResultResponse;
+import com.tricast.controllers.responses.ResultsByEventsResponse;
 import com.tricast.repositories.entities.Result;
 
 public interface ResultManager {
 	
     List<Result> findAll();
 
-    List<ResultResponse> findByEventId(Long eventId);
+    List<ResultsByEventsResponse> findByEventId(Long eventId);
 
     ResultResponse create(ResultRequest requestObject);
 

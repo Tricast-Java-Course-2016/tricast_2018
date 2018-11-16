@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.ResultRequest;
 import com.tricast.controllers.responses.ResultResponse;
+import com.tricast.controllers.responses.ResultsByEventsResponse;
 import com.tricast.managers.ResultManager;
 import com.tricast.repositories.entities.Result;
 
@@ -28,7 +29,7 @@ public class ResultController {
 
     // Instead of this, get a list of results for the screen, by eventId.
     @GetMapping(path = "events/{id}/results")
-    public List <ResultResponse> findByEventId(@PathVariable("id") long eventId) {
+    public List <ResultsByEventsResponse> findByEventId(@PathVariable("id") long eventId) {
         return resultManager.findByEventId(eventId);
     }
 

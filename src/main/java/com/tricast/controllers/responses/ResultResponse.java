@@ -15,56 +15,49 @@ public class ResultResponse implements Serializable{
 	private static final long serialVersionUID = 2646725308970295770L;
 
 	private long id;
-    
-    private Competitor competitorId;
-    
-    private PeriodType periodTypeId;
-    private ResultType resultTypeId;
+    private long periodTypeId;
+    private long resultTypeId;
     private int result;
     
-    private List<PeriodType> periodTypes = new ArrayList<PeriodType>();
-    private List<Competitor> competitors = new ArrayList<Competitor>();
-    
+    private long comeptitorId;
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	public Competitor getCompetitorId() {
-		return competitorId;
-	}
-	public void setCompetitorId(Competitor competitorId) {
-		this.competitorId = competitorId;
-	}
-	public PeriodType getPeriodTypeId() {
+
+	public long getPeriodTypeId() {
 		return periodTypeId;
 	}
-	public void setPeriodTypeId(PeriodType periodTypeId) {
+
+	public void setPeriodTypeId(long periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
-	public ResultType getResultTypeId() {
+
+	public long getResultTypeId() {
 		return resultTypeId;
 	}
-	public void setResultTypeId(ResultType resultTypeId) {
+
+	public void setResultTypeId(long resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
+
 	public int getResult() {
 		return result;
 	}
+
 	public void setResult(int result) {
 		this.result = result;
 	}
-	public List<PeriodType> getPeriodTypes() {
-		return periodTypes;
+
+	public long getComeptitorId() {
+		return comeptitorId;
 	}
-	public void setPeriodTypes(List<PeriodType> periodTypes) {
-		this.periodTypes = periodTypes;
-	}
-	public List<Competitor> getCompetitors() {
-		return competitors;
-	}
-	public void setCompetitors(List<Competitor> competitors) {
-		this.competitors = competitors;
+
+	public void setComeptitorId(long comeptitorId) {
+		this.comeptitorId = comeptitorId;
 	}
 }
