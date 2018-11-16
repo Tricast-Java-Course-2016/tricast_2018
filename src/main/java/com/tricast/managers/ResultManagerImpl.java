@@ -16,7 +16,10 @@ import com.tricast.repositories.PeriodTypeRepository;
 import com.tricast.repositories.ResultRepository;
 import com.tricast.repositories.ResultTypeRepository;
 import com.tricast.repositories.entities.Competitor;
+import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.EventCompetitorMap;
+import com.tricast.repositories.entities.PeriodType;
+import com.tricast.repositories.entities.PeriodTypes;
 import com.tricast.repositories.entities.Result;
 import com.tricast.repositories.entities.ResultType;
 
@@ -32,11 +35,13 @@ public class ResultManagerImpl implements ResultManager {
 
     @Autowired
 	public ResultManagerImpl(
+			ResultRepository resultRepository,
 			EventRepository eventRepository,
 			PeriodTypeRepository periodTypeRepository,
 			ResultTypeRepository resultTypeRepository,
 			CompetitorRepository competitorRepository,
 			EventCompetitorMapRepository eventCompetitorMapRepository) {
+    	this.resultRepository = resultRepository;
 		this.eventRepository = eventRepository;
 		this.periodTypeRepository = periodTypeRepository;
 		this.resultTypeRepository = resultTypeRepository;
@@ -46,39 +51,45 @@ public class ResultManagerImpl implements ResultManager {
 	
 	@Override
 	public List<Result> findAll() {
-		return resultRepository.findAll();
+    	return null;
 	}
 
 
 
 	@Override
 	public List<ResultResponse> findByEventId(Long eventId) {
-//		List<EventCompetitorMap> eventCompetitorMap = eventCompetitorMapRepository.findByEventId(eventId);
-//		List<Competitor> competitors = competitorRepository.findByEventId(eventId);
-//		
-//		List<Result> result = new ArrayList<Result>();
-//		
-//		for(EventCompetitorMap currentMap : eventCompetitorMap) {
-//			if(resultRepository.findByEventCompetitorMap_Id(currentMap.getId()) != null) {
-//				result.add(resultRepository.findByEventCompetitorMap_Id(currentMap.getId()));
-//			}
-//		}
-//		
-//		List<ResultResponse> responseObjectsList = new ArrayList<ResultResponse>();
-//		ResultResponse responseObject = new ResultResponse();
-//		
-//		for(Result currentResult : result) {
-//			responseObject.setPeriodTypeId(currentResult.getPeriodTypeId());
-//			responseObject.setResultTypeId(currentResult.getResultTypeId());
-//			if(currentResult.getResult() != null) {
-//				responseObject.setResult(currentResult.getResult());
-//			}
-//			responseObject.setCompetitors(competitors);
-//			
-//			responseObjectsList.add(responseObject);
-//		}
-//		return responseObjectsList;
-		return null;
+		List<EventCompetitorMap> eventCompetitorMap = eventCompetitorMapRepository.findByEventId(eventId);
+		List<Competitor> competitors = competitorRepository.findByEventId(eventId);
+		
+		List<Result> result = new ArrayList<Result>();
+		
+		for(EventCompetitorMap currentMap : eventCompetitorMap) {
+			if(resultRepository.findByEventCompetitorMap_Id(currentMap.getId()) != null) {
+				result.add(resultRepository.findByEventCompetitorMap_Id(currentMap.getId()));
+			}
+		}
+		
+		List<ResultResponse> responseObjectsList = new ArrayList<ResultResponse>();
+		
+		ResultResponse competitorAndPeriodResponse = new ResultResponse();
+		ResultResponse responseObject;
+		
+		
+		for(Result currentResult : result) {
+			responseObject = new ResultResponse();
+			responseObject.setId(currentResult.getId());
+			responseObject.setPeriodTypeId(currentResult.getPeriodTypeId());
+			responseObject.setResultTypeId(currentResult.getResultTypeId());			
+			responseObject.setResult(currentResult.getResult());
+			responseObjectsList.add(responseObject);
+		}
+		
+		competitorAndPeriodResponse.setCompetitors(competitors);
+		//competitorAndPeriodResponse.setPeriodTypes(periodTypes);
+		
+		responseObjectsList.add(competitorAndPeriodResponse);
+		
+		return responseObjectsList;
 	}
 
 	@Override
@@ -89,7 +100,7 @@ public class ResultManagerImpl implements ResultManager {
 		result.setResultTypeId(requestObject.getResultTypeId());
 		result.setResult(requestObject.getResult());
 		result.setPeriodTypeId(requestObject.getPeriodTypeId());
-		result.setEventCompetitorMapId(requestObject.getEventCompetitorMapId());
+		//result.setEventCompetitorMapId(requestObject.getEventCompetitorMapId());
 		
 		result = resultRepository.save(result);
 		
