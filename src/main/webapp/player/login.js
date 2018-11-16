@@ -19,6 +19,6 @@ function login() {
         // save data to the local storage
         let token = xhr.getResponseHeader('Authorization');
         SB.Utils.savePlayerData(token, data.id);
-        window.location.href = "moneytransfer.html";
+        window.location.href = "eventlist.html";
     });
 }
