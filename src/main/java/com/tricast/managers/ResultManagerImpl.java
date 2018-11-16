@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tricast.controllers.requests.ResultRequest;
+import com.tricast.controllers.responses.PeriodResponse;
 import com.tricast.controllers.responses.ResultResponse;
+import com.tricast.controllers.responses.ResultTypeResponse;
 import com.tricast.controllers.responses.ResultsByEventsResponse;
 import com.tricast.managers.mappers.ResultResponseMapper;
 import com.tricast.repositories.CompetitorRepository;
@@ -61,7 +63,37 @@ public class ResultManagerImpl implements ResultManager {
 	public List<ResultsByEventsResponse> findByEventId(Long eventId) {
 		List<EventCompetitorMap> eventCompetitorMap = eventCompetitorMapRepository.findByEventId(eventId);
 		List<Competitor> competitors = competitorRepository.findByEventId(eventId);
+		List<PeriodType> periodTypes = periodTypeRepository.findAll();
+		List<ResultType> resultTypes = resultTypeRepository.findAll();
+		
 		Event event = eventRepository.findById(eventId);
+		
+		List<PeriodType> periodTypesResponse = new ArrayList<PeriodType>();
+		List<ResultType> resultTypesResponse = new ArrayList<ResultType>();
+		
+		for(PeriodType pt : periodTypes) {
+			if(event.getEventType().getId() == 1) {
+				if(pt.getId() != 4) {
+					periodTypesResponse.add(pt);
+				}
+			} else {
+				if(pt.getId() == 4) {
+					periodTypesResponse.add(pt);
+				}
+			}
+		}
+		
+		for(ResultType rt : resultTypes) {
+			if(event.getEventType().getId() == 1) {
+				if(rt.getId() != 3) {
+					resultTypesResponse.add(rt);
+				}
+			} else {
+				if (rt.getId() == 3) {
+					resultTypesResponse.add(rt);
+				}
+			}
+		}
 		
 		List<Result> result = new ArrayList<Result>();
 		
@@ -72,23 +104,26 @@ public class ResultManagerImpl implements ResultManager {
 		}
 		
 		List<ResultsByEventsResponse> responseObjectsList = new ArrayList<ResultsByEventsResponse>();
+		ResultsByEventsResponse responseObject = new ResultsByEventsResponse();
 		List<ResultResponse> resultResponseList = new ArrayList<ResultResponse>();
 		
-		ResultResponse responseObject;
+		ResultResponse resultResponse;
 		
 		for(Result currentResult : result) {
-			responseObject = new ResultResponse();
-			responseObject.setId(currentResult.getId());
-			responseObject.setComeptitorId(currentResult.getEventCompetitorMap().getCompetitorId());
-			responseObject.setPeriodTypeId(currentResult.getPeriodTypeId().getId());
-			responseObject.setResultTypeId(currentResult.getResultTypeId().getId());			
-			responseObject.setResult(currentResult.getResult());
-			resultResponseList.add(responseObject);
+			resultResponse = new ResultResponse();
+			resultResponse.setId(currentResult.getId());
+			resultResponse.setComeptitorId(currentResult.getEventCompetitorMap().getCompetitorId());
+			resultResponse.setPeriodTypeId(currentResult.getPeriodTypeId().getId());
+			resultResponse.setResultTypeId(currentResult.getResultTypeId().getId());			
+			resultResponse.setResult(currentResult.getResult());
+			resultResponseList.add(resultResponse);
 		}
 		
-		for(ResultsByEventsResponse currentObject : responseObjectsList) {
-			//responseObjectsList.add(currentObject.setResultResponseList(resultResponseList));
-		}
+		responseObject.setResultResponseList(resultResponseList);
+		responseObject.setCompetitorList(competitors);
+		responseObject.setPeriodResponseList(periodTypesResponse);
+		responseObject.setResultTypeResponseList(resultTypesResponse);
+		responseObjectsList.add(responseObject);
 		
 		return responseObjectsList;
 	}
