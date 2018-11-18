@@ -7,27 +7,19 @@ public class ResultSaveResponse implements Serializable {
 	
 	private static final long serialVersionUID = -2135419002780681228L;
 	
-	private long id;
-	private long eventId;
-	private List<ResultResponse> responseToSave;
+	private long eventCompetitorMapId;
+	private ResultResponse responseToSave;
 	
-	public long getId() {
-		return id;
+	public long getEventCompetitorMapId() {
+		return eventCompetitorMapId;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setEventCompetitorMapId(long eventCompetitorMapId) {
+		this.eventCompetitorMapId = eventCompetitorMapId;
 	}
-	public long getEventId() {
-		return eventId;
-	}
-	public void setEventId(long eventId) {
-		this.eventId = eventId;
-	}
-	public List<ResultResponse> getResponseToSave() {
+	public ResultResponse getResponseToSave() {
 		return responseToSave;
 	}
-	public void setResponseToSave(List<ResultResponse> responseToSave) {
+	public void setResponseToSave(ResultResponse responseToSave) {
 		this.responseToSave = responseToSave;
 	}
-
 }

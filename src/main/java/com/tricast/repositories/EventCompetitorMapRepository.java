@@ -16,4 +16,6 @@ public interface EventCompetitorMapRepository extends CrudRepository<EventCompet
 	List <EventCompetitorMap> findByCompetitorId(Long competitorId);
 	
 	List <EventCompetitorMap> findByEventId(Long eventId);
+	
+	EventCompetitorMap findByEventIdAndCompetitorId(long eventId, long competitorId);
 }

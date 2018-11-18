@@ -13,34 +13,41 @@ public class ResultRequest implements Serializable {
 
 	private static final long serialVersionUID = -6817451528421899276L;
 
-    private ResultType resultTypeId;
+    private long resultTypeId;
     private int result;
-    private PeriodType periodTypeId;
-    
-    private long eventCompetitorMapId;
-    
-	public ResultType getResultTypeId() {
+    private long periodTypeId;
+
+    private long competitorId;
+
+	public long getResultTypeId() {
 		return resultTypeId;
 	}
-	public void setResultTypeId(ResultType resultTypeId) {
+
+	public void setResultTypeId(long resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
+
 	public int getResult() {
 		return result;
 	}
+
 	public void setResult(int result) {
 		this.result = result;
 	}
-	public PeriodType getPeriodTypeId() {
+
+	public long getPeriodTypeId() {
 		return periodTypeId;
 	}
-	public void setPeriodTypeId(PeriodType periodTypeId) {
+
+	public void setPeriodTypeId(long periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
-	public long getEventCompetitorMapId() {
-		return eventCompetitorMapId;
+
+	public long getCompetitorId() {
+		return competitorId;
 	}
-	public void setEventCompetitorMapId(long eventCompetitorMapId) {
-		this.eventCompetitorMapId = eventCompetitorMapId;
+
+	public void setCompetitorId(long competitorId) {
+		this.competitorId = competitorId;
 	}
 }
