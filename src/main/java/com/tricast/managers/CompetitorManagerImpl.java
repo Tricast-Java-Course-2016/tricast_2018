@@ -17,6 +17,7 @@ import com.tricast.controllers.requests.CompetitorRequest;
 import com.tricast.controllers.responses.CompetitorResponse;
 import com.tricast.managers.mappers.CompetitorResponseMapper;
 import com.tricast.repositories.CompetitorRepository;
+import com.tricast.repositories.EventCompetitorMapRepository;
 import com.tricast.repositories.LeagueCompetitorMapRepository;
 
 @Service
@@ -32,6 +33,16 @@ public class CompetitorManagerImpl implements CompetitorManager {
     public CompetitorResponse findById(Long id) {
         return this.entityToResponse( competitorRepository.findById(id) );
     }
+
+	@Override
+	public List<CompetitorResponse> findByEventId(long eventid) {
+		List<Competitor> competitors = competitorRepository.findByEventId(eventid);
+		List<CompetitorResponse> competitorResponse = new ArrayList<CompetitorResponse>();
+		for(Competitor currentCompetitor : competitors) {
+			competitorResponse.add(this.entityToResponse(currentCompetitor));
+		}
+		return competitorResponse;
+	}
 	
     @Override
     public List<CompetitorResponse> findAll() {
@@ -92,7 +103,4 @@ public class CompetitorManagerImpl implements CompetitorManager {
 		response.setLeagueIds(leagueIds);
 		return response;
 	}
-
-	
-
 }

@@ -26,6 +26,11 @@ public class CompetitorController {
     public CompetitorResponse findById(@PathVariable("id") long id) {
         return competitorManager.findById(id);
     }
+	
+	@GetMapping(path="/eventid/{id}")
+	public List<CompetitorResponse> findByEventId(@PathVariable("id") long eventid) {
+		return competitorManager.findByEventId(eventid);
+	}
 
 	@GetMapping(path="/list/{search}")
     public List<CompetitorResponse> findAll(@PathVariable("search") String search) {

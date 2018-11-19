@@ -11,6 +11,8 @@ public interface CompetitorManager {
     List<CompetitorResponse> findAll();
 
     CompetitorResponse findById(Long id);
+    
+    List<CompetitorResponse> findByEventId(long eventid);
 
     CompetitorResponse create(CompetitorRequest competitorRequest);
 

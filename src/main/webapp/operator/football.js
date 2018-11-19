@@ -3,9 +3,31 @@ window.onload = function() {
     let operator = {
         username : 'TestOperator'
     };
-    SB.Utils.loadTemplate('#navbar-content', 'operator_navbar.html', operator, null);	
+    SB.Utils.loadTemplate('#navbar-content', 'operator_navbar.html', operator, null);
     bindListeners();
-};
+    
+    
+    const destructById = function(array) {
+        let json = {};
+        $.each(array, function(index, elem) {
+            json[elem.id] = elem;
+        });
+        return json;
+    };
+
+    let competitorsByEventId;
+
+    $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/{id}', SB.Token.OPERATOR)).done(
+            function(competitors) {
+
+	        	competitorsByEventId = destructById(competitors[0]);
+	            
+	            $('#test').html(Handlebars.compile($('#test').html())({
+	                competitors : competitorsByEventId,
+	            }));
+            
+            });
+}
 
 function bindListeners() {
     $("#saveFootballResult").click(function(e) {
@@ -32,3 +54,4 @@ function footballResultSave() {
     });
 
 }
+        
