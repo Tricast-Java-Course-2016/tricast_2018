@@ -29,7 +29,7 @@ function sendMoney() {
         url = "/sportsbook/api/accounts/" + SB.Utils.getPlayerId() + "/transactions/withdraw";
     }
 
-    SB.Utils.postAjax(url, data, true, function(data, status, xhr) {
+    SB.Utils.postAjax(url, data, SB.Token.PLAYER, function(data, status, xhr) {
         alert("success");
     });
 

@@ -14,7 +14,7 @@ function login() {
         password : $("#lgpassword").val()
     }
 
-    SB.Utils.postAjax("/sportsbook/api/accounts/login", data, true, function(data, status, xhr) {
+    SB.Utils.postAjax("/sportsbook/api/accounts/login", data, null, function(data, status, xhr) {
         alert("success");
         // save data to the local storage
         let token = xhr.getResponseHeader('Authorization');

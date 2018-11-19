@@ -14,7 +14,7 @@ function register() {
     data.dob = moment(data.dob).format('YYYYMMDD');
     data.accountType = 'ADMIN';
 
-    SB.Utils.postAjax("/sportsbook/api/accounts", data, false, function(data, status, xhr) {
+    SB.Utils.postAjax("/sportsbook/api/accounts", data, null, function(data, status, xhr) {
         alert("success");
         window.location.href = "login.html";
     });

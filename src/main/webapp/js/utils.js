@@ -1,16 +1,21 @@
 window.SB = window.SB || {};
 
-let playerToken = "PLAYER_TOKEN";
-let playerId = "PLAYER_ID";
-let operatorToken = "OPERATOR_TOKEN";
-let operatorId = "OPERATOR_ID";
+const playerToken = "PLAYER_TOKEN";
+const playerId = "PLAYER_ID";
+const operatorToken = "OPERATOR_TOKEN";
+const operatorId = "OPERATOR_ID";
+
+window.SB.Token = {
+        PLAYER : 'PLAYER',
+        OPERATOR : 'OPERATOR'
+};
 
 window.SB.Utils = {
     loadTemplate : function loadTemplate(containerId, tplName, data, afterLoadCallback) {
         SB.Utils.loadHTMLSnippet('../tpl/' + tplName, function(tplSource) {
-            var template = Handlebars.compile(tplSource);
-            var html = template(data);
-            var container = $(containerId);
+            let template = Handlebars.compile(tplSource);
+            let html = template(data);
+            let container = $(containerId);
 
             container.html(html);
             if(afterLoadCallback) {
@@ -42,7 +47,7 @@ window.SB.Utils = {
     },
     
     defaultErrorHandling : function defaultErrorHandling(xhr) {
-        var errorMsg;
+        let errorMsg;
         if (xhr.status == 0) {
             errorMsg = "The server is not responding or is not reachable.";
         } else {
@@ -52,7 +57,7 @@ window.SB.Utils = {
         alert(errorMsg);
      },
      
-    postAjax : function postAjax(url, data, player, successCallback, errorCallback) {
+    postAjax : function postAjax(url, data, tokenToUse, successCallback, errorCallback) {
         
         if(!errorCallback) {
             errorCallback = SB.Utils.defaultErrorHandling;
@@ -70,14 +75,14 @@ window.SB.Utils = {
             success : successCallback,
             error : errorCallback,
             beforeSend: function(xhr){
-                if (player != null ){
-                    xhr.setRequestHeader("Authorization", SB.Utils.getToken(player));
+                if (tokenToUse != null ){
+                    xhr.setRequestHeader("Authorization", SB.Utils.getToken(tokenToUse));
                }
             }
         });
     },
     
-    getAjax : function getAjax(url, player, successCallback, errorCallback) {
+    getAjax : function getAjax(url, tokenToUse, successCallback, errorCallback) {
         
         if(!errorCallback) {
             errorCallback = SB.Utils.defaultErrorHandling;
@@ -95,18 +100,18 @@ window.SB.Utils = {
             success : successCallback,
             error : errorCallback,
             beforeSend: function(xhr){
-                if (player != null ){
-                    xhr.setRequestHeader("Authorization", SB.Utils.getToken(player));
+                if (tokenToUse != null ){
+                    xhr.setRequestHeader("Authorization", SB.Utils.getToken(tokenToUse));
                 }
             }
         });
     }, 
     
-    getToken : function getToken(player) {
+    getToken : function getToken(tokenToUse) {
         let token = null;
-        if(player == true) {
+        if(tokenToUse == SB.Token.PLAYER) {
             token = localStorage.getItem(playerToken);
-        } else if (player == false) {
+        } else if (tokenToUse == SB.Token.OPERATOR) {
             token = localStorage.getItem(operatorToken);
         }
         return token;
