@@ -1,84 +1,79 @@
 <!DOCTYPE html>
-<html>
-
+<html class="no-js">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="../css/theme.css" type="text/css">
+<meta charset="utf-8" />
+<title>Sportsbook Manager</title>
+<meta name="description" content="Sportsbook Manager">
+<meta name="viewport" content="width=device-width">
+
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+	type="text/css">
+
+<script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+<script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="football.js"></script>
+	
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <div class="container"> <a class="navbar-brand text-primary" href="#">
-        <i class="fa d-inline fa-lg fa-circle-o"></i>
-        <b>FOB</b>
-      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar5">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar5">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item" style=""> <a class="nav-link active" href="#">Sportesemények</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">Tranzakció történet</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">Egyenleg műveletek</a> </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"> <a class="nav-link" href="#">Bejelentkezve: Játékos</a> </li>
-          <li class="nav-item"><a class="nav-link" href="#">Egyenleg: 12 515 Ft</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table pb-0 mb-1">
-            <thead>
-              <tr>
-                <th>Kategóriák</th>
-                <th>Arsenal</th>
-                <th>Chelsea</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Végeredmény </td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-              </tr>
-              <tr>
-                <td>Első félidő eredménye</td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-              </tr>
-              <tr>
-                <td>Második félidő eredménye</td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-              </tr>
-              <tr>
-                <td>Szögletek száma</td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-              </tr>
-              <tr>
-                <td>Első félidő szögleteinek száma<br></td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-              </tr>
-              <tr>
-                <td>Második félidő szögleteinek száma</td>
-                <td><input type="text" class="form-control"></td>
-                <td><input type="text" class="form-control"></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="modal-footer"> <button type="button" class="btn btn-primary">Eredmények mentése</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="pb-5" id="navbar-content"></div>
+		  <div class="container">
+		    <div class="row">
+		      <div class="col-md-12">
+		        <table class="table pb-0 mb-1">
+		          <thead>
+		            <tr>
+		              <th>Kategóriák</th>
+		              <th>{HomeTeam}</th>
+		              <th>{AwayTeam}</th>
+		            </tr>
+		          </thead>
+	          	<form id="footballResultSave">
+		          <tbody>
+		            <tr>
+		              <td>Végeredmény </td>
+		              <td><input type="text" class="form-control" name="finalResultTeamHome"></td>
+		              <td><input type="text" class="form-control" name="finalResultTeamAway"></td>
+		            </tr>
+		            <tr>
+		              <td>Első félidő eredménye</td>
+		              <td><input type="text" class="form-control" name="firstHalfResultTeamHome"></td>
+		              <td><input type="text" class="form-control" name="firstHalfResultTeamAway"></td>
+		            </tr>
+		            <tr>
+		              <td>Második félidő eredménye</td>
+		              <td><input type="text" class="form-control" name="secondHalfResultTeamHome"></td>
+		              <td><input type="text" class="form-control" name="secondHalfResultTeamAway"></td>
+		            </tr>
+		            <tr>
+		              <td>Szögletek száma</td>
+		              <td><input type="text" class="form-control" name="finalCornerNumberTeamHome"></td>
+		              <td><input type="text" class="form-control" name="finalCornerNumberTeamAway"></td>
+		            </tr>
+		            <tr>
+		              <td>Első félidő szögleteinek száma<br></td>
+		              <td><input type="text" class="form-control" name="firstHalfCornerNumberTeamHome"></td>
+		              <td><input type="text" class="form-control" name="firstHalfCornerNumberTeamAway"></td>
+		            </tr>
+		            <tr>
+		              <td>Második félidő szögleteinek száma</td>
+		              <td><input type="text" class="form-control" name="secondHalfCornerNumberTeamHome"></td>
+		              <td><input type="text" class="form-control" name="secondHalfCornerNumberTeamAway"></td>
+		            </tr>
+		          </tbody>
+	          	</form>
+		        </table>
+		        <div class="modal-footer"> <button type="button" class="btn btn-primary" id="saveFootballResult">Eredmények mentése</button></div>
+		      </div>
+		    </div>
+		  </div>
+
 </body>
 
 </html>

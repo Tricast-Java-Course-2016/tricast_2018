@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,19 +20,19 @@ import com.tricast.controllers.responses.ResultsByEventsResponse;
 import com.tricast.managers.ResultManager;
 
 @RestController
-@RequestMapping(path = "api")
+@RequestMapping(path = "api/results")
 public class ResultController {
 
     @Autowired
     private ResultManager resultManager;
 
-    @GetMapping(path = "events/{id}/results")
+    @GetMapping(path = "events/{id}")
     public List <ResultsByEventsResponse> findByEventId(@PathVariable("id") long eventId) {
         return resultManager.findByEventId(eventId);
     }
 
     @PostMapping
-    public ResponseEntity<?> createResults(ResultSaveRequest newResult) {
+    public ResponseEntity<?> createResults(@RequestBody ResultSaveRequest newResult) {
     	try {
     		ResultSaveResponse result = resultManager.create(newResult);
 			return ResponseEntity.ok(result);
