@@ -1,7 +1,7 @@
 window.onload = function() {
-    // TODO load account data and balance
+
     let operator = {
-        username : 'TestOperator'
+        username : SB.Utils.getOperatorUsername()
     };
     SB.Utils.loadTemplate('#navbar-content', 'operator_navbar.html', operator, null);
     bindListeners();

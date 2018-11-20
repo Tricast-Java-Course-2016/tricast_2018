@@ -2,8 +2,10 @@ window.SB = window.SB || {};
 
 const playerToken = "PLAYER_TOKEN";
 const playerId = "PLAYER_ID";
+const playerUsername = "PLAYER_USERNAME";
 const operatorToken = "OPERATOR_TOKEN";
 const operatorId = "OPERATOR_ID";
+const operatorUsername = "OPERATOR_USERNAME";
 
 window.SB.Token = {
         PLAYER : 'PLAYER',
@@ -117,21 +119,31 @@ window.SB.Utils = {
         return token;
     },
     
-    savePlayerData : function savePlayerData(token, id) {
+    savePlayerData : function savePlayerData(token, id, username) {
         localStorage.setItem(playerToken, token);
         localStorage.setItem(playerId, id);
+        localStorage.setItem(playerUsername, username);
     }, 
     
     getPlayerId : function getPlayerId() {
         return localStorage.getItem(playerId);
     },
     
-    saveOperatorData : function saveOperatorData(token, id) {
+    getPlayerUsername : function getPlayerUsername() {
+        return localStorage.getItem(playerUsername);
+    },
+    
+    saveOperatorData : function saveOperatorData(token, id, username) {
         localStorage.setItem(operatorToken, token);
         localStorage.setItem(operatorId, id);
+        localStorage.setItem(operatorUsername, username);
     }, 
     
     getOperatorId : function getOperatorId() {
         return localStorage.getItem(operatorId);
     },
+    
+    getOperatorUsername : function getOperatorUsername() {
+        return localStorage.getItem(operatorUsername);
+    }
 };
