@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+<meta charset="utf-8" />
+<title>Sportsbook Manager</title>
+<meta name="description" content="Sportsbook Manager">
+<meta name="viewport" content="width=device-width">
+
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+type="text/css">
+
+<script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+<script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="results.js"></script>
+
+<!-- <script id="test" type="text/x-handlebars-template"> -->
+		<!-- {{#each competitors}} -->
+				<!-- <th>Kategóriák</th> -->
+				<!-- <th>{{description}}</th> -->
+				<!-- <th>{{description}}</th> -->
+		<!-- {{/each}} -->
+<!-- </script> -->
+
+<script id="football-results-template" type="text/x-handlebars-template">
+<table class="table pb-0 mb-5">      
+	<thead>
+		<th>Kategóriák</th>	
+		{{#each competitors}}
+			<th>{{this.description}}</th>
+		{{/each}} 
+	</thead>
+	<tbody>
+		<tr>
+			<td>Végeredmény </td>
+			<td><input type="text" class="form-control" name="finalResultTeamHome"></td>
+			<td><input type="text" class="form-control" name="finalResultTeamAway"></td>
+		</tr>
+		<tr>
+			<td>Első félidő eredménye</td>
+			<td><input type="text" class="form-control" name="firstHalfResultTeamHome"></td>
+			<td><input type="text" class="form-control" name="firstHalfResultTeamAway"></td>
+		</tr>
+		<tr>
+			<td>Második félidő eredménye</td>
+			<td><input type="text" class="form-control" name="secondHalfResultTeamHome"></td>
+			<td><input type="text" class="form-control" name="secondHalfResultTeamAway"></td>
+		</tr>
+		<tr>
+			<td>Szögletek száma</td>
+			<td><input type="text" class="form-control" name="finalCornerNumberTeamHome"></td>
+			<td><input type="text" class="form-control" name="finalCornerNumberTeamAway"></td>
+		</tr>
+		<tr>
+			<td>Első félidő szögleteinek száma<br></td>
+			<td><input type="text" class="form-control" name="firstHalfCornerNumberTeamHome"></td>
+			<td><input type="text" class="form-control" name="firstHalfCornerNumberTeamAway"></td>
+		</tr>
+		<tr>
+			<td>Második félidő szögleteinek száma</td>
+			<td><input type="text" class="form-control" name="secondHalfCornerNumberTeamHome"></td>
+			<td><input type="text" class="form-control" name="secondHalfCornerNumberTeamAway"></td>
+		</tr>
+	</tbody>			  
+</table>
+</script>
+
+<script id="horserace-results-template" type="text/x-handlebars-template">
+
+<datalist id="horses">
+	{{#each competitors}}
+		<option value="{{description}}"/>
+	{{/each}}
+</datalist>
+<table class="table pb-0 mb-5">	
+	<thead>
+		<th>Elért helyezés</th>
+		<th>Ló neve</th>
+	</thead>
+	<tbody>
+		{{#each competitors}}
+			<tr>
+				<td>{{incremented @index}}. helyezett</td>
+				<td>
+					<input class="form-control" list="horses" />
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+</script>
+</head>
+
+<body>
+<div class="pb-5" id="navbar-content"></div>
+  <div class="container">
+	<div class="row">
+	  <div id="results-tabele" class="col-md-12">
+			<table class="table pb-0 mb-5"></table>
+		<div class="modal-footer"> <button type="button" class="btn btn-primary" id="saveFootballResult">Eredmények mentése</button></div>
+	  </div>
+	</div>
+  </div>
+
+</body>
+
+</html>
