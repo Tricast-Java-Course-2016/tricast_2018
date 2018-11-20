@@ -5,6 +5,12 @@ window.onload = function() {
         balance : 12300
     };
     SB.Utils.loadTemplate('#navbar-content', 'player_navbar.html', player, null);
+    
+    let eventid = localStorage.getItem('eventid');
+    $('#place').html(Handlebars.compile($('#show_event_id').html())({
+        eventid
+    }));
+     
 
     const destructById = function(array) {
         let json = {};
@@ -15,22 +21,19 @@ window.onload = function() {
     };
 
     let eventsById;
-
-    $.when(SB.Utils.getAjax('/sportsbook/api/sports', SB.Token.PLAYER),
-            SB.Utils.getAjax('/sportsbook/api/leagues/list', SB.Token.PLAYER),
-            SB.Utils.getAjax('/sportsbook/api/competitors/list', SB.Token.PLAYER),
-            SB.Utils.getAjax('/sportsbook/api/events/listOpen', SB.Token.PLAYER)
+    let url="/sportsbook/api/events/"+eventid+"/detail";
+    
+    $.when(SB.Utils.getAjax(url, SB.Token.PLAYER)
         ).done(
-            function(sports, leagues, competitors, events) {
+            function(events) {
 
-                sportsById = destructById(sports[0]);
-                leaguesById = destructById(leagues[0]);
-                competitorsById = destructById(competitors[0]);
                 eventsById = destructById(events[0]);
 
-                let eventList = [];
+                let eventdetail = [];
+                
+                
                 $.each(eventsById, function(id, event) {
-                    eventList.push({
+                    eventdetail.push({
                         'id' : event.id + '',
                         'title' : event.description,
                         'league' : leaguesById[event.leagueId].description,
@@ -44,8 +47,3 @@ window.onload = function() {
 
             });
 };
-
-function eventdetail(element) {
-	localStorage.setItem('eventid',element.value);
-	window.location.href = "eventdetail.html";
-}
