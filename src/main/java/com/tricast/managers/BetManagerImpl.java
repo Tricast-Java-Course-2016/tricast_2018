@@ -124,6 +124,18 @@ public class BetManagerImpl implements BetManager {
         if(requestObject == null) {
             return null;
         }
+        
+        Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet();
+    	Iterator <Long> iterator=outcomeIds.iterator();
+    	Long currentId;
+    	while(iterator.hasNext()) {
+    		currentId=iterator.next();
+    		if(outcomeRepository.findById(currentId).getOdds()!=requestObject.getOutcomeOdds().get(currentId)) {
+    			throw new SportsbookException("Some of the outcomes referred in betRequest have new odds.");
+    		}
+    	}
+    	
+    	
 
         if(requestObject.getBetStake().compareTo(BigDecimal.valueOf(0))!=1)
         	throw new SportsbookException("Stake has to be greater than 0.");
