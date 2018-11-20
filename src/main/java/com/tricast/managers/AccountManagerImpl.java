@@ -1,6 +1,8 @@
 package com.tricast.managers;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -13,17 +15,22 @@ import com.tricast.controllers.responses.AccountResponse;
 import com.tricast.managers.exceptions.SportsbookException;
 import com.tricast.managers.mappers.AccountMapper;
 import com.tricast.repositories.AccountRepository;
+import com.tricast.repositories.TransactionRepository;
 import com.tricast.repositories.entities.Account;
+import com.tricast.repositories.entities.Transaction;
 
 @Service
 public class AccountManagerImpl implements AccountManager {
 
     private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
     private final PasswordEncoder encoder;
 
     @Inject
-    public AccountManagerImpl(AccountRepository playerRepository, PasswordEncoder encoder) {
+    public AccountManagerImpl(AccountRepository playerRepository, TransactionRepository transactionRepository,
+            PasswordEncoder encoder) {
         this.accountRepository = playerRepository;
+        this.transactionRepository = transactionRepository;
         this.encoder = encoder;
     }
 
@@ -58,5 +65,18 @@ public class AccountManagerImpl implements AccountManager {
         if (accountFoundByUsername != null) {
             throw new SportsbookException("Username is already occupied");
         }
+    }
+
+    @Override
+    public BigDecimal getBalance(long accountId) throws SportsbookException {
+
+        List<Transaction> allTransactions = transactionRepository.findByAccount_id(accountId);
+
+        if (allTransactions == null) {
+            return BigDecimal.ZERO;
+        }
+
+        return allTransactions.stream().map(Transaction::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+
     }
 }
