@@ -1,15 +1,18 @@
 window.onload = function() {
-    // TODO load account data and balance
-    let player = {
-        username : 'TestPlayer',
-        balance : 12300
-    };
-    SB.Utils.loadTemplate('#navbar-content', 'player_navbar.html', player, null);
+    loadBalance();
     bindListeners();
 };
 
-function loadAccount() {
-    // TODO Orsi
+function loadBalance() {
+    let url = "/sportsbook/api/accounts/" + SB.Utils.getPlayerId() + "/balance";
+    
+    SB.Utils.getAjax(url, SB.Token.PLAYER, function(data, status, xhr) {
+        let player = {
+                username : SB.Utils.getPlayerUsername(),
+                balance : data.balance
+            };
+            SB.Utils.loadTemplate('#navbar-content', 'player_navbar.html', player, null);
+    });
 }
 
 function bindListeners() {
@@ -30,7 +33,7 @@ function sendMoney() {
     }
 
     SB.Utils.postAjax(url, data, SB.Token.PLAYER, function(data, status, xhr) {
-        alert("success");
+        loadBalance();
     });
 
 }

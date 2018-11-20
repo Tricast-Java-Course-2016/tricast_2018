@@ -10,7 +10,10 @@ import org.apache.log4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +23,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.tricast.controllers.filters.AuthenticationSettings;
 import com.tricast.controllers.requests.AccountRequest;
 import com.tricast.controllers.requests.LoginRequest;
+import com.tricast.controllers.responses.AccountBalanceResponse;
 import com.tricast.controllers.responses.AccountResponse;
 import com.tricast.managers.AccountManager;
 import com.tricast.repositories.entities.AccountType;
@@ -77,7 +81,28 @@ public class AccountController {
         return JWT.create().withIssuer(AuthenticationSettings.ISSUER).withExpiresAt(Date.from(exp.toInstant()))
                 .withClaim(AuthenticationSettings.CLAIM_ACCOUNTID_IDENTIFIER, accountId)
                 .withClaim(AuthenticationSettings.CLAIM_USERNAME_IDENTIFIER, username)
-                .withClaim(AuthenticationSettings.CLAIM_ACCOUNTTYPE_IDENTIFIER, accountType.name())
-                .sign(algorithm);
+                .withClaim(AuthenticationSettings.CLAIM_ACCOUNTTYPE_IDENTIFIER, accountType.name()).sign(algorithm);
+    }
+
+    @GetMapping(path = "/{accountId}/balance")
+    public ResponseEntity<?> getBalance(@RequestAttribute("authentication.accountType") String accountType,
+            @RequestAttribute("authentication.accountId") Long attributeAccountId,
+            @PathVariable("accountId") Long accountId) {
+
+        if (!AccountType.valueOf(accountType).equals(AccountType.PLAYER)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Permission denied");
+        }
+
+        if (!attributeAccountId.equals(accountId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Provided account id and the token not match.");
+        }
+
+        LOG.info("Get balance for " + accountId);
+
+        try {
+            return ResponseEntity.ok().body(new AccountBalanceResponse(accountManager.getBalance(accountId)));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
