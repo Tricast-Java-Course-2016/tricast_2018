@@ -22,18 +22,19 @@ public enum SportEnum {
                     PeriodTypeEnum.RACE));
 
     private final List<MarketTypeEnum> marketTypes;
-    private final List<PeriodTypeEnum> periodTpes;
+    private final List<PeriodTypeEnum> periodTypes;
 
-    private SportEnum(List<MarketTypeEnum> marketTypes, List<PeriodTypeEnum> periodTpes) {
+    private SportEnum(List<MarketTypeEnum> marketTypes, List<PeriodTypeEnum> periodTypes) {
         this.marketTypes = marketTypes;
-        this.periodTpes = periodTpes;
+        this.periodTypes = periodTypes;
+        marketTypes = marketTypes;
     }
 
     public List<MarketTypeEnum> getMarketTypes() {
-        return marketTypes;
+        return this.marketTypes;
     }
 
-    public List<PeriodTypeEnum> getPeriodTpes() {
-        return periodTpes;
+    public List<PeriodTypeEnum> getPeriodTypes() {
+        return this.periodTypes;
     }
 }
