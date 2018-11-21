@@ -16,42 +16,81 @@
     
         <script type="text/javascript" src="../js/utils.js"></script>
         <script type="text/javascript" src="eventdetail.js"></script>
+        
         <script id="show_event_description" type="text/x-handlebars-template">
-        		<tr>
-					<td>{{eventDescription}}</td>
-		        	<td>{{eventId}}</td>
-					<td>{{eventStartTime}}</td>
-		    	</tr>
+			<b>{{eventDescription}}</b>		       
         </script>
+        
+        <script id="show_event_start" type="text/x-handlebars-template">
+       		 <b>{{eventStartTime}}</b>
+		</script>
+		
         <script id="show_event_details" type="text/x-handlebars-template">
 				{{#each periodMarketsList}}
 					<tr>
-					<td>{{period.periodTypeDescription}}</td>
-					<td>{{market.marketDescription}}</td>
-					<td>{{market.marketId}}</td>
-					<td>{{market.marketTypeDescription}}</td>
+					<td><b>{{period.description}}</b></td>
+					<td><b>{{market.marketDescription}}</b></td>
+					<td><b>{{market.marketTypeDescription}}</b></td>
 					{{#each outcomes}}
 						<tr>
 						<td>{{outcomeDescription}}</td>
 						<td>{{outcomeId}}</td>	
-						<td style="padding: 6px 15px" class="text-right"><button value={{outcomeid}} onclick="" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default class="btn btn-sm btn-default"><b>{{odds}}</b></button></td>		
+						<td style="padding: 6px 15px" class="text-right"><button value={{outcomeid}} onclick="addToBetslip(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>{{odds}}</b></button></td>		
 						</tr>
 					{{/each}}
 					</tr>
 				{{/each}}
 		</script>
+		
     </head>
     <body>
         <div id="navbar-content"></div>
 		<div class="container">
-			<div id="place" class="row"><div class="col-md-12">
-				 <table id="eventdetail_table" class="table table-hover">
-		            <thead>
-		            </thead>
+			<div class="row"><div id="event_description" class="col"></div><div id="event_start" class="col"></div></div>
+        	<div class="row">
+		        <div class="col-md-8">
+		          <table id="eventdetail_table" class="table table-hover">
+		            <thead> </thead>
 		            <tbody></tbody>
 		          </table>
-			</div>
-		</div>	
- 		</div>
+		        </div>
+		        <div class="col-md-4">
+					<div class="container">
+						<table id="betslip-table" class="table table-sm">
+						 	<thead>
+		              		<tr>
+		                	<th>Szelvény</th>
+		                	<th></th>
+		                	<th></th>
+		              		</tr>
+		            		</thead>
+		            		<tbody>
+		            			<tr>
+		            				<td>Valami</td>	
+		            				<td>1.5</td>	
+		            				<td><button>X</button></td>	
+		            			</tr>
+		            			<tr>
+		            				<td>Valami</td>	
+		            				<td>1.5</td>	
+		            				<td><button>X</button></td>	
+		            			</tr>
+		            			<tr>
+		            				<td>Valami</td>	
+		            				<td>1.5</td>	
+		            				<td><button>X</button></td>	
+		            			</tr>
+		            			<tr> <td></td> <td></td><td></td></tr>
+		            			<tr>
+		            				<td>Tét</td>	
+		            				<td> </td>
+		            				<td>1234</td>	
+		            			</tr>
+		            		</tbody>
+						</table>
+					</div>
+				</div>
+		      </div>
+        </div>
     </body>
 </html>

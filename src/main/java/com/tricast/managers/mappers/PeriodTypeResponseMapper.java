@@ -9,7 +9,7 @@ public class PeriodTypeResponseMapper {
 
 		PeriodTypeResponse periodTypeResponse = new PeriodTypeResponse();
 
-        periodTypeResponse.setDescription(periodType.getDescription());
+        periodTypeResponse.setDescription(periodType.getType().getDescription());
 
 		return periodTypeResponse;
     }
