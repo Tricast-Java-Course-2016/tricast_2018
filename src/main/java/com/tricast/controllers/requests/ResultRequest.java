@@ -7,7 +7,7 @@ import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.PeriodType;
 import com.tricast.repositories.entities.ResultType;
-import com.tricast.repositories.entities.ResultTypes;
+import com.tricast.repositories.entities.ResultTypeEnum;
 
 public class ResultRequest implements Serializable {
 
