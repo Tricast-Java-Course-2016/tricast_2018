@@ -14,6 +14,18 @@ window.onload = function() {
     
     SB.Utils.getAjax(url, SB.Token.PLAYER,function(events) {
     	
+    	 let
+         eventDetail = {
+         eventId : events.eventId,
+         eventDescription : events.eventDescription,
+         eventStartTime : moment(events.eventStartTime).format('YYYY.MM.DD HH:MM')
+    	 };
+   	    $('#eventdetail_table thead').html(Handlebars.compile($('#show_event_description').html())(
+                eventDetail
+            ));
+
+
+    	
    	    $('#eventdetail_table tbody').html(Handlebars.compile($('#show_event_details').html())(
                    events
                ));

@@ -16,13 +16,14 @@
     
         <script type="text/javascript" src="../js/utils.js"></script>
         <script type="text/javascript" src="eventdetail.js"></script>
-        
-        <script id="show_event_details" type="text/x-handlebars-template">
-		    	<tr>
+        <script id="show_event_description" type="text/x-handlebars-template">
+        		<tr>
 					<td>{{eventDescription}}</td>
 		        	<td>{{eventId}}</td>
 					<td>{{eventStartTime}}</td>
 		    	</tr>
+        </script>
+        <script id="show_event_details" type="text/x-handlebars-template">
 				{{#each periodMarketsList}}
 					<tr>
 					<td>{{period.periodTypeDescription}}</td>
