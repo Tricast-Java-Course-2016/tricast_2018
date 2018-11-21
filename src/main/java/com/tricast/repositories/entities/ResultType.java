@@ -28,7 +28,7 @@ public class ResultType implements Serializable {
 	
     @Enumerated(EnumType.STRING)
     @Column(name = "description")
-    private ResultTypes description;
+    private ResultTypeEnum description;
 
 	public Long getId() {
 		return id;
@@ -38,11 +38,11 @@ public class ResultType implements Serializable {
 		this.id = id;
 	}
 
-	public ResultTypes getDescription() {
+	public ResultTypeEnum getDescription() {
 		return description;
 	}
 
-	public void setDescription(ResultTypes description) {
+	public void setDescription(ResultTypeEnum description) {
 		this.description = description;
 	}
     

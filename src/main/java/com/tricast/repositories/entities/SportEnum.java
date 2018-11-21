@@ -14,19 +14,26 @@ public enum SportEnum {
             Arrays.asList(
                     PeriodTypeEnum.NINETYMINUTES,
                     PeriodTypeEnum.FIRSTHALF,
-                    PeriodTypeEnum.SECONDHALF)),
+                    PeriodTypeEnum.SECONDHALF),
+            Arrays.asList(
+            		ResultTypeEnum.GOALS,
+            		ResultTypeEnum.CORNERS)),
     HORSERACING(Arrays.asList(
                     MarketTypeEnum.HeadToHead, 
                     MarketTypeEnum.Outright), 
            Arrays.asList(
-                    PeriodTypeEnum.RACE));
+                    PeriodTypeEnum.RACE),
+           Arrays.asList(
+        		   	ResultTypeEnum.POSITIONS));
 
     private final List<MarketTypeEnum> marketTypes;
     private final List<PeriodTypeEnum> periodTypes;
+    private final List<ResultTypeEnum> resultTypes;
 
-    private SportEnum(List<MarketTypeEnum> marketTypes, List<PeriodTypeEnum> periodTypes) {
+    private SportEnum(List<MarketTypeEnum> marketTypes, List<PeriodTypeEnum> periodTypes, List<ResultTypeEnum> resultTypes) {
         this.marketTypes = marketTypes;
         this.periodTypes = periodTypes;
+        this.resultTypes = resultTypes;
         marketTypes = marketTypes;
     }
 
@@ -37,4 +44,8 @@ public enum SportEnum {
     public List<PeriodTypeEnum> getPeriodTypes() {
         return this.periodTypes;
     }
+
+	public List<ResultTypeEnum> getResultTypes() {
+		return resultTypes;
+	}
 }
