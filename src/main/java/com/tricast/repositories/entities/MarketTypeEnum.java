@@ -1,17 +1,31 @@
 package com.tricast.repositories.entities;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum MarketTypeEnum {
-	WDW("WDW"),CorrectScore("Correct Score"),OverUnderGoalsOneAndAHalf("Over/Under Goals 1.5"),OverUnderGoalsTwoAndAHalf("Over/Under Goals 2.5"),
-	OverUnderCornersEightAndAHalf("Over/Under Corners 8.5"),HalfTimeFullTime("Half time/Full time"),Outright("Outright"),HeadToHead("Head to Head");
-	
-	
-	 private final String description;
+    WDW("WDW", Arrays.asList(SportEnum.FOOTBALL)),
+    CorrectScore("Correct Score", Arrays.asList(SportEnum.FOOTBALL)),
+    OverUnderGoalsOneAndAHalf("Over/Under Goals 1.5", Arrays.asList(SportEnum.FOOTBALL)),
+    OverUnderGoalsTwoAndAHalf("Over/Under Goals 2.5", Arrays.asList(SportEnum.FOOTBALL)),
+    OverUnderCornersEightAndAHalf("Over/Under Corners 8.5", Arrays.asList(SportEnum.FOOTBALL)),
+    HalfTimeFullTime("Half time/Full time", Arrays.asList(SportEnum.FOOTBALL)),
+    Outright("Outright", Arrays.asList(SportEnum.FOOTBALL)),
+    HeadToHead("Head to Head", Arrays.asList(SportEnum.FOOTBALL));
 
-	    private MarketTypeEnum(String value) {
-	        description = value;
-	    }
+    private final String description;
+    private final List<SportEnum> sports;
 
-	    public String getValue() {
-	    	return description;
-	    }
+    private MarketTypeEnum(String value, List<SportEnum> sports) {
+        this.description = value;
+        this.sports = sports;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<SportEnum> getSports() {
+        return sports;
+    }
 }

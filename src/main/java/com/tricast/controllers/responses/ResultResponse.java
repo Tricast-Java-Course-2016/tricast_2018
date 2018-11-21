@@ -7,7 +7,7 @@ import java.util.List;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.PeriodType;
-import com.tricast.repositories.entities.PeriodTypes;
+import com.tricast.repositories.entities.PeriodTypeEnum;
 import com.tricast.repositories.entities.ResultType;
 import com.tricast.repositories.entities.ResultTypes;
 

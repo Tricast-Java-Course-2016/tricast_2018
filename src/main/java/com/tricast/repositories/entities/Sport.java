@@ -16,18 +16,18 @@ import com.tricast.repositories.entities.converters.SportsConverter;
 @Table(name = "SPORTS")
 public class Sport implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7912760514213968427L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
+
     @Column(name = "description")
     private String description;
 
+    @Column(name = "description", insertable = false, updatable = false)
+    @Convert(converter = SportsConverter.class)
+    private SportEnum type;
 
 	public Long getId() {
 		return id;
@@ -44,4 +44,4 @@ public class Sport implements Serializable {
 	public void setDescription(String description){
 		this.description=description;
 	}
-}	
+}

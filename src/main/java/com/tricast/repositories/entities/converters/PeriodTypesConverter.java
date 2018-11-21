@@ -2,15 +2,15 @@ package com.tricast.repositories.entities.converters;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.tricast.repositories.entities.PeriodTypes;
+import com.tricast.repositories.entities.PeriodTypeEnum;
 
-import static com.tricast.repositories.entities.PeriodTypes.*;
+import static com.tricast.repositories.entities.PeriodTypeEnum.*;
 
 @Converter
-public class PeriodTypesConverter implements AttributeConverter<PeriodTypes, String> {
+public class PeriodTypesConverter implements AttributeConverter<PeriodTypeEnum, String> {
 
     @Override
-    public String convertToDatabaseColumn(PeriodTypes attribute) {
+    public String convertToDatabaseColumn(PeriodTypeEnum attribute) {
         switch (attribute) {
             case NINETYMINUTES:
                 return "90 minutes";
@@ -26,7 +26,7 @@ public class PeriodTypesConverter implements AttributeConverter<PeriodTypes, Str
     }
 
     @Override
-    public PeriodTypes convertToEntityAttribute(String dbData) {
+    public PeriodTypeEnum convertToEntityAttribute(String dbData) {
         switch (dbData) {
             case "90 minutes":
                 return NINETYMINUTES;
