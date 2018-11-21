@@ -21,7 +21,7 @@
 
 <script id="competitor-row-template" type="text/x-handlebars-template">
 			{{#each competitors}}
-		    	<tr>
+		    	<tr data-name="{{description}}" data-league-names="{{leaguesNameConcatenated}}">
 		        	<td>{{description}}</td>
 		            <td>{{leaguesNameConcatenated}}</td>
 		            <td style="padding: 6px 15px" class="text-right"><button data-target="#edit-modal" data-toggle="modal"="modal" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-edit"></button></td>
@@ -33,6 +33,13 @@
 <body>
 	<div class="pb-5" id="navbar-content"></div>
 	<div class="container">
+		<div class="row">
+	       <div class="col-md-12">
+	         <form class="">
+	           <div class="form-group pb-4"> <input id="search" type="text" class="form-control pl-4" placeholder="Keresés..." style="	background-image: url(&quot;https://png.icons8.com/metro/1600/search.png&quot;);	background-position: 7px 8px;	background-size: 20px;	background-repeat: no-repeat; padding-left: 35px !important;"> </div>
+	         </form>
+	       </div>
+	     </div>
 		<div class="row">
 			<div class="col-md-12">
 				<table id="competitors-table" class="table pb-0 mb-5">

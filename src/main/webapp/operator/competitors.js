@@ -69,6 +69,20 @@ window.onload = function() {
                     });
                 });
         
+        $('#search').on('change keyup', function(){
+        	const search = $(this).val().toLowerCase().trim();
+        	if(search.length === 0){
+        		$('#competitors-table tbody tr').css('display', 'table-row');
+        	}
+        	else {
+	        	const regex = new RegExp(search, 'i');
+	        	$.each($('#competitors-table tbody tr'), function(index, tr){
+	        		tr = $(tr);
+	        		tr.css('display', ( regex.test(tr.attr('data-name')) || regex.test(tr.attr('data-league-names')) ) ? 'table-row' : 'none' )
+	        	});
+    		}
+        });
+        
     });
 			
 			
