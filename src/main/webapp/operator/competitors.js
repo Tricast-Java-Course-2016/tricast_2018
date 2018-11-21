@@ -69,6 +69,7 @@ window.onload = function() {
                     });
                 });
         
+        // Sumák Frontend Technic (SFC) - NEM AJÁNLOTT! NE HASZNÁLD!
         $('#search').on('change keyup', function(){
         	const search = $(this).val().toLowerCase().trim();
         	if(search.length === 0){
