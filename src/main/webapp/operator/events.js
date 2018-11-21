@@ -116,36 +116,65 @@ window.onload = function() {
                 }));
 
                 $('#new-event-form select[name="leagueId"]').on('change', function() {
-                            let sportId = -1;
-                            const select = $(this);
-                            const leagueId = (select.val().trim().length === 0) ? -1 : parseInt(select.val());
-                            if (leagueId > 0) {
-                                sportId = select.find('option[value="' + leagueId + '"]').attr('data-sport-id');
-                            }
-                            $.each($('#new-event-form [data-name="competitorIds"] option'), function(index, option) {
-                                option = $(option);
-                                if (leagueId === -1) {
-                                    option.prop('disabled', false);
-                                    option.css('display', 'block');
-                                } else {
-                                	const disable = (competitorsById[option.attr('value')].leagueIds.indexOf(leagueId) === -1);
-                                    option.prop('disabled', disable);
-                                    option.css('display', disable ? 'none' : 'block');
-                                }
-                            });
-                            $('#new-event-form [data-name="competitorIds"]').val([]);
-                            $.each($('#period-market-type-table tr'), function(index, tr) {
-                                tr = $(tr);
-                                if (sportId === -1) {
-                                    tr.find('input[type="checkbox"]').prop('disabled', false);
-                                } else {
-                                	const disable = tr.attr('data-sport-id') != sportId;
-                                    tr.find('input[type="checkbox"]').prop('disabled', disable);
-                                    tr.find('input[type="checkbox"][disabled]').prop('checked', false);
-                                }
-                            });
-                        });
+                    let sportId = -1;
+                    const select = $(this);
+                    const leagueId = (select.val().trim().length === 0) ? -1 : parseInt(select.val());
+                    if (leagueId > 0) {
+                        sportId = select.find('option[value="' + leagueId + '"]').attr('data-sport-id');
+                    }
+                    $.each($('#new-event-form [data-name="competitorIds"] option'), function(index, option) {
+                        option = $(option);
+                        if (leagueId === -1) {
+                            option.prop('disabled', false);
+                            option.css('display', 'block');
+                        } else {
+                        	const disable = (competitorsById[option.attr('value')].leagueIds.indexOf(leagueId) === -1);
+                            option.prop('disabled', disable);
+                            option.css('display', disable ? 'none' : 'block');
+                        }
+                    });
+                    $('#new-event-form [data-name="competitorIds"]').val([]);
+                    $.each($('#period-market-type-table tr'), function(index, tr) {
+                        tr = $(tr);
+                        if (sportId === -1) {
+                            tr.find('input[type="checkbox"]').prop('disabled', false);
+                        } else {
+                        	const disable = tr.attr('data-sport-id') != sportId;
+                            tr.find('input[type="checkbox"]').prop('disabled', disable);
+                            tr.find('input[type="checkbox"][disabled]').prop('checked', false);
+                        }
+                    });
+                });
 
+                const refreshEventDescription = function (){
+                	const form = $(this).parents('form');
+                	const descriptionInput = form.find('input[name="description"]');
+                	const selectedCompetitors = form.find('[data-name="competitorIds"]').val();
+                	if (form.find('select[name="eventTypeId"]').val() == 1) {
+                		if(selectedCompetitors.length == 2)
+                			descriptionInput.val(
+                					competitorsById[ selectedCompetitors[0] ].description + 
+                					'-' + 
+                					competitorsById[ selectedCompetitors[1] ].description);
+                		else 
+                			descriptionInput.val('');
+                	}
+                }
+                
+                $('select[data-name="competitorIds"]').on('change', refreshEventDescription);
+                
+                $('#new-event-form select[name="eventTypeId"]').on('change', function() {
+                	const select = $(this);
+                	const descriptionInput = select.parents('form').find('input[name="description"]');
+                	if (select.val() == 1) {
+                		descriptionInput.val('').prop('readonly', true);
+                		refreshEventDescription();
+                	}
+                	else {
+                		descriptionInput.val('').prop('readonly', false);
+                	} 
+                });
+                
                 $('#new-event-form').on('submit', function(e) {
                     e.preventDefault();
 
