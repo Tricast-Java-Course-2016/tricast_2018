@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tricast.controllers.responses.SportResponse;
 import com.tricast.managers.SportManager;
 import com.tricast.repositories.entities.Sport;
 
@@ -19,7 +20,7 @@ public class SportController {
 	private SportManager sportManager;
 
 	@GetMapping
-	public List<Sport> findAll() {
+	public List<SportResponse> findAll() {
 		return sportManager.findAll();
 	}
 

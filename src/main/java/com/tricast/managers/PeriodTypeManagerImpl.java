@@ -60,9 +60,9 @@ public class PeriodTypeManagerImpl implements PeriodTypeManager {
 		List<PeriodTypeEnum> periods = new ArrayList<PeriodTypeEnum>();
 		
 		if(event.getEventType().getId() == 1) {
-			periods = SportEnum.FOOTBALL.getPeriodTpes();
+			periods = SportEnum.FOOTBALL.getPeriodTypes();
 		} else {
-			periods = SportEnum.HORSERACING.getPeriodTpes();
+			periods = SportEnum.HORSERACING.getPeriodTypes();
 		}
 		return periods;
 	}

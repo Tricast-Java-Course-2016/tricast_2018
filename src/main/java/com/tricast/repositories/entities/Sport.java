@@ -44,4 +44,8 @@ public class Sport implements Serializable {
 	public void setDescription(String description){
 		this.description=description;
 	}
+
+	public SportEnum getType() {
+		return type;
+	}
 }

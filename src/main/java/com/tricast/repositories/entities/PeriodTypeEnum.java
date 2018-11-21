@@ -1,15 +1,25 @@
 package com.tricast.repositories.entities;
 
 public enum PeriodTypeEnum {
-    NINETYMINUTES("Ninety Minutes"), FIRSTHALF("First Half"), SECONDHALF("Second Half"), RACE("Race");
+    NINETYMINUTES(1, "Ninety Minutes"), 
+    FIRSTHALF(2, "First Half"), 
+    SECONDHALF(3, "Second Half"), 
+    RACE(4, "Race");
 
+	private final int id;
     private final String description;
 
-    private PeriodTypeEnum(String value) {
-        description = value;
+    
+    private PeriodTypeEnum(int id, String value) {
+    	this.id = id;
+        this.description = value;
     }
+    
+    public int getId() {
+		return id;
+	}
 
-    public String getValue() {
+	public String getDescription() {
         return description;
     }
 }

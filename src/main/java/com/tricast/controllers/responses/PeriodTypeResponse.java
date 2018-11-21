@@ -4,19 +4,21 @@ import java.io.Serializable;
 
 public class PeriodTypeResponse implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6366007905616529333L;
 
-	private String periodTypeDescription;
-
-	public String getPeriodTypeDescription() {
-		return periodTypeDescription;
+	private int id;
+	private String description;
+	
+	public int getId() {
+		return id;
 	}
-
-	public void setPeriodTypeDescription(String periodTypeDescription) {
-		this.periodTypeDescription = periodTypeDescription;
+	public void setId(int id) {
+		this.id = id;
 	}
-
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
