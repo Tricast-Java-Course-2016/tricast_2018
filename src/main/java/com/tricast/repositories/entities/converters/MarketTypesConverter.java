@@ -2,15 +2,15 @@ package com.tricast.repositories.entities.converters;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.tricast.repositories.entities.MarketTypes;
+import com.tricast.repositories.entities.MarketTypeEnum;
 
-import static com.tricast.repositories.entities.MarketTypes.*;
+import static com.tricast.repositories.entities.MarketTypeEnum.*;
 
 @Converter
-public class MarketTypesConverter implements AttributeConverter<MarketTypes, String> {
+public class MarketTypesConverter implements AttributeConverter<MarketTypeEnum, String> {
 
     @Override
-    public String convertToDatabaseColumn(MarketTypes attribute) {
+    public String convertToDatabaseColumn(MarketTypeEnum attribute) {
         switch (attribute) {
             case WDW:
                 return "WDW";
@@ -34,7 +34,7 @@ public class MarketTypesConverter implements AttributeConverter<MarketTypes, Str
     }
 
     @Override
-    public MarketTypes convertToEntityAttribute(String dbData) {
+    public MarketTypeEnum convertToEntityAttribute(String dbData) {
         switch (dbData) {
             case "WDW":
                 return WDW;

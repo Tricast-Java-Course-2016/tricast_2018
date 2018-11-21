@@ -18,24 +18,22 @@ import com.tricast.repositories.entities.converters.MarketTypesConverter;
 @Table(name = "MARKETTYPES")
 public class MarketType implements Serializable {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7227671871339213573L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
+
     @Column(name = "description")
-    @Convert(converter = MarketTypesConverter.class)
-    private MarketTypes description;
-    
+    private String description;
+
 	@ManyToOne
     @JoinColumn(name = "sportid")
     private Sport sportId;
 
+    @Column(name = "description", insertable = false, updatable = false)
+    @Convert(converter = MarketTypesConverter.class)
+    private MarketTypeEnum type;
 
 	public Long getId() {
 		return id;
@@ -45,14 +43,6 @@ public class MarketType implements Serializable {
 		this.id = id;
 	}
 
-	public MarketTypes getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(MarketTypes description){
-		this.description=description;
-	}
-
 	public Sport getSportId() {
 		return sportId;
 	}
@@ -60,5 +50,20 @@ public class MarketType implements Serializable {
 	public void setSportId(Sport sportId) {
 		this.sportId = sportId;
 	}
-	
-}	
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public MarketTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(MarketTypeEnum type) {
+        this.type = type;
+    }
+}

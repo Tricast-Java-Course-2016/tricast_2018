@@ -17,9 +17,9 @@ public class Market implements Serializable {
 
 	public static final int ID_WDW = 1;
 	public static final int ID_OUTRIGHT = 9;
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 4266469379148385522L;
 
@@ -30,14 +30,14 @@ public class Market implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "eventid")
     private Event event;
-	
+
 	@ManyToOne
 	@JoinColumn(name="markettypeid")
-	private MarketType marketTypeId;
-	
+	private MarketType marketType;
+
 	@Column(name="description")
 	private String description;
-	
+
 	@ManyToOne
 	@JoinColumn(name="periodtypeid")
 	private PeriodType periodTypeId;
@@ -58,15 +58,15 @@ public class Market implements Serializable {
 		this.event = event;
 	}
 
-	public MarketType getMarketTypeId() {
-		return marketTypeId;
-	}
+    public MarketType getMarketType() {
+        return marketType;
+    }
 
-	public void setMarketTypeId(MarketType marketTypeId) {
-		this.marketTypeId = marketTypeId;
-	}
+    public void setMarketType(MarketType marketType) {
+        this.marketType = marketType;
+    }
 
-	public String getDescription() {
+    public String getDescription() {
 		return description;
 	}
 
@@ -81,5 +81,5 @@ public class Market implements Serializable {
 	public void setPeriodTypeId(PeriodType periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
-		
+
 }
