@@ -116,11 +116,14 @@ window.onload = function() {
                                 option = $(option);
                                 if (leagueId === -1) {
                                     option.prop('disabled', false);
+                                    option.css('display', 'block');
                                 } else {
-                                    option.prop('disabled', competitorsById[option.attr('value')].leagueIds
-                                            .indexOf(leagueId) === -1);
+                                	const disable = (competitorsById[option.attr('value')].leagueIds.indexOf(leagueId) === -1);
+                                    option.prop('disabled', disable);
+                                    option.css('display', disable ? 'none' : 'block');
                                 }
                             });
+                            $('#new-event-form [data-name="competitorIds"]').val([]);
                             $.each($('#period-market-type-table tr'), function(index, tr) {
                                 tr = $(tr);
                                 if (sportId === -1) {
