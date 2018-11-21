@@ -18,7 +18,7 @@ public interface ResultManager {
 
     ResultSaveResponse create(ResultSaveRequest requestObject) throws SportsbookException;
 
-    Result update(Result result);
+    ResultSaveResponse update(long resultId, ResultSaveRequest resultUpdate);
 
     void deleteById(Long id);
     

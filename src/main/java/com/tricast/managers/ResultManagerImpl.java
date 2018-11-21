@@ -169,11 +169,6 @@ public class ResultManagerImpl implements ResultManager {
 	}
 
 	@Override
-	public Result update(Result result) {
-		return resultRepository.save(result);
-	}
-
-	@Override
 	public void deleteById(Long id) {
 		resultRepository.delete(id);
 	}
@@ -189,5 +184,19 @@ public class ResultManagerImpl implements ResultManager {
      		
  		return response;
  	}
+
+	@Override
+	public ResultSaveResponse update(long resultId, ResultSaveRequest resultUpdate) {
+		Result resultToSave = new Result();
+		ResultResponse currentResult = resultRepository.findById(resultId);
+		
+		currentResult.setResultTypeId(resultUpdate.getResultToSave().getResultTypeId());
+		currentResult.setResult(resultUpdate.getResultToSave().getResult());
+		currentResult.setPeriodTypeId(resultUpdate.getResultToSave().getPeriodTypeId());
+		
+//		resultToSave.setResultType(resultType);
+		
+		return null;
+	}
 		
 }
