@@ -69,6 +69,11 @@ window.onload = function() {
                 eventsById = destructById(events[0]);
                 periodsById = destructById(periods[0]);
 
+                $.each(sportsById, function(index, sport){
+                	sport.periodTypesById = destructById(sport.periodTypes);
+                	sport.marketTypesById = destructById(sport.marketTypes);
+                });
+                
                 let eventList = [];
                 $.each(eventsById, function(id, event) {
                     eventList.push({
@@ -87,25 +92,30 @@ window.onload = function() {
 
                 $('#period-market-type-table').html(
                         Handlebars.compile($('#period-market-type-table-template').html())({
-                            marketTypes : [ {
-                                id : 1,
-                                description : 'WDW',
-                                sportId : 1
-                            }, {
-                                id : 9,
-                                description : 'Outright',
-                                sportId : 2
-                            }, ],
+                            marketTypes : [ 
+                            	{ id : 1, description : 'WDW', 		sportId : 1 }, 
+                            	{ id : 9, description : 'Outright', sportId : 2 }, 
+                        	],
                             periods : periodsById
                         }));
+                
+                $.each($('#period-market-type-table tr[data-sport-id]'), function(index, tr){
+                	tr = $(tr);
+                	const sportId = tr.attr('data-sport-id');
+                	$.each(tr.find('td'), function(index, td){
+                		td = $(td);
+                		const periodTypeId = td.children('input[type="checkbox"]').attr('data-period-type-id');
+                		const hasPeriod = sportsById[sportId].periodTypesById.hasOwnProperty(periodTypeId);
+                		if (!hasPeriod)
+                			td.empty();
+                	});
+                });
 
                 $('#events-table tbody').html(Handlebars.compile($('#event-row-template').html())({
                     events : eventList
                 }));
 
-                $('#new-event-form select[name="leagueId"]').on(
-                        'change',
-                        function() {
+                $('#new-event-form select[name="leagueId"]').on('change', function() {
                             let sportId = -1;
                             const select = $(this);
                             const leagueId = (select.val().trim().length === 0) ? -1 : parseInt(select.val());
@@ -129,8 +139,9 @@ window.onload = function() {
                                 if (sportId === -1) {
                                     tr.find('input[type="checkbox"]').prop('disabled', false);
                                 } else {
-                                    tr.find('input[type="checkbox"]').prop('disabled',
-                                            tr.attr('data-sport-id') != sportId);
+                                	const disable = tr.attr('data-sport-id') != sportId;
+                                    tr.find('input[type="checkbox"]').prop('disabled', disable);
+                                    tr.find('input[type="checkbox"][disabled]').prop('checked', false);
                                 }
                             });
                         });
