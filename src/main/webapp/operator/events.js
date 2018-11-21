@@ -135,16 +135,34 @@ window.onload = function() {
                             });
                         });
 
-                $('#new-event-form').on(
-                        'submit',
-                        function(e) {
-                            e.preventDefault();
+                $('#new-event-form').on('submit', function(e) {
+                    e.preventDefault();
 
-                            const data = Object.assign({}, SB.Utils.readFormData($('#new-event-form')),
-                                    readCustomInputsFrom($('#new-event-form')));
-                            SB.Utils.postAjax('/sportsbook/api/events', data, SB.Token.OPERATOR, function() {
-                                location.reload(true);
-                            });
-                        });
+                    const data = Object.assign({}, SB.Utils.readFormData($('#new-event-form')),
+                            readCustomInputsFrom($('#new-event-form')));
+                    SB.Utils.postAjax('/sportsbook/api/events', data, SB.Token.OPERATOR, function() {
+                        location.reload(true);
+                    });
+                });
+                
+                $('#search').on('change keyup', function(){
+                	const search = $(this).val().toLowerCase().trim();
+                	console.log(search);
+                	if(search.length === 0){
+                		$('#events-table tbody tr').css('display', 'table-row');
+                	}
+                	else {
+        	        	const regex = new RegExp(search, 'i');
+        	        	$.each($('#events-table tbody tr'), function(index, tr){
+        	        		tr = $(tr);
+        	        		tr.css('display', ( 	regex.test(tr.attr('data-name')) || 
+        	        								regex.test(tr.attr('data-league')) ||
+        	        								regex.test(tr.attr('data-start-date')) ||
+        	        								regex.test(tr.attr('data-status'))
+        	        		) ? 'table-row' : 'none' );
+        	        	});
+            		}
+                });
+                
             });
 };
