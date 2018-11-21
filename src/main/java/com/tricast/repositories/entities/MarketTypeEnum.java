@@ -10,8 +10,8 @@ public enum MarketTypeEnum {
     OverUnderGoalsTwoAndAHalf("Over/Under Goals 2.5", Arrays.asList(SportEnum.FOOTBALL)),
     OverUnderCornersEightAndAHalf("Over/Under Corners 8.5", Arrays.asList(SportEnum.FOOTBALL)),
     HalfTimeFullTime("Half time/Full time", Arrays.asList(SportEnum.FOOTBALL)),
-    Outright("Outright", Arrays.asList(SportEnum.FOOTBALL)),
-    HeadToHead("Head to Head", Arrays.asList(SportEnum.FOOTBALL));
+    Outright("Outright", Arrays.asList(SportEnum.HORSERACING)),
+    HeadToHead("Head to Head", Arrays.asList(SportEnum.HORSERACING));
 
     private final String description;
     private final List<SportEnum> sports;
