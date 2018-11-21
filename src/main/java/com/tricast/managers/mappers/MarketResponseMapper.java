@@ -6,7 +6,7 @@ import com.tricast.repositories.entities.Market;
 
 public class MarketResponseMapper {
 
-	  public static MarketResponse mapToResponse(Market entityObject, 
+	  public static MarketResponse mapToResponse(Market entityObject,
 	    		EventRepository eventRepository) {
 	        if(entityObject == null) {
 	            return null;
@@ -15,11 +15,11 @@ public class MarketResponseMapper {
 	        MarketResponse responseObject = new MarketResponse();
 	        responseObject.setMarketId(entityObject.getId());
 	        responseObject.setMarketDescription(entityObject.getDescription());
-	        responseObject.setMarketTypeDescription(entityObject.getMarketTypeId().getDescription().getValue());
+        responseObject.setMarketTypeDescription(entityObject.getMarketType().getType().getValue());
 	        responseObject.setStatus(eventRepository.findById(entityObject.getEvent().getId()).getStatus().getValue());
-	        
+
 	        return responseObject;
 
 	  }
-	
+
 }

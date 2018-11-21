@@ -19,7 +19,6 @@ import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
 import com.tricast.managers.exceptions.SportsbookException;
-import com.tricast.managers.helpers.OffsetDateTimeToCalendar;
 import com.tricast.repositories.CompetitorRepository;
 import com.tricast.repositories.EventCompetitorMapRepository;
 import com.tricast.repositories.EventRepository;
@@ -44,16 +43,16 @@ public class EventManagerImpl implements EventManager {
 
 	@Autowired
     private EventCompetitorMapRepository eventCompetitorMapRepository;
-	
+
 	@Autowired
     private EventRepositoryCustom eventRepositoryCustom;
-	
+
 	@Autowired
     private EventRepository eventRepository;
 
 	@Autowired
     private EventTypeRepository eventTypeRepository;
-	
+
     @Autowired
     private SportRepository sportRepository;
 
@@ -65,7 +64,7 @@ public class EventManagerImpl implements EventManager {
 
     @Autowired
     private OutcomeRepository outcomeRepository;
-    
+
     @Autowired
     private MarketTypeRepository marketTypeRepository;
 
@@ -77,7 +76,7 @@ public class EventManagerImpl implements EventManager {
 
     @Override
     public List<EventResponse> findAll() {
-    	List<EventResponse> eventResponses = new ArrayList<EventResponse>();
+    	List<EventResponse> eventResponses = new ArrayList<>();
         for (Event event : eventRepository.findAll()) {
 			eventResponses.add(EventResponseBuilder.build(event, competitorRepository.findByEventId(event.getId())));
 		}
@@ -95,41 +94,43 @@ public class EventManagerImpl implements EventManager {
     @Override
     public EventResponse create(EventRequest eventRequest) throws SportsbookException {
     	Event event = new Event();
-    	
+
     	event.setDescription(eventRequest.getDescription());
 
     	event.setStartTime( eventRequest.getStartTime() );
     	event.setStatus(eventRequest.getStatus());
     	event.setEventType(eventTypeRepository.findById( eventRequest.getEventTypeId() ));
     	event.setLeague( leagueRepository.findOne(eventRequest.getLeagueId()) );
-    	
+
     	event = eventRepository.save(event);
-    	
-    	List<Competitor> competitors = new ArrayList<Competitor>();
+
+    	List<Competitor> competitors = new ArrayList<>();
     	for (Long competitorId : eventRequest.getCompetitorIds()) {
 			competitors.add(competitorRepository.findById(competitorId));
-			
+
 			EventCompetitorMap eventCompetitorMap = new EventCompetitorMap();
 			eventCompetitorMap.setEventId(event.getId());
 			eventCompetitorMap.setCompetitorId(competitorId);
-			
+
 			eventCompetitorMapRepository.save(eventCompetitorMap);
 		}
-    		
+
     	for (MarketForEventRequest marketData : eventRequest.getMarkets()) {
 			Market market = new Market();
 			market.setEventId(event);
-			market.setMarketTypeId(marketTypeRepository.findById( marketData.getMarketTypeId() ));
+            market.setMarketType(marketTypeRepository.findById(marketData.getMarketTypeId()));
 			market.setPeriodTypeId(periodTypeRepository.findById( marketData.getPeriodTypeId() ));
-			market.setDescription(event.getLeague().getDescription() + " - " + event.getDescription() + " - " + market.getMarketTypeId().getDescription() );
+            market.setDescription(event.getLeague().getDescription() + " - " + event.getDescription() + " - "
+                    + market.getMarketType().getDescription());
 			marketRepository.save(market);
-			
-			
-			switch (market.getMarketTypeId().getId().intValue()) {
+
+
+            switch (market.getMarketType().getId().intValue()) {
 			case Market.ID_WDW:
-				if (competitors.size() != 2)
-					throw new SportsbookException("Pontosan 2 darab csapat szerepelhet egy WDW típusú marketen!");
-				
+				if (competitors.size() != 2) {
+                    throw new SportsbookException("Pontosan 2 darab csapat szerepelhet egy WDW típusú marketen!");
+                }
+
 				saveOutcome(competitors.get(0).getDescription(), "1", market);
 				saveOutcome("Döntetlen", "X", market);
 				saveOutcome(competitors.get(1).getDescription(), "2", market);
@@ -142,8 +143,20 @@ public class EventManagerImpl implements EventManager {
 				}
 				break;
 			}
+
+            // market type enum
+            /*
+             * switch (market.getMarketType().getType()) { case WDW: if (competitors.size() != 2) { throw new
+             * SportsbookException("Pontosan 2 darab csapat szerepelhet egy WDW típusú marketen!"); }
+             * 
+             * saveOutcome(competitors.get(0).getDescription(), "1", market); saveOutcome("Döntetlen", "X", market);
+             * saveOutcome(competitors.get(1).getDescription(), "2", market); break;
+             * 
+             * case Outright: int index = 1; for (Competitor competitor : competitors) {
+             * saveOutcome(competitor.getDescription(), Integer.toString(index++), market); } break; default: break; }
+             */
 		}
-    	
+
         return EventResponseBuilder.build(event, competitors);
     }
 
@@ -154,7 +167,7 @@ public class EventManagerImpl implements EventManager {
     	outcome.setMarket(market);
     	outcomeRepository.save(outcome);
     }
-    
+
     @Override
     public Event update(Event event) {
         return eventRepository.save(event);
@@ -202,7 +215,7 @@ public class EventManagerImpl implements EventManager {
     public EventDetailResponse detail(Long id) {
     	return EventDetailResponseBuilder.build(id, eventRepository, marketRepository, outcomeRepository, periodTypeRepository);
     }
-    
+
     @Override
     public EventDetailResponse updateOdds(OddsRequest oddsRequest,Long eventId) throws SportsbookException {
     	Set <Long> outcomeIds = oddsRequest.getOutcomeIdOdds().keySet();
@@ -210,7 +223,7 @@ public class EventManagerImpl implements EventManager {
     	Double currentOdds;
     	Long currentId;
     	Outcome currentOutcome;
-    	
+
 
         while(iterator.hasNext()) {
         	currentId=iterator.next();
@@ -223,28 +236,28 @@ public class EventManagerImpl implements EventManager {
             	}
         	}
         }
-    	
+
 	iterator = outcomeIds.iterator();
     	while(iterator.hasNext()) {
     		currentId=iterator.next();
     		currentOdds = oddsRequest.getOutcomeIdOdds().get(currentId);
-    		
+
     		currentOutcome=outcomeRepository.findById(currentId);
     		currentOutcome.setOdds(currentOdds);
-    		
+
     		outcomeRepository.save(currentOutcome);
-    		
+
     	}
-    	
+
     	return EventDetailResponseBuilder.build(oddsRequest.getEventId()
     			, eventRepository, marketRepository, outcomeRepository, periodTypeRepository);
 
     }
-    
+
     @Override
     public List <EventResponse> listOpen(){
     	List <Event> events = eventRepositoryCustom.listOpen();
-    	List <EventResponse> responses=new ArrayList <EventResponse>();
+    	List <EventResponse> responses=new ArrayList <>();
     	for(Event currentEvent : events) {
     		responses.add(EventResponseBuilder.build(currentEvent, this.competitorRepository.findByEventId(currentEvent.getId())));
     	}
