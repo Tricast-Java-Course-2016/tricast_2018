@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.tricast.repositories.EventRepository;
 import com.tricast.repositories.ResultTypeRepository;
 import com.tricast.repositories.entities.Event;
-import com.tricast.repositories.entities.PeriodTypeEnum;
 import com.tricast.repositories.entities.ResultType;
 import com.tricast.repositories.entities.ResultTypeEnum;
 import com.tricast.repositories.entities.SportEnum;
@@ -53,17 +52,29 @@ public class ResultTypeManagerImpl implements ResultTypeManager{
 		
 	}
 	@Override
-	public List<ResultTypeEnum> findByEventId(long eventId) {
+	public List<ResultType> findByEventId(long eventId) {
 		Event event = eventRepository.findById(eventId);
+
+		List<ResultTypeEnum> results = new ArrayList<ResultTypeEnum>();
+		List<ResultType> resultTypList = new ArrayList<ResultType>();
 		
-		List<ResultTypeEnum> resultTypes = new ArrayList<ResultTypeEnum>();
+		ResultType resultType;
 		
 		if(event.getEventType().getId() == 1) {
-			resultTypes = SportEnum.FOOTBALL.getResultTypes();
+			results = SportEnum.FOOTBALL.getResultTypes();
 		} else {
-			resultTypes = SportEnum.HORSERACING.getResultTypes();
+			results = SportEnum.HORSERACING.getResultTypes();
 		}
-		return resultTypes;
+		
+		for(ResultTypeEnum currentResultTypeEnum : results) {
+			resultType = new ResultType();
+			resultType.setId(currentResultTypeEnum.getId());
+			resultType.setDescription(currentResultTypeEnum.getDescription());
+			resultType.setType(currentResultTypeEnum);
+			resultTypList.add(resultType);
+		}
+		
+		return resultTypList;
 	}
 
 }

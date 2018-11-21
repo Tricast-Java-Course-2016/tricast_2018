@@ -54,17 +54,29 @@ public class PeriodTypeManagerImpl implements PeriodTypeManager {
     }
 
 	@Override
-	public List<PeriodTypeEnum> findByEventId(long eventId) {
+	public List<PeriodType> findByEventId(long eventId) {
 		Event event = eventRepository.findById(eventId);
-		
+
 		List<PeriodTypeEnum> periods = new ArrayList<PeriodTypeEnum>();
+		List<PeriodType> periodTypList = new ArrayList<PeriodType>();
+		
+		PeriodType periodType;
 		
 		if(event.getEventType().getId() == 1) {
 			periods = SportEnum.FOOTBALL.getPeriodTypes();
 		} else {
 			periods = SportEnum.HORSERACING.getPeriodTypes();
 		}
-		return periods;
+		
+		for(PeriodTypeEnum currentPeriodTypeEnum : periods) {
+			periodType = new PeriodType();
+			periodType.setId(currentPeriodTypeEnum.getId());
+			periodType.setDescription(currentPeriodTypeEnum.getDescription());
+			periodType.setType(currentPeriodTypeEnum);
+			periodTypList.add(periodType);
+		}
+		
+		return periodTypList;
 	}
 
 }

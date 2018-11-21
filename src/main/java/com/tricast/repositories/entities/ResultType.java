@@ -4,6 +4,7 @@ package com.tricast.repositories.entities;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,6 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.tricast.repositories.entities.converters.PeriodTypesConverter;
+import com.tricast.repositories.entities.converters.ResultTypesConverter;
 
 @Entity 
 @Table(name = "RESULTTYPES")
@@ -24,27 +28,36 @@ public class ResultType implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 	
-    @Enumerated(EnumType.STRING)
     @Column(name = "description")
-    private ResultTypeEnum description;
+    private String description;
+    
+    @Column(name = "description", insertable = false, updatable = false)
+    @Convert(converter = ResultTypesConverter.class)
+    private ResultTypeEnum type;
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public ResultTypeEnum getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(ResultTypeEnum description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
-    
-    
+
+	public ResultTypeEnum getType() {
+		return type;
+	}
+
+	public void setType(ResultTypeEnum type) {
+		this.type = type;
+	}
 }

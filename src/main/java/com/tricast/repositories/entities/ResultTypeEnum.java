@@ -1,14 +1,22 @@
 package com.tricast.repositories.entities;
 
 public enum ResultTypeEnum{
-	GOALS("Goals"), CORNERS("Corners"), POSITIONS("Position");
+	GOALS(1, "Goals"),
+	CORNERS(2, "Corners"),
+	POSITIONS(3, "Position");
 	
+	private final int id;
 	private final String description;
 	
-	private ResultTypeEnum(String value) {
-		description = value;
+	private ResultTypeEnum(int id, String value) {
+		this.id = id;
+		this.description = value;
 	}
 
+	public int getId() {
+		return id;
+	}
+	
 	public String getDescription() {
 		return description;
 	}

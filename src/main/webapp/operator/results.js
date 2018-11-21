@@ -23,19 +23,26 @@ const destructById = function(array) {
 let competitorsByEventId;
 let eventsById;
 let eventTypeId;
+let resultTypesByEventId;
+let periodTypesByEventId;
 
 const urlParam = new URLSearchParams(window.location.search);
 let id = urlParam.get("eventid");
+
 $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OPERATOR),
-		SB.Utils.getAjax('/sportsbook/api/events/' + id, SB.Token.OPERATOR)).done(
-		function(competitors, events) {
+		SB.Utils.getAjax('/sportsbook/api/events/' + id, SB.Token.OPERATOR),
+		SB.Utils.getAjax('/sportsbook/api/resulttypes/findByEventId/' + id, SB.Token.OPERATOR),
+		SB.Utils.getAjax('/sportsbook/api/periodtypes/findByEventId/' + id, SB.Token.OPERATOR)).done(
+		function(competitors, events, resulttypes, periodtypes) {
 			
 			eventsById = destructById(events[0]);
 			competitorsByEventId = destructById(competitors[0]);
+			resultTypesByEventId = destructById(resulttypes[0]);
+			periodTypesByEventId = destructById(periodtypes[0]);
 			
-			eventTypeId = events[0].eventTypeId;
-
 			let competitorsList = [];
+			let resultTypeList = [];
+			let periodTypeList = [];
 			
 			$.each(competitorsByEventId, function(id, competitor) {
 				competitorsList.push({
@@ -43,11 +50,30 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 					'description' : competitor.description
 				});
 			});
+						
+			$.each(resultTypesByEventId, function(id, resulttypes) {
+				resultTypeList.push({
+					'id' : resulttypes.id + '',
+					'description' : resulttypes.description
+				});
+			});
+			
+			$.each(periodTypesByEventId, function(id, periodtypes) {
+				periodTypeList.push({
+					'id' : periodtypes.id + '',
+					'description' : periodtypes.description
+				});
+			});
+			
+			eventTypeId = events[0].eventTypeId;
 			
 			if(eventTypeId === 1){
 				$('#results-tabele table').html(Handlebars.compile($('#football-results-template').html())({					
-					competitors : competitorsList
+					competitors : competitorsList,
+					resulttypes : resultTypeList,
+					periodtypes : periodTypeList
 				}));
+				
 			} else {
 				$('#results-tabele table').html(Handlebars.compile($('#horserace-results-template').html())({
 					competitors : competitorsList,
@@ -58,25 +84,25 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 }
 
 function bindListeners() {
-$("#saveFootballResult").click(function(e) {
+$("#saveResult").click(function(e) {
 	footballResultSave();
 });
 }
 
 function footballResultSave() {
 
-const data = SB.Utils.readFormData($('#footballResultSave'));
-
-
+const data = SB.Utils.readFormData($('#saveResult'));
+const urlParam = new URLSearchParams(window.location.search);
+let id = urlParam.get("eventid");
 
 //SB.Utils.postAjax("/sportsbook/api/results",
 //				{
-//				  "eventId": 1,
+//				  "eventId": id,
 //				  "resultToSave": {
-//					"competitorId": 3,
-//					"periodTypeId": 1,
-//					"result": 5,
-//					"resultTypeId": 1
+//					"competitorId": 3?,
+//					"periodTypeId": input.dataset.periodId,
+//					"result": input.value,
+//					"resultTypeId": input.dataset.resultTypeId
 //				  }
 //				},
 //				SB.Token.OPERATOR, function(data, status, xhr) {

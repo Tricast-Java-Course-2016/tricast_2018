@@ -20,7 +20,7 @@ public class PeriodType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "description")
     private String description;
@@ -29,11 +29,11 @@ public class PeriodType implements Serializable {
     @Convert(converter = PeriodTypesConverter.class)
     private PeriodTypeEnum type;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -26,7 +26,7 @@ public class ResultTypeController {
 	}
 	
     @GetMapping(path = "findByEventId/{id}")
-    public List<ResultTypeEnum> findByEventId(@PathVariable("id") long eventId){
+    public List<ResultType> findByEventId(@PathVariable("id") long eventId){
     	return resultTypeManager.findByEventId(eventId);
     }
 

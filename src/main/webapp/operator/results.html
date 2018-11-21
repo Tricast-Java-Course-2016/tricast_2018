@@ -35,37 +35,16 @@ type="text/css">
 			<th data-competitorId={{id}}>{{this.description}}</th>
 		{{/each}} 
 	</thead>
-	<tbody>
-		<tr>
-			<td data-periodId=1 data-resultTypeId=1>Végeredmény </td>
-			<td><input type="text" class="resultInput form-control" name="finalResultTeamHome" id="test1"></td>
-			<td><input type="text" class="resultInput form-control" name="finalResultTeamAway" id="test2"></td>
-		</tr>
-		<tr>
-			<td>Első félidő eredménye</td>
-			<td><input type="text" class="form-control" name="firstHalfResultTeamHome"></td>
-			<td><input type="text" class="form-control" name="firstHalfResultTeamAway"></td>
-		</tr>
-		<tr>
-			<td>Második félidő eredménye</td>
-			<td><input type="text" class="form-control" name="secondHalfResultTeamHome"></td>
-			<td><input type="text" class="form-control" name="secondHalfResultTeamAway"></td>
-		</tr>
-		<tr>
-			<td>Szögletek száma</td>
-			<td><input type="text" class="form-control" name="finalCornerNumberTeamHome"></td>
-			<td><input type="text" class="form-control" name="finalCornerNumberTeamAway"></td>
-		</tr>
-		<tr>
-			<td>Első félidő szögleteinek száma<br></td>
-			<td><input type="text" class="form-control" name="firstHalfCornerNumberTeamHome"></td>
-			<td><input type="text" class="form-control" name="firstHalfCornerNumberTeamAway"></td>
-		</tr>
-		<tr>
-			<td>Második félidő szögleteinek száma</td>
-			<td><input type="text" class="form-control" name="secondHalfCornerNumberTeamHome"></td>
-			<td><input type="text" class="form-control" name="secondHalfCornerNumberTeamAway"></td>
-		</tr>
+	<tbody> 
+		{{#each resulttypes}}
+			{{#each ../periodtypes}}
+				<tr id="test">
+					<td>{{../this.description}} - {{this.description}}</td>
+					<td><input type="text" class="resultInput form-control" data-periodId={{this.id}} data-resultTypeId={{../this.id}}/></td>
+					<td><input type="text" class="resultInput form-control" data-periodId={{this.id}} data-resultTypeId={{../this.id}}/></td>
+				</tr>
+			{{/each}}		
+		{{/each}}
 	</tbody>			  
 </table>
 </script>

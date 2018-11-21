@@ -18,5 +18,5 @@ public interface ResultTypeManager {
 	
 	void deleteById(Long id);
 	
-    List<ResultTypeEnum> findByEventId(long eventId);
+    List<ResultType> findByEventId(long eventId);
 }

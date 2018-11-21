@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.managers.PeriodTypeManager;
 import com.tricast.repositories.entities.PeriodType;
-import com.tricast.repositories.entities.PeriodTypeEnum;
 
 @RestController
 @RequestMapping(path = "api/periodtypes")
@@ -30,7 +29,7 @@ public class PeriodTypeController {
     }
     
     @GetMapping(path = "findByEventId/{id}")
-    public List<PeriodTypeEnum> findByEventId(@PathVariable("id") long eventId){
+    public List<PeriodType> findByEventId(@PathVariable("id") long eventId){
     	return periodtypeManager.findByEventId(eventId);
     }
 
