@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
+import com.tricast.managers.exceptions.OddsException;
 import com.tricast.managers.exceptions.SportsbookException;
 import com.tricast.managers.mappers.BetResponseMapper;
 import com.tricast.repositories.AccountRepository;
@@ -131,7 +132,7 @@ public class BetManagerImpl implements BetManager {
     	while(iterator.hasNext()) {
     		currentId=iterator.next();
     		if(outcomeRepository.findById(currentId).getOdds()!=requestObject.getOutcomeOdds().get(currentId)) {
-    			throw new SportsbookException("Some of the outcomes referred in betRequest have new odds.");
+    			throw new OddsException("Some of the outcomes referred in betRequest have new odds.");
     		}
     	}
     	

@@ -4,14 +4,14 @@ import com.tricast.controllers.responses.PeriodTypeResponse;
 import com.tricast.repositories.entities.PeriodType;
 
 public class PeriodTypeResponseMapper {
-	
+
 	public static PeriodTypeResponse build(PeriodType periodType) {
-		
+
 		PeriodTypeResponse periodTypeResponse = new PeriodTypeResponse();
-		
-		periodTypeResponse.setPeriodTypeDescription(periodType.getDescription().getValue());
-		
+
+        periodTypeResponse.setPeriodTypeDescription(periodType.getDescription());
+
 		return periodTypeResponse;
     }
-	
+
 }

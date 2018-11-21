@@ -16,33 +16,40 @@ import com.tricast.repositories.entities.converters.PeriodTypesConverter;
 @Table(name = "PERIODTYPES")
 public class PeriodType implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7416880906917279709L;
-	
-	@Id
+    private static final long serialVersionUID = 7416880906917279709L;
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-	
+
     @Column(name = "description")
+    private String description;
+
+    @Column(name = "description", insertable = false, updatable = false)
     @Convert(converter = PeriodTypesConverter.class)
-    private PeriodTypes description;
+    private PeriodTypeEnum type;
 
+    public Long getId() {
+        return id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public PeriodTypes getDescription() {
-		return this.description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setDescription(PeriodTypes description){
-		this.description=description;
-	}
-}	
+    public PeriodTypeEnum getType() {
+        return type;
+    }
+
+    public void setType(PeriodTypeEnum type) {
+        this.type = type;
+    }
+}
