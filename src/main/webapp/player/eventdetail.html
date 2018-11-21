@@ -18,34 +18,39 @@
         <script type="text/javascript" src="eventdetail.js"></script>
         
         <script id="show_event_details" type="text/x-handlebars-template">
-		    {{#with this}}
 		    	<tr>
-					<td>{{eventdescription}}</td>
-		        	<td>{{eventid}}</td>
-					<td>{{starttime}}</td>
+					<td>{{eventDescription}}</td>
+		        	<td>{{eventId}}</td>
+					<td>{{eventStartTime}}</td>
 		    	</tr>
-				{{#each periodmarkets}}
+				{{#each periodMarketsList}}
 					<tr>
-					<td>{{perioddescription}}</td>
-					<td>{{marketdescription}}</td>
-					<td>{{marketid}}</td>
-					<td>{{markettype}}</td>
+					<td>{{period.periodTypeDescription}}</td>
+					<td>{{market.marketDescription}}</td>
+					<td>{{market.marketId}}</td>
+					<td>{{market.marketTypeDescription}}</td>
 					{{#each outcomes}}
 						<tr>
-						<td>{{outcomedescription}}</td>
-						<td>{{outcomeid}}</td>	
+						<td>{{outcomeDescription}}</td>
+						<td>{{outcomeId}}</td>	
 						<td style="padding: 6px 15px" class="text-right"><button value={{outcomeid}} onclick="" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default class="btn btn-sm btn-default"><b>{{odds}}</b></button></td>		
 						</tr>
 					{{/each}}
 					</tr>
 				{{/each}}
-		    {{/with}}
 		</script>
     </head>
     <body>
         <div id="navbar-content"></div>
 		<div class="container">
-			<div id="place" class="row"><div class="col-md-12"><b></b></div></div>
+			<div id="place" class="row"><div class="col-md-12">
+				 <table id="eventdetail_table" class="table table-hover">
+		            <thead>
+		            </thead>
+		            <tbody></tbody>
+		          </table>
+			</div>
+		</div>	
  		</div>
     </body>
 </html>
