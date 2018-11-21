@@ -17,11 +17,28 @@
         <script type="text/javascript" src="../js/utils.js"></script>
         <script type="text/javascript" src="eventdetail.js"></script>
         
-        <script id="show_event_id" type="text/x-handlebars-template">
+        <script id="show_event_details" type="text/x-handlebars-template">
 		    {{#with this}}
 		    	<tr>
+					<td>{{eventdescription}}</td>
 		        	<td>{{eventid}}</td>
+					<td>{{starttime}}</td>
 		    	</tr>
+				{{#each periodmarkets}}
+					<tr>
+					<td>{{perioddescription}}</td>
+					<td>{{marketdescription}}</td>
+					<td>{{marketid}}</td>
+					<td>{{markettype}}</td>
+					{{#each outcomes}}
+						<tr>
+						<td>{{outcomedescription}}</td>
+						<td>{{outcomeid}}</td>	
+						<td style="padding: 6px 15px" class="text-right"><button value={{outcomeid}} onclick="" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default class="btn btn-sm btn-default"><b>{{odds}}</b></button></td>		
+						</tr>
+					{{/each}}
+					</tr>
+				{{/each}}
 		    {{/with}}
 		</script>
     </head>
