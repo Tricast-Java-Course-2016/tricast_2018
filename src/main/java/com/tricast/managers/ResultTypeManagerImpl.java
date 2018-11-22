@@ -32,7 +32,7 @@ public class ResultTypeManagerImpl implements ResultTypeManager{
 	}
 
 	@Override
-	public ResultType findById(Long id) {
+	public ResultType findById(int id) {
 		return resultTypeRepository.findById(id);
 	}
 

@@ -24,7 +24,7 @@ public class PeriodTypeController {
     }
 
     @GetMapping(path = "findById/{id}")
-    public PeriodType findById(@PathVariable("id") Long id) {
+    public PeriodType findById(@PathVariable("id") int id) {
         return periodtypeManager.findById(id);
     }
     

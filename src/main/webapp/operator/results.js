@@ -85,29 +85,44 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 
 function bindListeners() {
 $("#saveResult").click(function(e) {
-	footballResultSave();
+	ResultSave();
 });
 }
 
-function footballResultSave() {
+function ResultSave() {
+	
+	//const data = SB.Utils.readFormData($('#saveResult'));
+	const urlParam = new URLSearchParams(window.location.search);
+	
+	let eventId = parseInt(urlParam.get("eventid"));
+	let competitorId;
+	let periodTypeId;
+	let result;
+	let resultTypeId;
+	
+	console.log("This is the EventId: " + eventId + " " + typeof(eventId));
+	
+	$(".resultInput").each(function(){
+		competitorId = parseInt($(this).attr("data-competitorId"));
+		periodTypeId = parseInt($(this).attr("data-periodId"));
+		result = parseInt($(this).val());
+		resultTypeId = parseInt($(this).attr("data-resultTypeId"));
 
-const data = SB.Utils.readFormData($('#saveResult'));
-const urlParam = new URLSearchParams(window.location.search);
-let id = urlParam.get("eventid");
-
-//SB.Utils.postAjax("/sportsbook/api/results",
-//				{
-//				  "eventId": id,
-//				  "resultToSave": {
-//					"competitorId": 3?,
-//					"periodTypeId": input.dataset.periodId,
-//					"result": input.value,
-//					"resultTypeId": input.dataset.resultTypeId
-//				  }
-//				},
-//				SB.Token.OPERATOR, function(data, status, xhr) {
-//	alert("success");
-//});
+	
+		SB.Utils.postAjax("/sportsbook/api/results",
+							{
+				    	  "eventId": eventId,
+				    	  "resultToSave": {
+				    	    "competitorId": competitorId,
+				    	    "periodTypeId": periodTypeId,
+				    	    "result": result,
+				    	    "resultTypeId": resultTypeId
+				    	  }
+				    	},
+						SB.Token.OPERATOR, function(data, status, xhr) {
+							alert("success");
+						});
+	});
 
 }
 	

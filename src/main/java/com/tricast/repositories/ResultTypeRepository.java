@@ -11,6 +11,6 @@ public interface ResultTypeRepository extends CrudRepository<ResultType, Long>{
 	@Override
     List<ResultType> findAll();
 
-    ResultType findById(Long id);
+    ResultType findById(int id);
 
 }

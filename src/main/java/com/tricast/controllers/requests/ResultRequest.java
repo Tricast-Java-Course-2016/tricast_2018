@@ -13,17 +13,17 @@ public class ResultRequest implements Serializable {
 
 	private static final long serialVersionUID = -6817451528421899276L;
 
-    private long resultTypeId;
+    private int resultTypeId;
     private int result;
-    private long periodTypeId;
+    private int periodTypeId;
 
     private long competitorId;
 
-	public long getResultTypeId() {
+	public int getResultTypeId() {
 		return resultTypeId;
 	}
 
-	public void setResultTypeId(long resultTypeId) {
+	public void setResultTypeId(int resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
 
@@ -35,11 +35,11 @@ public class ResultRequest implements Serializable {
 		this.result = result;
 	}
 
-	public long getPeriodTypeId() {
+	public int getPeriodTypeId() {
 		return periodTypeId;
 	}
 
-	public void setPeriodTypeId(long periodTypeId) {
+	public void setPeriodTypeId(int periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
 

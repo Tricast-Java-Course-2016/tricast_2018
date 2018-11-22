@@ -10,7 +10,7 @@ public interface ResultTypeManager {
 	
 	List<ResultType> findAll();
 	
-	ResultType findById(Long id);
+	ResultType findById(int id);
 	
 	ResultType create(ResultType resulttype);
 	

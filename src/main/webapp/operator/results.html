@@ -30,22 +30,20 @@ type="text/css">
 <script id="football-results-template" type="text/x-handlebars-template">
 <table class="table pb-0 mb-5">      
 	<thead>
-		<th>Kategóriák</th>	
 		{{#each competitors}}
-			<th data-competitorId={{id}}>{{this.description}}</th>
-		{{/each}} 
+			<th id="competitor">{{this.description}}</th> 
 	</thead>
-	<tbody> 
-		{{#each resulttypes}}
-			{{#each ../periodtypes}}
-				<tr id="test">
-					<td>{{../this.description}} - {{this.description}}</td>
-					<td><input type="text" class="resultInput form-control" data-periodId={{this.id}} data-resultTypeId={{../this.id}}/></td>
-					<td><input type="text" class="resultInput form-control" data-periodId={{this.id}} data-resultTypeId={{../this.id}}/></td>
-				</tr>
-			{{/each}}		
-		{{/each}}
-	</tbody>			  
+			<tbody> 
+				{{#each ../resulttypes}}
+					{{#each ../../periodtypes}}
+						<tr>
+							<td>{{../this.description}} - {{this.description}}</td>
+							<td><input id="{{../../this.id}}{{../this.id}}{{this.id}}" type="text" class="resultInput form-control" data-periodId={{this.id}} data-resultTypeId={{../this.id}} data-competitorId={{../../this.id}}></td>
+						</tr>
+					{{/each}}		
+				{{/each}}
+			</tbody>
+		{{/each}}		
 </table>
 </script>
 
@@ -81,7 +79,8 @@ type="text/css">
 	<div class="row">
 	  <div id="results-tabele" class="col-md-12">
 			<table class="table pb-0 mb-5"></table>
-		<div class="modal-footer"> <button type="button" class="btn btn-primary" id="saveFootballResult">Eredmények mentése</button></div>
+		<div class="modal-footer"> <button type="button" class="btn btn-primary" id="saveResult">Eredmények mentése</button></div>
+		<!-- <div id="test" class="testdiv"  data-periodId=1 data-resultTypeId=2 data-competitorId=3>TEST</div> -->
 	  </div>
 	</div>
   </div>

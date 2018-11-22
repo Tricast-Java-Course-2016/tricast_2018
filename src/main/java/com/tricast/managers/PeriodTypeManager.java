@@ -9,7 +9,7 @@ public interface PeriodTypeManager {
 
     List<PeriodType> findAll();
 
-    PeriodType findById(Long id);
+    PeriodType findById(int id);
 
     PeriodType create(PeriodType periodtype);
 

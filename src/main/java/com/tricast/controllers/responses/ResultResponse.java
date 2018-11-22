@@ -15,8 +15,8 @@ public class ResultResponse implements Serializable{
 	private static final long serialVersionUID = 2646725308970295770L;
 
 	private long id;
-    private long periodTypeId;
-    private long resultTypeId;
+    private int periodTypeId;
+    private int resultTypeId;
     private int result;
     
     private long comeptitorId;
@@ -29,19 +29,19 @@ public class ResultResponse implements Serializable{
 		this.id = id;
 	}
 
-	public long getPeriodTypeId() {
+	public int getPeriodTypeId() {
 		return periodTypeId;
 	}
 
-	public void setPeriodTypeId(long periodTypeId) {
+	public void setPeriodTypeId(int periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
 
-	public long getResultTypeId() {
+	public int getResultTypeId() {
 		return resultTypeId;
 	}
 
-	public void setResultTypeId(long resultTypeId) {
+	public void setResultTypeId(int resultTypeId) {
 		this.resultTypeId = resultTypeId;
 	}
 

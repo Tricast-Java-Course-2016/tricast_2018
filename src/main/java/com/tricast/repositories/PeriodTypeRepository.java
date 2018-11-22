@@ -11,6 +11,6 @@ public interface PeriodTypeRepository extends CrudRepository<PeriodType, Long> {
 	@Override
     List<PeriodType> findAll();
 
-    PeriodType findById(Long id);
+    PeriodType findById(int id);
 
 }

@@ -34,7 +34,7 @@ public class PeriodTypeManagerImpl implements PeriodTypeManager {
     }
 
     @Override
-    public PeriodType findById(Long id) {
+    public PeriodType findById(int id) {
         return periodtypeRepository.findById(id);
     }
 

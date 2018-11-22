@@ -7,7 +7,7 @@ public class MarketForEventRequest implements Serializable  {
 	private static final long serialVersionUID = 4617316053970844761L;
 
 	private long marketTypeId;
-	private long periodTypeId;
+	private int periodTypeId;
 	
 	public long getMarketTypeId() {
 		return marketTypeId;
@@ -15,10 +15,10 @@ public class MarketForEventRequest implements Serializable  {
 	public void setMarketTypeId(long marketTypeId) {
 		this.marketTypeId = marketTypeId;
 	}
-	public long getPeriodTypeId() {
+	public int getPeriodTypeId() {
 		return periodTypeId;
 	}
-	public void setPeriodTypeId(long periodTypeId) {
+	public void setPeriodTypeId(int periodTypeId) {
 		this.periodTypeId = periodTypeId;
 	}
 }
