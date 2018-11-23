@@ -43,8 +43,20 @@ window.onload = function() {
 
             });
     
+    
+    let betslip = [];
+    let current;
+    for(let i = 0; i < localStorage.length; i++){
+    	if(localStorage.key(i)!='betslip'){
+    		current=localStorage.getItem(localStorage.key(i));
+    		
+    		if (current.includes("outcomeOdds"))
+    			betslip.push(JSON.parse(current));
+    	}
+        
+    }
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
-			localStorage.getItem('betslip')
+			betslip
      ));
 };
 
