@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tricast.controllers.requests.ResultSaveRequest;
 import com.tricast.controllers.responses.ResultResponse;
 import com.tricast.controllers.responses.ResultSaveResponse;
-import com.tricast.controllers.responses.ResultsByEventsResponse;
 import com.tricast.managers.ResultManager;
 
 @RestController
