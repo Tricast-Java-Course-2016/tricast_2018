@@ -12,7 +12,7 @@ public interface ResultRepository extends CrudRepository<Result, Long> {
 	@Override
     List<Result> findAll();
 
-	ResultResponse findById(long id);
+	Result findById(long id);
 	
 	Result findByEventCompetitorMap_Id(long eventCompetitorMapId);
 }

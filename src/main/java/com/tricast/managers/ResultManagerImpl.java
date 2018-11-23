@@ -164,7 +164,7 @@ public class ResultManagerImpl implements ResultManager {
 		result.setResult(requestObject.getResultToSave().getResult());
 		result = resultRepository.save(result);
 		
-		saveResponseObject.setResponseToSave(this.entityToResponse(result));
+		saveResponseObject.setResponseToSave(this.entityToResponse(result, requestObject.getResultToSave().getCompetitorId()));
 		return saveResponseObject;
 	}
 
@@ -173,7 +173,7 @@ public class ResultManagerImpl implements ResultManager {
 		resultRepository.delete(id);
 	}
 	
-	private ResultResponse entityToResponse(Result result) {
+	private ResultResponse entityToResponse(Result result, long competitorId) {
  		
      	ResultResponse response = new ResultResponse();
  		
@@ -181,22 +181,37 @@ public class ResultManagerImpl implements ResultManager {
  		response.setResultTypeId(result.getResultType().getId());
  		response.setResult(result.getResult());
  		response.setPeriodTypeId(result.getPeriodType().getId());
-     		
+     	response.setComeptitorId(competitorId);
  		return response;
  	}
 
 	@Override
-	public ResultSaveResponse update(long resultId, ResultSaveRequest resultUpdate) {
-		Result resultToSave = new Result();
-		ResultResponse currentResult = resultRepository.findById(resultId);
+	public ResultSaveResponse update(long resultId, ResultSaveRequest resultRequestToUpdate) throws SportsbookException {
+		ResultSaveResponse resultSaveResponse = new ResultSaveResponse();
 		
-		currentResult.setResultTypeId(resultUpdate.getResultToSave().getResultTypeId());
-		currentResult.setResult(resultUpdate.getResultToSave().getResult());
-		currentResult.setPeriodTypeId(resultUpdate.getResultToSave().getPeriodTypeId());
+		Result resultToUpdate = resultRepository.findById(resultId);
+		EventCompetitorMap currentEventCompetitorMap = eventCompetitorMapRepository.findByEventIdAndCompetitorId(resultRequestToUpdate.getEventId(), resultRequestToUpdate.getResultToSave().getCompetitorId());
+		PeriodType resultResponsePeriodType = periodTypeRepository.findById(resultRequestToUpdate.getResultToSave().getPeriodTypeId());
+		ResultType resultResponseResultType = resultTypeRepository.findById(resultRequestToUpdate.getResultToSave().getResultTypeId());
 		
-//		resultToSave.setResultType(resultType);
 		
-		return null;
+		resultToUpdate.setResultType(resultResponseResultType);
+		resultToUpdate.setResult(resultRequestToUpdate.getResultToSave().getResult());
+		resultToUpdate.setPeriodType(resultResponsePeriodType);		
+		
+		
+		resultToUpdate = resultRepository.save(resultToUpdate);
+		
+		if(currentEventCompetitorMap == null) {
+			throw new SportsbookException("A megadott eseményen nem játszott ez a versenyző!");
+		} else {
+			resultSaveResponse.setEventCompetitorMapId(currentEventCompetitorMap.getId());
+			resultToUpdate.setEventCompetitorMap(currentEventCompetitorMap);
+		}
+		
+		resultSaveResponse.setResponseToSave(this.entityToResponse(resultToUpdate, resultRequestToUpdate.getResultToSave().getCompetitorId()));
+		
+		return resultSaveResponse;
 	}
 		
 }
