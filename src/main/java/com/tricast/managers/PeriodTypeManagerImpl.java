@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tricast.repositories.EventRepository;
 import com.tricast.repositories.PeriodTypeRepository;
 import com.tricast.repositories.entities.Event;
+import com.tricast.repositories.entities.EventTypeEnum;
 import com.tricast.repositories.entities.PeriodType;
 import com.tricast.repositories.entities.PeriodTypeEnum;
 import com.tricast.repositories.entities.SportEnum;
@@ -62,7 +63,7 @@ public class PeriodTypeManagerImpl implements PeriodTypeManager {
 		
 		PeriodType periodType;
 		
-		if(event.getEventType().getId() == 1) {
+		if(event.getEventType().getType() == EventTypeEnum.GAMEEVENT) {
 			periods = SportEnum.FOOTBALL.getPeriodTypes();
 		} else {
 			periods = SportEnum.HORSERACING.getPeriodTypes();

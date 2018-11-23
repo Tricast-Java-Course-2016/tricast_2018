@@ -22,8 +22,11 @@ import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.EventCompetitorMap;
 import com.tricast.repositories.entities.PeriodType;
+import com.tricast.repositories.entities.PeriodTypeEnum;
 import com.tricast.repositories.entities.Result;
 import com.tricast.repositories.entities.ResultType;
+import com.tricast.repositories.entities.ResultTypeEnum;
+import com.tricast.repositories.entities.SportEnum;
 
 @Service
 public class ResultManagerImpl implements ResultManager {
@@ -35,6 +38,9 @@ public class ResultManagerImpl implements ResultManager {
 	private CompetitorRepository competitorRepository;
 	private EventCompetitorMapRepository eventCompetitorMapRepository;
 
+	private ResultTypeManager resultTypeManager;
+	private PeriodTypeManager periodTypeManager;
+	
     @Autowired
 	public ResultManagerImpl(
 			ResultRepository resultRepository,
@@ -42,13 +48,17 @@ public class ResultManagerImpl implements ResultManager {
 			PeriodTypeRepository periodTypeRepository,
 			ResultTypeRepository resultTypeRepository,
 			CompetitorRepository competitorRepository,
-			EventCompetitorMapRepository eventCompetitorMapRepository) {
+			EventCompetitorMapRepository eventCompetitorMapRepository,
+			ResultTypeManager resultTypeManager,
+			PeriodTypeManager periodTypeManager) {
     	this.resultRepository = resultRepository;
 		this.eventRepository = eventRepository;
 		this.periodTypeRepository = periodTypeRepository;
 		this.resultTypeRepository = resultTypeRepository;
 		this.competitorRepository = competitorRepository;
 		this.eventCompetitorMapRepository = eventCompetitorMapRepository;
+		this.resultTypeManager = resultTypeManager;
+		this.periodTypeManager = periodTypeManager;
 	}
 	
 	@Override
@@ -184,21 +194,35 @@ public class ResultManagerImpl implements ResultManager {
      	response.setComeptitorId(competitorId);
  		return response;
  	}
-
+	
 	@Override
 	public ResultSaveResponse update(long resultId, ResultSaveRequest resultRequestToUpdate) throws SportsbookException {
+		
+		List<ResultType> resultTypesByEvent = resultTypeManager.findByEventId(resultRequestToUpdate.getEventId());
+		List<PeriodType> periodTypesByEvent = periodTypeManager.findByEventId(resultRequestToUpdate.getEventId());
+		
+		ResultType resultResponseResultType = resultTypeRepository.findById(resultRequestToUpdate.getResultToSave().getResultTypeId());
+		PeriodType resultResponsePeriodType = periodTypeRepository.findById(resultRequestToUpdate.getResultToSave().getPeriodTypeId());
+		
 		ResultSaveResponse resultSaveResponse = new ResultSaveResponse();
 		
 		Result resultToUpdate = resultRepository.findById(resultId);
 		EventCompetitorMap currentEventCompetitorMap = eventCompetitorMapRepository.findByEventIdAndCompetitorId(resultRequestToUpdate.getEventId(), resultRequestToUpdate.getResultToSave().getCompetitorId());
-		PeriodType resultResponsePeriodType = periodTypeRepository.findById(resultRequestToUpdate.getResultToSave().getPeriodTypeId());
-		ResultType resultResponseResultType = resultTypeRepository.findById(resultRequestToUpdate.getResultToSave().getResultTypeId());
+
 		
+		if(resultTypesByEvent.contains(resultResponseResultType)) {
+			resultToUpdate.setResultType(resultResponseResultType);
+		} else {
+			throw new SportsbookException("Nem megfelelő az eredmény típusa!");
+		}
 		
-		resultToUpdate.setResultType(resultResponseResultType);
+		if(periodTypesByEvent.contains(resultResponsePeriodType)) {
+			resultToUpdate.setPeriodType(resultResponsePeriodType);
+		} else {
+			throw new SportsbookException("Nem megfelelő a periódus típusa!");
+		}
+		
 		resultToUpdate.setResult(resultRequestToUpdate.getResultToSave().getResult());
-		resultToUpdate.setPeriodType(resultResponsePeriodType);		
-		
 		
 		resultToUpdate = resultRepository.save(resultToUpdate);
 		
@@ -213,5 +237,4 @@ public class ResultManagerImpl implements ResultManager {
 		
 		return resultSaveResponse;
 	}
-		
 }

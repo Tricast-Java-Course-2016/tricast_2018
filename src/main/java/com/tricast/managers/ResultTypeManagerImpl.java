@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tricast.repositories.EventRepository;
 import com.tricast.repositories.ResultTypeRepository;
 import com.tricast.repositories.entities.Event;
+import com.tricast.repositories.entities.EventTypeEnum;
 import com.tricast.repositories.entities.ResultType;
 import com.tricast.repositories.entities.ResultTypeEnum;
 import com.tricast.repositories.entities.SportEnum;
@@ -55,12 +56,14 @@ public class ResultTypeManagerImpl implements ResultTypeManager{
 	public List<ResultType> findByEventId(long eventId) {
 		Event event = eventRepository.findById(eventId);
 
+		event.getLeague().getSportId();
+		
 		List<ResultTypeEnum> results = new ArrayList<ResultTypeEnum>();
 		List<ResultType> resultTypList = new ArrayList<ResultType>();
 		
 		ResultType resultType;
 		
-		if(event.getEventType().getId() == 1) {
+		if(event.getEventType().getType() == EventTypeEnum.GAMEEVENT) {
 			results = SportEnum.FOOTBALL.getResultTypes();
 		} else {
 			results = SportEnum.HORSERACING.getResultTypes();
