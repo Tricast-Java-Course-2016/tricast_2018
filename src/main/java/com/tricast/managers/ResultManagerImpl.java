@@ -26,7 +26,6 @@ import com.tricast.repositories.entities.PeriodTypeEnum;
 import com.tricast.repositories.entities.Result;
 import com.tricast.repositories.entities.ResultType;
 import com.tricast.repositories.entities.ResultTypeEnum;
-import com.tricast.repositories.entities.SportEnum;
 
 @Service
 public class ResultManagerImpl implements ResultManager {
@@ -67,74 +66,24 @@ public class ResultManagerImpl implements ResultManager {
 	}
 
 	@Override
-	public List<ResultsByEventsResponse> findByEventId(Long eventId) {
-		List<EventCompetitorMap> eventCompetitorMap = eventCompetitorMapRepository.findByEventId(eventId);
-		List<Competitor> competitors = competitorRepository.findByEventId(eventId);
-		List<PeriodType> periodTypes = periodTypeRepository.findAll();
-		List<ResultType> resultTypes = resultTypeRepository.findAll();
+	public List<ResultResponse> findByEventId(long eventId) {
 		
-		Event event = eventRepository.findById(eventId);
-		
-		List<PeriodType> periodTypesResponse = new ArrayList<PeriodType>();
-		List<ResultType> resultTypesResponse = new ArrayList<ResultType>();
-		
-		for(PeriodType pt : periodTypes) {
-			if(event.getEventType().getId() == 1) {
-				if(pt.getId() != 4) {
-					periodTypesResponse.add(pt);
-				}
-			} else {
-				if(pt.getId() == 4) {
-					periodTypesResponse.add(pt);
-				}
-			}
-		}
-		
-		for(ResultType rt : resultTypes) {
-			if(event.getEventType().getId() == 1) {
-				if(rt.getId() != 3) {
-					resultTypesResponse.add(rt);
-				}
-			} else {
-				if (rt.getId() == 3) {
-					resultTypesResponse.add(rt);
-				}
-			}
-		}
-		
-		List<Result> result = new ArrayList<Result>();
-		
-		for(EventCompetitorMap currentMap : eventCompetitorMap) {
-			if(resultRepository.findByEventCompetitorMap_Id(currentMap.getId()) != null) {
-				result.add(resultRepository.findByEventCompetitorMap_Id(currentMap.getId()));
-			}
-		}
-		
-		List<ResultsByEventsResponse> responseObjectsList = new ArrayList<ResultsByEventsResponse>();
-		ResultsByEventsResponse responseObject = new ResultsByEventsResponse();
-		List<ResultResponse> resultResponseList = new ArrayList<ResultResponse>();
-		
+		List<ResultResponse> listOfResultResponse = new ArrayList<ResultResponse>();
 		ResultResponse resultResponse;
 		
-		for(Result currentResult : result) {
+		List<Result> resultByEventId = resultRepository.findByEventCompetitorMap_Event_Id(eventId);
+		
+		for(Result currentResult : resultByEventId) {
 			resultResponse = new ResultResponse();
 			resultResponse.setId(currentResult.getId());
-			resultResponse.setComeptitorId(currentResult.getEventCompetitorMap().getCompetitorId());
+			resultResponse.setResultTypeId(currentResult.getResultType().getId());
+			resultResponse.setResult(currentResult.getResult());
 			resultResponse.setPeriodTypeId(currentResult.getPeriodType().getId());
-			resultResponse.setResultTypeId(currentResult.getResultType().getId());			
-			if(currentResult.getResult() != null) {
-				resultResponse.setResult(currentResult.getResult());
-			}
-			resultResponseList.add(resultResponse);
+			resultResponse.setComeptitorId(currentResult.getEventCompetitorMap().getCompetitorId());
+			listOfResultResponse.add(resultResponse);
 		}
-		
-		responseObject.setResultResponseList(resultResponseList);
-		responseObject.setCompetitorList(competitors);
-		responseObject.setPeriodResponseList(periodTypesResponse);
-		responseObject.setResultTypeResponseList(resultTypesResponse);
-		responseObjectsList.add(responseObject);
-		
-		return responseObjectsList;
+
+		return listOfResultResponse;
 	}
 
 	@Override
@@ -154,7 +103,7 @@ public class ResultManagerImpl implements ResultManager {
 			result.setEventCompetitorMap(eventCompetitorMap);
 		}
 		
-		Event event = eventRepository.findById(eventCompetitorMap.getEventId());		
+		Event event = eventRepository.findById(eventCompetitorMap.getEvent().getId());		
 
 		if(event.getEventType().getId() == 1) {
 			if(resultResponsePeriodType.getId() != 4 && resultResponseResultType.getId() != 3) {

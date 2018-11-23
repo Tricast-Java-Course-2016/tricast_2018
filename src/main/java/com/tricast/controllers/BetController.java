@@ -65,10 +65,4 @@ public class BetController {
 	public List<BetResponse> findByEventId(@PathVariable("id") long id) {
 		return betManager.findByEventId(id);
 	}
-	
-	@GetMapping(path="outcome/{id}")
-	public List<BetOutcomeMap> findByOutcomeId(@PathVariable("id") long outcomeId) {
-		return betOutcomeMapManager.findByOutcomeId(outcomeId);
-	}
-
 }

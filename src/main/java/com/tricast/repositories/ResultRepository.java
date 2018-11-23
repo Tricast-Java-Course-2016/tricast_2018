@@ -13,6 +13,6 @@ public interface ResultRepository extends CrudRepository<Result, Long> {
     List<Result> findAll();
 
 	Result findById(long id);
-	
-	Result findByEventCompetitorMap_Id(long eventCompetitorMapId);
+		
+	List<Result> findByEventCompetitorMap_Event_Id(long eventId);
 }

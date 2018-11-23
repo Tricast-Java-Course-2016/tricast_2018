@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,8 +24,9 @@ public class EventCompetitorMap implements Serializable {
 	@Column(name = "competitorid")
 	private long competitorId;
 	
-	@Column(name = "eventid")
-	private long eventId;
+	@ManyToOne
+	@JoinColumn(name = "eventid")
+	private Event event;
 
 	public long getId() {
 		return id;
@@ -41,11 +44,11 @@ public class EventCompetitorMap implements Serializable {
 		this.competitorId = competitorId;
 	}
 
-	public long getEventId() {
-		return eventId;
+	public Event getEvent() {
+		return event;
 	}
 
-	public void setEventId(long eventId) {
-		this.eventId = eventId;
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 }

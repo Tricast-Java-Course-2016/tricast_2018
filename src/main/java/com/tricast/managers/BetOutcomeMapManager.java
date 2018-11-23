@@ -15,7 +15,4 @@ public interface BetOutcomeMapManager {
     BetOutcomeMap update(BetOutcomeMap betoutcomemap);
 
     void deleteById(Long id);
-
-    List<BetOutcomeMap> findByOutcomeId(long outcomeId);
-
 }

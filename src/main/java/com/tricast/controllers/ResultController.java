@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.ResultSaveRequest;
+import com.tricast.controllers.responses.ResultResponse;
 import com.tricast.controllers.responses.ResultSaveResponse;
 import com.tricast.controllers.responses.ResultsByEventsResponse;
 import com.tricast.managers.ResultManager;
@@ -25,8 +26,8 @@ public class ResultController {
     @Autowired
     private ResultManager resultManager;
 
-    @GetMapping(path = "events/{id}")
-    public List <ResultsByEventsResponse> findByEventId(@PathVariable("id") long eventId) {
+    @GetMapping(path = "eventid/{id}")
+    public List<ResultResponse> findByEventId(@PathVariable("id") long eventId) {
         return resultManager.findByEventId(eventId);
     }
 

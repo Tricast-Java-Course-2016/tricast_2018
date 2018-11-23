@@ -109,7 +109,7 @@ public class EventManagerImpl implements EventManager {
 			competitors.add(competitorRepository.findById(competitorId));
 
 			EventCompetitorMap eventCompetitorMap = new EventCompetitorMap();
-			eventCompetitorMap.setEventId(event.getId());
+			eventCompetitorMap.setEvent(event);
 			eventCompetitorMap.setCompetitorId(competitorId);
 
 			eventCompetitorMapRepository.save(eventCompetitorMap);

@@ -14,7 +14,7 @@ public interface ResultManager {
 	
     List<Result> findAll();
 
-    List<ResultsByEventsResponse> findByEventId(Long eventId);
+    List<ResultResponse> findByEventId(long eventId);
 
     ResultSaveResponse create(ResultSaveRequest requestObject) throws SportsbookException;
 

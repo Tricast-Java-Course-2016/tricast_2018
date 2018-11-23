@@ -44,12 +44,4 @@ public class BetOutcomeMapManagerImpl implements BetOutcomeMapManager {
     public void deleteById(Long id) {
     	betoutcomemapRepository.delete(id);
     }
-
-	@Override
-	public List<BetOutcomeMap> findByOutcomeId(long outcomeId) {
-		List<BetOutcomeMap> betOutcomeMap = betoutcomemapRepository.findByOutcomeID_Id(outcomeId);
-		return betOutcomeMap;
-	}
-	
-	
 }
