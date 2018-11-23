@@ -30,8 +30,19 @@ window.onload = function() {
     
     
     
+    let betslip = [];
+    let current;
+    for(let i = 0; i < localStorage.length; i++){
+    	if(localStorage.key(i)!='betslip'){
+    		current=localStorage.getItem(localStorage.key(i));
+    		
+    		if (current.includes("outcomeOdds"))
+    			betslip.push(JSON.parse(current));
+    	}
+        
+    }
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
-			localStorage.getItem('betslip')
+			betslip
      ));
 };
 
@@ -48,23 +59,23 @@ function addToBetslip(element) {
     
     localStorage.setItem(element.getAttribute('data-outcomeId'),JSON.stringify(detail));
     
-    let arrayOfValues = [];
+    let betslip = [];
     let current;
     for(let i = 0; i < localStorage.length; i++){
     	if(localStorage.key(i)!='betslip'){
     		current=localStorage.getItem(localStorage.key(i));
     		
     		if (current.includes("outcomeOdds"))
-    			arrayOfValues.push(current);
+    			betslip.push(JSON.parse(current));
     	}
         
     }
 	
-    localStorage.setItem('betslip',arrayOfValues);
+    localStorage.setItem('betslip',betslip);
     
     
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
-			arrayOfValues
+			betslip
      ));
 }
 
