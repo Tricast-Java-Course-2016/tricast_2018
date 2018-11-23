@@ -53,15 +53,13 @@ public class ResultTypeManagerImpl implements ResultTypeManager{
 		
 	}
 	@Override
-	public List<ResultType> findByEventId(long eventId) {
+	public List<ResultTypeEnum> findByEventId(long eventId) {
 		Event event = eventRepository.findById(eventId);
 
-		event.getLeague().getSportId();
-		
 		List<ResultTypeEnum> results = new ArrayList<ResultTypeEnum>();
-		List<ResultType> resultTypList = new ArrayList<ResultType>();
+		//List<ResultType> resultTypList = new ArrayList<ResultType>();
 		
-		ResultType resultType;
+		//ResultType resultType;
 		
 		if(event.getEventType().getType() == EventTypeEnum.GAMEEVENT) {
 			results = SportEnum.FOOTBALL.getResultTypes();
@@ -69,15 +67,15 @@ public class ResultTypeManagerImpl implements ResultTypeManager{
 			results = SportEnum.HORSERACING.getResultTypes();
 		}
 		
-		for(ResultTypeEnum currentResultTypeEnum : results) {
-			resultType = new ResultType();
-			resultType.setId(currentResultTypeEnum.getId());
-			resultType.setDescription(currentResultTypeEnum.getDescription());
-			resultType.setType(currentResultTypeEnum);
-			resultTypList.add(resultType);
-		}
+//		for(ResultTypeEnum currentResultTypeEnum : results) {
+//			resultType = new ResultType();
+//			resultType.setId(currentResultTypeEnum.getId());
+//			resultType.setDescription(currentResultTypeEnum.getDescription());
+//			resultType.setType(currentResultTypeEnum);
+//			resultTypList.add(resultType);
+//		}
 		
-		return resultTypList;
+		return results;
 	}
 
 }

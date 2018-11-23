@@ -198,8 +198,8 @@ public class ResultManagerImpl implements ResultManager {
 	@Override
 	public ResultSaveResponse update(long resultId, ResultSaveRequest resultRequestToUpdate) throws SportsbookException {
 		
-		List<ResultType> resultTypesByEvent = resultTypeManager.findByEventId(resultRequestToUpdate.getEventId());
-		List<PeriodType> periodTypesByEvent = periodTypeManager.findByEventId(resultRequestToUpdate.getEventId());
+		List<ResultTypeEnum> resultTypesByEvent = resultTypeManager.findByEventId(resultRequestToUpdate.getEventId());
+		List<PeriodTypeEnum> periodTypesByEvent = periodTypeManager.findByEventId(resultRequestToUpdate.getEventId());
 		
 		ResultType resultResponseResultType = resultTypeRepository.findById(resultRequestToUpdate.getResultToSave().getResultTypeId());
 		PeriodType resultResponsePeriodType = periodTypeRepository.findById(resultRequestToUpdate.getResultToSave().getPeriodTypeId());
@@ -209,14 +209,20 @@ public class ResultManagerImpl implements ResultManager {
 		Result resultToUpdate = resultRepository.findById(resultId);
 		EventCompetitorMap currentEventCompetitorMap = eventCompetitorMapRepository.findByEventIdAndCompetitorId(resultRequestToUpdate.getEventId(), resultRequestToUpdate.getResultToSave().getCompetitorId());
 
+		if(currentEventCompetitorMap == null) {
+			throw new SportsbookException("A megadott eseményen nem játszott ez a versenyző!");
+		} else {
+			resultSaveResponse.setEventCompetitorMapId(currentEventCompetitorMap.getId());
+			resultToUpdate.setEventCompetitorMap(currentEventCompetitorMap);
+		}
 		
-		if(resultTypesByEvent.contains(resultResponseResultType)) {
+		if(resultTypesByEvent.contains(resultResponseResultType.getType())) {
 			resultToUpdate.setResultType(resultResponseResultType);
 		} else {
 			throw new SportsbookException("Nem megfelelő az eredmény típusa!");
 		}
 		
-		if(periodTypesByEvent.contains(resultResponsePeriodType)) {
+		if(periodTypesByEvent.contains(resultResponsePeriodType.getType())) {
 			resultToUpdate.setPeriodType(resultResponsePeriodType);
 		} else {
 			throw new SportsbookException("Nem megfelelő a periódus típusa!");
@@ -225,13 +231,6 @@ public class ResultManagerImpl implements ResultManager {
 		resultToUpdate.setResult(resultRequestToUpdate.getResultToSave().getResult());
 		
 		resultToUpdate = resultRepository.save(resultToUpdate);
-		
-		if(currentEventCompetitorMap == null) {
-			throw new SportsbookException("A megadott eseményen nem játszott ez a versenyző!");
-		} else {
-			resultSaveResponse.setEventCompetitorMapId(currentEventCompetitorMap.getId());
-			resultToUpdate.setEventCompetitorMap(currentEventCompetitorMap);
-		}
 		
 		resultSaveResponse.setResponseToSave(this.entityToResponse(resultToUpdate, resultRequestToUpdate.getResultToSave().getCompetitorId()));
 		

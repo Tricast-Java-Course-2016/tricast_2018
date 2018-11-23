@@ -17,5 +17,5 @@ public interface PeriodTypeManager {
 
     void deleteById(Long id);
     
-    List<PeriodType> findByEventId(long eventId);
+    List<PeriodTypeEnum> findByEventId(long eventId);
 }
