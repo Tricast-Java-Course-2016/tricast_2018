@@ -1,5 +1,6 @@
 package com.tricast.managers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,4 +45,11 @@ public class BetOutcomeMapManagerImpl implements BetOutcomeMapManager {
     	betoutcomemapRepository.delete(id);
     }
 
+	@Override
+	public List<BetOutcomeMap> findByOutcomeId(long outcomeId) {
+		List<BetOutcomeMap> betOutcomeMap = betoutcomemapRepository.findByOutcomeID_Id(outcomeId);
+		return betOutcomeMap;
+	}
+	
+	
 }

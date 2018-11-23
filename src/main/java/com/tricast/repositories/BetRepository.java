@@ -13,5 +13,4 @@ public interface BetRepository extends CrudRepository<Bet, Long> {
 
     Bet findById(Long id);
 
-
 }

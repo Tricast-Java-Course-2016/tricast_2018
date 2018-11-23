@@ -15,4 +15,6 @@ public interface BetOutcomeMapRepository extends CrudRepository<BetOutcomeMap, L
 	
 	List <BetOutcomeMap> findByBet_Id(Long betId);
 	
+	List <BetOutcomeMap> findByOutcomeID_Id(long outcomeId);
+	
 }

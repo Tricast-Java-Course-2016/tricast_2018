@@ -18,6 +18,8 @@ import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.BetManager;
+import com.tricast.managers.BetOutcomeMapManager;
+import com.tricast.repositories.entities.BetOutcomeMap;
 
 @RestController
 @RequestMapping(path = "api/bets")
@@ -27,6 +29,9 @@ public class BetController {
 
     @Autowired
     private BetManager betManager;
+    
+    @Autowired
+    private BetOutcomeMapManager betOutcomeMapManager;
 
     @GetMapping
     public List<BetResponse> findAll() {
@@ -59,6 +64,11 @@ public class BetController {
 	@GetMapping(path="eventid/{id}")
 	public List<BetResponse> findByEventId(@PathVariable("id") long id) {
 		return betManager.findByEventId(id);
+	}
+	
+	@GetMapping(path="outcome/{id}")
+	public List<BetOutcomeMap> findByOutcomeId(@PathVariable("id") long outcomeId) {
+		return betOutcomeMapManager.findByOutcomeId(outcomeId);
 	}
 
 }
