@@ -17,7 +17,7 @@
         <script type="text/javascript" src="../js/utils.js"></script>
         <script type="text/javascript" src="eventlist.js"></script>
         
-          <script id="event-row-template" type="text/x-handlebars-template">
+        <script id="event-row-template" type="text/x-handlebars-template">
 			{{#each events}}
 		    {{#with this}}
 		    	<tr>
@@ -28,6 +28,19 @@
 		    	</tr>
 		    {{/with}}
 		    {{/each}}
+		</script>
+		
+		<script id="add-to-betslip" type="text/x-handlebars-template">
+			{{#each this}}
+			<tr>
+				<td>{{marketDescription}}</td>
+			</tr>
+			 <tr>
+				<td>{{outcomeDescription}}</td>
+				<td>{{odds}}</td>
+				<td style="padding: 6px 15px" class="text-right"><button data-outcomeId={{outcomeId}} data-odds={{odds}} data-marketDescription={{../market.marketDescription}} data-outcomeDescription={{outcomeDescription}} onclick="removeFromBetslip(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>X</b></button></td>		
+			</tr>
+			{{/each}}
 		</script>
     </head>
     <body>
@@ -59,27 +72,6 @@
 		              		</tr>
 		            		</thead>
 		            		<tbody>
-		            			<tr>
-		            				<td>Valami</td>	
-		            				<td>1.5</td>	
-		            				<td><button>X</button></td>	
-		            			</tr>
-		            			<tr>
-		            				<td>Valami</td>	
-		            				<td>1.5</td>	
-		            				<td><button>X</button></td>	
-		            			</tr>
-		            			<tr>
-		            				<td>Valami</td>	
-		            				<td>1.5</td>	
-		            				<td><button>X</button></td>	
-		            			</tr>
-		            			<tr> <td></td> <td></td><td></td></tr>
-		            			<tr>
-		            				<td>Tét</td>	
-		            				<td> </td>
-		            				<td>1234</td>	
-		            			</tr>
 		            		</tbody>
 						</table>
 					</div>

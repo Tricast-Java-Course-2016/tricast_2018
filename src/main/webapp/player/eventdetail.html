@@ -35,11 +35,24 @@
 						<tr>
 						<td>{{outcomeDescription}}</td>
 						<td>{{outcomeId}}</td>	
-						<td style="padding: 6px 15px" class="text-right"><button value={{outcomeid}} onclick="addToBetslip(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>{{odds}}</b></button></td>		
+						<td style="padding: 6px 15px" class="text-right"><button data-outcomeId={{outcomeId}} data-odds={{odds}} data-marketDescription={{../market.marketDescription}} data-outcomeDescription={{outcomeDescription}} onclick="addToBetslip(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>{{odds}}</b></button></td>		
 						</tr>
 					{{/each}}
 					</tr>
 				{{/each}}
+		</script>
+		
+		<script id="add-to-betslip" type="text/x-handlebars-template">
+		{{#each this}}
+		<tr>
+			<td>{{marketDescription}}</td>
+		</tr>
+		 <tr>
+			<td>{{outcomeDescription}}</td>
+			<td>{{odds}}</td>
+			<td style="padding: 6px 15px" class="text-right"><button data-outcomeId={{outcomeId}} data-odds={{odds}} data-marketDescription={{../market.marketDescription}} data-outcomeDescription={{outcomeDescription}} onclick="removeFromBetslip(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>X</b></button></td>		
+		</tr>
+		{{/each}}
 		</script>
 		
     </head>
@@ -65,27 +78,6 @@
 		              		</tr>
 		            		</thead>
 		            		<tbody>
-		            			<tr>
-		            				<td>Valami</td>	
-		            				<td>1.5</td>	
-		            				<td><button>X</button></td>	
-		            			</tr>
-		            			<tr>
-		            				<td>Valami</td>	
-		            				<td>1.5</td>	
-		            				<td><button>X</button></td>	
-		            			</tr>
-		            			<tr>
-		            				<td>Valami</td>	
-		            				<td>1.5</td>	
-		            				<td><button>X</button></td>	
-		            			</tr>
-		            			<tr> <td></td> <td></td><td></td></tr>
-		            			<tr>
-		            				<td>Tét</td>	
-		            				<td> </td>
-		            				<td>1234</td>	
-		            			</tr>
 		            		</tbody>
 						</table>
 					</div>

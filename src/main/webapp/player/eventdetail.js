@@ -27,11 +27,49 @@ window.onload = function() {
                ));
 
             });
+    
+    
+    
+	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
+			localStorage.getItem('betslip')
+     ));
 };
 
 
 function addToBetslip(element) {
-    localStorage.setItem('outcomeId', element.value);
+		
+    let detail={
+    		outcomeOdds:"true",
+    		odds:element.getAttribute('data-odds'),
+    		outcomeId:element.getAttribute('data-outcomeId'),
+    		marketDescription:element.getAttribute('data-marketDescription'),
+    		outcomeDescription:element.getAttribute('data-outcomeDescription')
+    };
+    
+    localStorage.setItem(element.getAttribute('data-outcomeId'),JSON.stringify(detail));
+    
+    let arrayOfValues = [];
+    let current;
+    for(let i = 0; i < localStorage.length; i++){
+    	if(localStorage.key(i)!='betslip'){
+    		current=localStorage.getItem(localStorage.key(i));
+    		
+    		if (current.includes("outcomeOdds"))
+    			arrayOfValues.push(current);
+    	}
+        
+    }
+	
+    localStorage.setItem('betslip',arrayOfValues);
+    
+    
+	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
+			arrayOfValues
+     ));
+}
+
+function removeFromBetslip(element) {
+
 }
 
 function loadBalance() {

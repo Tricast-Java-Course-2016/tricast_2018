@@ -42,6 +42,10 @@ window.onload = function() {
                 }));
 
             });
+    
+	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
+			localStorage.getItem('betslip')
+     ));
 };
 
 function eventdetail(element) {
