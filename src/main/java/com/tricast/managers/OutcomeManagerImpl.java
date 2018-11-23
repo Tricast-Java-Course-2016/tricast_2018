@@ -44,4 +44,10 @@ public class OutcomeManagerImpl implements OutcomeManager {
         outcomeRepository.delete(id);
     }
 
+	@Override
+	public List<Outcome> findByEventId(long eventId) {
+		List<Outcome> outcomeByEventId = outcomeRepository.findByMarket_Event_Id(eventId);
+		return outcomeByEventId;
+	}
+
 }

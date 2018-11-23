@@ -15,5 +15,6 @@ public interface OutcomeManager {
     Outcome update(Outcome outcome);
 
     void deleteById(Long id);
-
+    
+    List<Outcome> findByEventId(long eventId);
 }
