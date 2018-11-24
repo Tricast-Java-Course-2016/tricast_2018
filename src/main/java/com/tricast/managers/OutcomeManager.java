@@ -1,8 +1,10 @@
 package com.tricast.managers;
 
 import java.util.List;
+import java.util.Set;
 
 import com.tricast.repositories.entities.Outcome;
+import com.tricast.repositories.entities.Result;
 
 public interface OutcomeManager {
 
@@ -16,5 +18,5 @@ public interface OutcomeManager {
 
     void deleteById(Long id);
     
-    List<Outcome> findByEventId(long eventId);
+    Set<Result> findByEventId(long eventId);
 }
