@@ -17,6 +17,7 @@
         <script type="text/javascript" src="../js/utils.js"></script>
         <script type="text/javascript" src="eventlist.js"></script>
         
+       
         <script id="event-row-template" type="text/x-handlebars-template">
 			{{#each events}}
 		    {{#with this}}
@@ -70,6 +71,51 @@
 		                	<th></th>
 		                	<th></th>
 		              		</tr>
+		            		</thead>
+		            		<tbody>
+		            		</tbody>
+						</table>
+						<table id="betslip-input" class="table table-sm">
+						 	<thead>
+								<tr>
+									<td>Tét</td>
+									<td></td>
+          							<td><input id="stake" type="text" value="" onchange="saveStake(this)" /></td>
+          						</tr>
+          						<tr>  
+          							<td>
+										<div class="radio" id="radio">
+                     						<label><input type="radio" id='single' name="bet-type"> Single</label>
+                						</div>
+                					</td>
+                					<td></td>
+                					<td></td>
+                				</tr>
+                				<tr>
+                					<td>
+										<div class="radio" id="radio">
+                     						<label><input type="radio" id='double' name="bet-type"> Double</label>
+                						</div>
+                					</td>
+                					<td></td>
+                					<td></td>
+                				</tr>	
+                				<tr>
+                					<td>
+										<div class="radio" id="radio">
+                     						<label><input type="radio" id='treble' name="bet-type"> Treble</label>
+                						</div>
+                					</td>
+                					<td></td>
+                					<td></td>
+  								</tr>
+  								<tr>
+  									<td>
+  									</td>
+  									<td>
+  									</td>
+  									<td style="padding: 6px 15px" class="text-right"><button onclick="placeBet()" style="line-height: 22px; padding: 4px 6px 4px 8px"  class="btn btn-block"><b>Fogadás</b></button>
+  								</tr>
 		            		</thead>
 		            		<tbody>
 		            		</tbody>

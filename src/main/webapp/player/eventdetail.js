@@ -44,6 +44,7 @@ window.onload = function() {
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
 			betslip
      ));
+	
 };
 
 
@@ -77,6 +78,11 @@ function addToBetslip(element) {
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
 			betslip
      ));
+}
+
+function saveStake(element){
+	 var x = element.getAttribute('value');
+	 localStorage.setItem('stake',x);
 }
 
 function removeFromBetslip(element) {

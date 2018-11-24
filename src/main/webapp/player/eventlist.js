@@ -58,7 +58,13 @@ window.onload = function() {
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
 			betslip
      ));
+		
 };
+
+function saveStake(element){
+	 var x = element.getAttribute('value');
+	 localStorage.setItem('stake',x);
+}
 
 function eventdetail(element) {
     localStorage.setItem('eventid', element.value);
