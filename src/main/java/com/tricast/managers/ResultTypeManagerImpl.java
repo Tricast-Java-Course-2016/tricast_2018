@@ -57,23 +57,12 @@ public class ResultTypeManagerImpl implements ResultTypeManager{
 		Event event = eventRepository.findById(eventId);
 
 		List<ResultTypeEnum> results = new ArrayList<ResultTypeEnum>();
-		//List<ResultType> resultTypList = new ArrayList<ResultType>();
-		
-		//ResultType resultType;
-		
+
 		if(event.getEventType().getType() == EventTypeEnum.GAMEEVENT) {
 			results = SportEnum.FOOTBALL.getResultTypes();
 		} else {
 			results = SportEnum.HORSERACING.getResultTypes();
 		}
-		
-//		for(ResultTypeEnum currentResultTypeEnum : results) {
-//			resultType = new ResultType();
-//			resultType.setId(currentResultTypeEnum.getId());
-//			resultType.setDescription(currentResultTypeEnum.getDescription());
-//			resultType.setType(currentResultTypeEnum);
-//			resultTypList.add(resultType);
-//		}
 		
 		return results;
 	}

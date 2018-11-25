@@ -1,5 +1,6 @@
 package com.tricast.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,20 @@ public class PeriodTypeController {
     }
     
     @GetMapping(path = "findByEventId/{id}")
-    public List<PeriodTypeEnum> findByEventId(@PathVariable("id") long eventId){
-    	return periodtypeManager.findByEventId(eventId);
+    public List<PeriodType> findByEventId(@PathVariable("id") long eventId){
+    	List<PeriodTypeEnum> periodTypeEnumList = periodtypeManager.findByEventId(eventId);
+    	List<PeriodType> periodTypes = new ArrayList<PeriodType>();
+    	
+    	PeriodType periodType;
+    	
+    	for(PeriodTypeEnum currentPeriodTypeEnum : periodTypeEnumList) {
+    		periodType = new PeriodType();
+    		periodType.setId(currentPeriodTypeEnum.getId());
+    		periodType.setDescription(currentPeriodTypeEnum.getDescription());
+    		periodType.setType(currentPeriodTypeEnum);
+    		periodTypes.add(periodType);
+    	}
+    	return periodTypes;
     }
 
 }
