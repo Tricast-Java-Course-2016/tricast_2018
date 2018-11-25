@@ -45,6 +45,70 @@ window.onload = function() {
 			betslip
      ));
 	
+	
+	const betslipform = document.getElementById("betslip");
+
+	   
+	betslipform.addEventListener("submit", function(event) {
+
+		var json={};
+		
+		event.preventDefault();
+      
+		var bettype = document.querySelector('input[name="betType"]:checked').value;
+		var stake = document.getElementById("stake").value;
+		var accountId=localStorage.getItem('PLAYER_ID');
+		
+		json.accountId=accountId;
+		json.betStake=stake;
+		
+		localStorage.setItem('check',bettype);
+		
+		if(bettype=="single"){
+			json.betTypeId=1;
+		}
+		else if(bettype=='double'){
+			json.betTypeId=2;
+		} 
+		else{
+			json.betTypeId=3;
+		}
+		
+		json.outcomeOdds={};
+		
+		let odds = [];
+		let outcomeId = [];
+		let current;
+		for(let i = 0; i < localStorage.length; i++){
+			if(localStorage.key(i)!='betslip'){
+				current=localStorage.getItem(localStorage.key(i));
+				
+				
+				
+				if (current.includes("outcomeOdds")){
+					
+					odds.push(JSON.parse(current).odds);
+		    		outcomeId.push(JSON.parse(current).outcomeId);
+				}
+
+		    }
+		}
+		
+		for(let i=0;i<odds.length;i++){
+			let outcome=outcomeId[i];
+			let odd=odds[i];
+			json.outcomeOdds[i] ={outcome:odd};
+		}
+		   
+
+
+	    localStorage.setItem('json',JSON.stringify(json));
+	    localStorage.setItem('odds',JSON.stringify(odds));
+	    localStorage.setItem('outcomes',JSON.stringify(outcomeId));
+	    
+	    //SB.Utils.postAjax("/sportsbook/api/bets",json,SB.Token.PLAYER);
+    });  
+	
 };
 
 
@@ -78,11 +142,7 @@ function addToBetslip(element) {
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
 			betslip
      ));
-}
-
-function saveStake(element){
-	 var x = element.getAttribute('value');
-	 localStorage.setItem('stake',x);
+	
 }
 
 function removeFromBetslip(element) {
