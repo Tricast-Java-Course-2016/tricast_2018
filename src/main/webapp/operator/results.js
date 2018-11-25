@@ -10,8 +10,6 @@ Handlebars.registerHelper('incremented', function (index) {
     return index;
 });
 
-bindListeners();
-
 const destructById = function(array) {
 	let json = {};
 	$.each(array, function(index, elem) {
@@ -37,13 +35,13 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 			
 			eventsById = destructById(events[0]);
 			competitorsByEventId = destructById(competitors[0]);
-			resultTypesByEventId = destructById(resulttypes[0]);
-			periodTypesByEventId = destructById(periodtypes[0]);
+			resultTypesByEventId = resulttypes[0];
+			periodTypesByEventId = periodtypes[0];
 			
 			let competitorsList = [];
 			let resultTypeList = [];
 			let periodTypeList = [];
-			
+					
 			$.each(competitorsByEventId, function(id, competitor) {
 				competitorsList.push({
 					'id' : competitor.id + '',
@@ -80,16 +78,18 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 				}));
 			}
 
+			bindListeners(eventTypeId);
+			
 		});
 }
 
-function bindListeners() {
+function bindListeners(eventTypeId) {
 $("#saveResult").click(function(e) {
-	ResultSave();
+	ResultSave(eventTypeId);
 });
 }
 
-function ResultSave() {
+function ResultSave(eventTypeId) {
 	
 	//const data = SB.Utils.readFormData($('#saveResult'));
 	const urlParam = new URLSearchParams(window.location.search);
@@ -102,27 +102,53 @@ function ResultSave() {
 	
 	console.log("This is the EventId: " + eventId + " " + typeof(eventId));
 	
-	$(".resultInput").each(function(){
-		competitorId = parseInt($(this).attr("data-competitorId"));
-		periodTypeId = parseInt($(this).attr("data-periodId"));
-		result = parseInt($(this).val());
-		resultTypeId = parseInt($(this).attr("data-resultTypeId"));
-
+	if(eventTypeId === 1){
+		console.log("Foci");
+		$(".resultInput").each(function(){
+			competitorId = parseInt($(this).attr("data-competitorId"));
+			periodTypeId = parseInt($(this).attr("data-periodId"));
+			result = parseInt($(this).val());
+			resultTypeId = parseInt($(this).attr("data-resultTypeId"));
 	
-		SB.Utils.postAjax("/sportsbook/api/results",
-							{
-				    	  "eventId": eventId,
-				    	  "resultToSave": {
-				    	    "competitorId": competitorId,
-				    	    "periodTypeId": periodTypeId,
-				    	    "result": result,
-				    	    "resultTypeId": resultTypeId
-				    	  }
-				    	},
-						SB.Token.OPERATOR, function(data, status, xhr) {
-							alert("success");
-						});
-	});
+		
+			SB.Utils.postAjax("/sportsbook/api/results",
+					{
+		    	  "eventId": eventId,
+		    	  "resultToSave": {
+		    	    "competitorId": competitorId,
+		    	    "periodTypeId": periodTypeId,
+		    	    "result": result,
+		    	    "resultTypeId": resultTypeId
+		    	  }
+		    	},
+				SB.Token.OPERATOR, function(data, status, xhr) {
+					//alert("success");
+				});
+		});
+		
+	} else {
+		console.log("Ló");
+		$(".resultInput").each(function(){
+			competitorId = parseInt($(this).find(":selected").attr("id"));
+			periodTypeId = parseInt($(this).find(":selected").attr("data-periodTypeId"));
+			result = parseInt($(this).attr("data-index"));
+			resultTypeId = parseInt($(this).find(":selected").attr("data-resultTypeId"));
+
+			SB.Utils.postAjax("/sportsbook/api/results",
+					{
+		    	  "eventId": eventId,
+		    	  "resultToSave": {
+		    	    "competitorId": competitorId,
+		    	    "periodTypeId": periodTypeId,
+		    	    "result": result,
+		    	    "resultTypeId": resultTypeId
+		    	  }
+		    	},
+				SB.Token.OPERATOR, function(data, status, xhr) {
+					//alert("success");
+				});
+		});
+	}
 
 }
 	

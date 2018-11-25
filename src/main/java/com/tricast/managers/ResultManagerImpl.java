@@ -1,7 +1,9 @@
 package com.tricast.managers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,11 +22,13 @@ import com.tricast.repositories.ResultTypeRepository;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.EventCompetitorMap;
+import com.tricast.repositories.entities.EventTypeEnum;
 import com.tricast.repositories.entities.PeriodType;
 import com.tricast.repositories.entities.PeriodTypeEnum;
 import com.tricast.repositories.entities.Result;
 import com.tricast.repositories.entities.ResultType;
 import com.tricast.repositories.entities.ResultTypeEnum;
+import com.tricast.repositories.entities.SportEnum;
 
 @Service
 public class ResultManagerImpl implements ResultManager {
@@ -38,6 +42,8 @@ public class ResultManagerImpl implements ResultManager {
 
 	private ResultTypeManager resultTypeManager;
 	private PeriodTypeManager periodTypeManager;
+	
+	private Set<Competitor> competitors = new HashSet<Competitor>();
 	
     @Autowired
 	public ResultManagerImpl(
@@ -88,9 +94,19 @@ public class ResultManagerImpl implements ResultManager {
 	@Override
 	public ResultSaveResponse create(ResultSaveRequest requestObject) throws SportsbookException {
 		Result result = new Result();
+		Event event = eventRepository.findById(requestObject.getEventId());
 		ResultSaveResponse saveResponseObject = new ResultSaveResponse();
 		PeriodType resultResponsePeriodType = periodTypeRepository.findById(requestObject.getResultToSave().getPeriodTypeId());
 		ResultType resultResponseResultType = resultTypeRepository.findById(requestObject.getResultToSave().getResultTypeId());
+		Competitor competitor = competitorRepository.findById(requestObject.getResultToSave().getCompetitorId());
+		
+		if(event.getEventType().getType() == EventTypeEnum.RANKEVENT) {
+				if(competitors.contains(competitor)) {
+					throw new SportsbookException("Nem adhat meg egy versenyen ugyanazon versenyzőhöz különböző eredményt!");
+				} else {
+					competitors.add(competitor);
+				}
+		}
 		
 		EventCompetitorMap eventCompetitorMap = eventCompetitorMapRepository.findByEventIdAndCompetitorId(
 				requestObject.getEventId(), requestObject.getResultToSave().getCompetitorId());
@@ -101,8 +117,6 @@ public class ResultManagerImpl implements ResultManager {
 			saveResponseObject.setEventCompetitorMapId(eventCompetitorMap.getId());
 			result.setEventCompetitorMap(eventCompetitorMap);
 		}
-		
-		Event event = eventRepository.findById(eventCompetitorMap.getEvent().getId());		
 
 		if(event.getEventType().getId() == 1) {
 			if(resultResponsePeriodType.getId() != 4 && resultResponseResultType.getId() != 3) {

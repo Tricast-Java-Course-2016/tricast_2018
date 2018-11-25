@@ -48,14 +48,8 @@ type="text/css">
 </script>
 
 <script id="horserace-results-template" type="text/x-handlebars-template">
-
-<datalist id="horses">
-	{{#each competitors}}
-		<option id={{id}} value="{{description}}"/>
-	{{/each}}
-</datalist>
 <table class="table pb-0 mb-5">	
-	<thead>
+	<thead> 
 		<th>Elért helyezés</th>
 		<th>Ló neve</th>
 	</thead>
@@ -64,7 +58,11 @@ type="text/css">
 			<tr>
 				<td>{{incremented @index}}. helyezett</td>
 				<td>
-					<input data-resultTypeId=5 data-periodTypeId=3 class="form-control" list="horses" />
+					<select class="resultInput form-control" data-index="{{incremented @index}}">
+						{{#each ../competitors}}
+							<option data-resultTypeId=3 data-periodTypeId=4 id="{{this.id}}">{{this.description}}</option>
+						{{/each}}
+					</select>
 				</td>
 			</tr>
 		{{/each}}
