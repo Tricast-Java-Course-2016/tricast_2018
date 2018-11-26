@@ -45,36 +45,53 @@ window.onload = function() {
 			betslip
      ));
 	
-	
 	const betslipform = document.getElementById("betslip");
 
 	   
 	betslipform.addEventListener("submit", function(event) {
 
-		var json={};
-		
 		event.preventDefault();
-      
+		
+		var string1='';
+		string1+='{';
+		string1+='"';
+		string1+="bettypeId";
+		string1+='"';
+		string1+=": ";
+
 		var bettype = document.querySelector('input[name="betType"]:checked').value;
 		var stake = document.getElementById("stake").value;
 		var accountId=localStorage.getItem('PLAYER_ID');
 		
-		json.accountId=accountId;
-		json.betStake=stake;
-		
-		localStorage.setItem('check',bettype);
 		
 		if(bettype=="single"){
-			json.betTypeId=1;
+			string1+="1,";
 		}
 		else if(bettype=='double'){
-			json.betTypeId=2;
+			string1+="2,";
 		} 
 		else{
-			json.betTypeId=3;
+			string1+="3,";
 		}
+		string1+='"'; 
+		string1+="accountId";
+		string1+='"';
+		string1+=": ";
+		string1+='"';
+		string1+=accountId;
+		string1+='"';
+		string1+=',';
+		string1+='"';
+		string1+="betStake";
+		string1+='"';
+		string1+=": ";
+		string1+=stake;
+		string1+=',';
+		string1+='"';
+		string1+="outcomeOdds";
+		string1+='"';
+		string1+=": {";
 		
-		json.outcomeOdds={};
 		
 		let odds = [];
 		let outcomeId = [];
@@ -82,11 +99,8 @@ window.onload = function() {
 		for(let i = 0; i < localStorage.length; i++){
 			if(localStorage.key(i)!='betslip'){
 				current=localStorage.getItem(localStorage.key(i));
-				
-				
-				
-				if (current.includes("outcomeOdds")){
-					
+
+				if (current.includes("outcomeOdds")){					
 					odds.push(JSON.parse(current).odds);
 		    		outcomeId.push(JSON.parse(current).outcomeId);
 				}
@@ -95,18 +109,26 @@ window.onload = function() {
 		}
 		
 		for(let i=0;i<odds.length;i++){
-			let outcome=outcomeId[i];
-			let odd=odds[i];
-			json.outcomeOdds[i] ={outcome:odd};
+			string1+='"';
+			string1+=outcomeId[i];
+			string1+='"';
+			string1+=": ";
+			string1+='"';
+			string1+=odds[i];
+			string1+='"';
+			
+			if(i<odds.length-1){
+				string1+=',';
+			}	
 		}
-		   
+		
+		
+		string1+="}}";
+		
 
-
-	    localStorage.setItem('json',JSON.stringify(json));
-	    localStorage.setItem('odds',JSON.stringify(odds));
-	    localStorage.setItem('outcomes',JSON.stringify(outcomeId));
+		//localStorage.setItem('string',string1);
 	    
-	    //SB.Utils.postAjax("/sportsbook/api/bets",json,SB.Token.PLAYER);
+	    SB.Utils.postAjax("/sportsbook/api/bets",JSON.parse(string1),SB.Token.PLAYER);
     });  
 	
 };

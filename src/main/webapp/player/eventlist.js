@@ -58,6 +58,93 @@ window.onload = function() {
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
 			betslip
      ));
+	
+	
+	const betslipform = document.getElementById("betslip");
+
+	   
+	betslipform.addEventListener("submit", function(event) {
+
+		event.preventDefault();
+		
+		var string1='';
+		string1+='{';
+		string1+='"';
+		string1+="bettypeId";
+		string1+='"';
+		string1+=": ";
+
+		var bettype = document.querySelector('input[name="betType"]:checked').value;
+		var stake = document.getElementById("stake").value;
+		var accountId=localStorage.getItem('PLAYER_ID');
+		
+		
+		if(bettype=="single"){
+			string1+="1,";
+		}
+		else if(bettype=='double'){
+			string1+="2,";
+		} 
+		else{
+			string1+="3,";
+		}
+		string1+='"'; 
+		string1+="accountId";
+		string1+='"';
+		string1+=": ";
+		string1+='"';
+		string1+=accountId;
+		string1+='"';
+		string1+=',';
+		string1+='"';
+		string1+="betStake";
+		string1+='"';
+		string1+=": ";
+		string1+=stake;
+		string1+=',';
+		string1+='"';
+		string1+="outcomeOdds";
+		string1+='"';
+		string1+=": {";
+		
+		
+		let odds = [];
+		let outcomeId = [];
+		let current;
+		for(let i = 0; i < localStorage.length; i++){
+			if(localStorage.key(i)!='betslip'){
+				current=localStorage.getItem(localStorage.key(i));
+
+				if (current.includes("outcomeOdds")){					
+					odds.push(JSON.parse(current).odds);
+		    		outcomeId.push(JSON.parse(current).outcomeId);
+				}
+
+		    }
+		}
+		
+		for(let i=0;i<odds.length;i++){
+			string1+='"';
+			string1+=outcomeId[i];
+			string1+='"';
+			string1+=": ";
+			string1+='"';
+			string1+=odds[i];
+			string1+='"';
+			
+			if(i<odds.length-1){
+				string1+=',';
+			}	
+		}
+		
+		
+		string1+="}}";
+		
+
+		//localStorage.setItem('string',string1);
+	    
+	    SB.Utils.postAjax("/sportsbook/api/bets",JSON.parse(string1),SB.Token.PLAYER);
+    });  
 		
 };
 
