@@ -94,8 +94,8 @@ INSERT INTO "tricast"."eventcompetitormap" ("id", "competitorid", "eventid") VAL
 	(13, 4, 3);
 	
 INSERT INTO "tricast"."markets" ("id", "eventid", "markettypeid", "description", "periodtypeid") VALUES
-	(1, 1, 4, E'Szuper EB döntő - FTC - ARSENAL - 2018.09.30. 18:30 - 1x2', 1),
-	(2, 3, 3, E'EB elődöntő - ETO - MILAN - 2018.09.30. 18:30 - 1x2', 2),
+	(1, 1, 1, E'Szuper EB döntő - FTC - ARSENAL - 2018.09.30. 18:30 - 1x2', 1),
+	(2, 3, 1, E'EB elődöntő - ETO - MILAN - 2018.09.30. 18:30 - 1x2', 1),
 	(3, 2, 8, E'A nagy lóverseny - Lord Clenaghcastle - Poetic Force', 4),
 	(4, 2, 8, E'A nagy lóverseny - Mamillius - Poetic Force', 4);
 	
