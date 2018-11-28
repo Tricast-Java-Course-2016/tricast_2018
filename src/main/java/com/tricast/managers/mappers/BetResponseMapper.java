@@ -46,8 +46,7 @@ public class BetResponseMapper {
         
         responseObject.setBetStatus("CLOSED");
         for(BetOutcomeMap currentMap : betOutcomeMap) {
-        	statuses.add(eventRepository.findById(marketRepository.findById(outcomeRepository.findById(
-            		currentMap.getOutcomeID().getId()).getMarket().getId()).getId()).getStatus().getValue());
+        	statuses.add(outcomeRepository.findById(currentMap.getOutcomeID().getId()).getMarket().getEvent().getStatus().getValue());
         	
         	outcomes.add(currentMap.getOutcomeID().getDescription());
         	

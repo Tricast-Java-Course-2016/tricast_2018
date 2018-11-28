@@ -141,9 +141,25 @@ window.onload = function() {
 		string1+="}}";
 		
 
-		//localStorage.setItem('string',string1);
+		localStorage.setItem('string',string1);
 	    
-	    SB.Utils.postAjax("/sportsbook/api/bets",JSON.parse(string1),SB.Token.PLAYER);
+		 SB.Utils.postAjax("/sportsbook/api/bets",JSON.parse(string1),SB.Token.PLAYER,function(){
+		    	for(let i = 0; i < localStorage.length; i++){
+						current=localStorage.getItem(localStorage.key(i));
+
+						if (current.includes("outcomeOdds")){					
+							localStorage.removeItem(localStorage.key(i));
+							i--;
+						}
+				}
+		    	location.reload();
+		    	alert("Bet placement successful!");
+		    	alert.show();
+		    	
+		    },function(e){
+		    	
+		    	
+		    });
     });  
 		
 };
