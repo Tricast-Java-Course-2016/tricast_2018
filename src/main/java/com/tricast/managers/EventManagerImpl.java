@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.tricast.builders.EventDetailResponseBuilder;
 import com.tricast.builders.EventResponseBuilder;
 import com.tricast.controllers.requests.EventRequest;
+import com.tricast.controllers.requests.EventStatusRequest;
 import com.tricast.controllers.requests.MarketForEventRequest;
 import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
@@ -33,6 +34,7 @@ import com.tricast.repositories.customs.EventRepositoryCustom;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Event;
 import com.tricast.repositories.entities.EventCompetitorMap;
+import com.tricast.repositories.entities.EventStatusTypes;
 import com.tricast.repositories.entities.League;
 import com.tricast.repositories.entities.Market;
 import com.tricast.repositories.entities.Outcome;
@@ -263,5 +265,19 @@ public class EventManagerImpl implements EventManager {
     	}
     	return responses;
     }
+
+	@Override
+	public EventResponse update(long id, EventStatusRequest eventStatusRequest) throws SportsbookException {
+		Event event = eventRepository.findById(id);
+		if(eventStatusRequest.getStatus() == EventStatusTypes.OPEN) {
+			List<Outcome> outcomes = outcomeRepository.findByMarket_Event_Id(id);
+			for (Outcome outcome : outcomes) {
+				if (outcome.getOdds() == 0)
+					throw new SportsbookException("Csak abban az esetben lehet aktívra álítani az eseményt ha minden Outcome be van állítva!");
+			}
+		}
+		event.setStatus(eventStatusRequest.getStatus());
+		return EventResponseBuilder.build(event, competitorRepository.findByEventId(id));
+	}
 
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.EventRequest;
+import com.tricast.controllers.requests.EventStatusRequest;
 import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
@@ -72,8 +73,8 @@ public class EventController {
 	}
 
 	@PutMapping(path="/{id}")
-	public EventResponse update(long id, EventRequest eventRequest) {
-		return null;
+	public EventResponse update(long id, @RequestBody EventStatusRequest eventStatusRequest) throws SportsbookException {
+		return eventManager.update(id, eventStatusRequest);
 	}
 
     @GetMapping(path = "statusList")

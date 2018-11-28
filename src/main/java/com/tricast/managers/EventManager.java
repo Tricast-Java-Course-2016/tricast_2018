@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.tricast.controllers.requests.EventRequest;
+import com.tricast.controllers.requests.EventStatusRequest;
 import com.tricast.controllers.requests.OddsRequest;
 import com.tricast.controllers.responses.EventDetailResponse;
 import com.tricast.controllers.responses.EventResponse;
@@ -30,4 +31,6 @@ public interface EventManager {
 	EventDetailResponse updateOdds(OddsRequest oddsRequest,Long eventId) throws SportsbookException;
 	
 	List <EventResponse> listOpen();
+
+	EventResponse update(long id, EventStatusRequest eventStatusRequest) throws SportsbookException;
 }
