@@ -84,6 +84,31 @@ window.SB.Utils = {
         });
     },
     
+    putAjax : function putAjax(url, data, tokenToUse, successCallback, errorCallback) {
+        
+        if(!errorCallback) {
+            errorCallback = SB.Utils.defaultErrorHandling;
+        }
+        
+        return $.ajax({
+            type : 'PUT',
+            dataType : 'json',
+            contentType : "application/json;charset=utf-8",
+            url : url,
+            data : JSON.stringify(data),
+            cache : false,
+            timeout : 30000,
+            ifModified : false,
+            success : successCallback,
+            error : errorCallback,
+            beforeSend: function(xhr){
+                if (tokenToUse != null ){
+                    xhr.setRequestHeader("Authorization", SB.Utils.getToken(tokenToUse));
+               }
+            }
+        });
+    },
+    
     getAjax : function getAjax(url, tokenToUse, successCallback, errorCallback) {
         
         if(!errorCallback) {
