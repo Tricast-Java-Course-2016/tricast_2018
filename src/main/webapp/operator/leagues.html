@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Sportsbook Manager</title>
+<meta name="description" content="Sportsbook Manager">
+<meta name="viewport" content="width=device-width">
+
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+	type="text/css">
+
+<script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+<script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+
+<script type="text/javascript" src="../js/utils.js"></script>
+<script type="text/javascript" src="leagues.js"></script>
+
+<script id="league-row-template" type="text/x-handlebars-template">
+			{{#each leagues}}
+		    	<tr data-name="{{description}}" data-sport-name="{{sportName}}">
+		        	<td>{{description}}</td>
+		            <td>{{sportName}}</td>
+		            <td style="padding: 6px 15px" class="text-right"><button data-target="#edit-modal" data-toggle="modal"="modal" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-edit"></button></td>
+		    	</tr>
+		    {{/each}}
+</script>
+
+</head>
+<body>
+	<div class="pb-5" id="navbar-content"></div>
+	<div class="container">
+		<div class="row">
+	       <div class="col-md-12">
+	         <form class="">
+	           <div class="form-group pb-4"> <input id="search" type="text" class="form-control pl-4" placeholder="Keresés..." style="	background-image: url(&quot;https://png.icons8.com/metro/1600/search.png&quot;);	background-position: 7px 8px;	background-size: 20px;	background-repeat: no-repeat; padding-left: 35px !important;"> </div>
+	         </form>
+	       </div>
+	     </div>
+		<div class="row">
+			<div class="col-md-12">
+				<table id="league-table" class="table pb-0 mb-5">
+					<thead>
+						<tr>
+							<th>Liga</th>
+							<th>Sport</th>
+							<th style="padding: 7px 15px" class="text-right">
+								<button style="padding: 7px 9px;" 
+								data-target="#new-league-modal" data-toggle="modal" 
+								class="btn btn-sm btn-default fa fa-plus"></button>
+							</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div id="new-league-modal" class="modal">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Liga létrehozása</h5>
+					<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+				</div>
+				<div class="modal-body">
+					<form id="new-league-form">
+						<div class="form-group">
+							<label>Név:</label> 
+							<input name="description" type="text" class="form-control" placeholder="Liga neve" required>
+						</div>
+						<div class="form-group">
+							<label>Sport:</label> 
+							<select class="custom-select" name="sportId">
+								{{#each sports}}
+								<option value="{{id}}">{{description}}</option>
+								{{/each}}
+							</select>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" form="new-league-form" class="btn btn-primary">Mentés</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
