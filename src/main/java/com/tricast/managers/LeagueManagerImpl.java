@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tricast.controllers.requests.LeagueRequest;
 import com.tricast.controllers.responses.LeagueResponse;
 import com.tricast.repositories.LeagueRepository;
 import com.tricast.repositories.entities.Competitor;
@@ -32,8 +33,12 @@ public class LeagueManagerImpl implements LeagueManager {
 	}
 
 	@Override
-	public League create(League league) {
-		return leagueRepository.save(league);
+	public LeagueResponse create(LeagueRequest leagueRequest) {
+		League league = new League();
+		league.setDescription(leagueRequest.getDescription());
+		league.setSportId(leagueRequest.getSportId());
+		leagueRepository.save(league);
+		return this.buildResponse(league);
 	}
 
 	@Override
