@@ -26,7 +26,7 @@
 		            <td>{{startDate}}</td>
 		            <td>{{status}}</td>
 					<td><button type="button" class="btn btn-primary">Nyeremények kiosztása</button></td>
-					<td style="padding: 6px 15px" class="text-right"><button data-target="#edit-modal" data-toggle="modal"="modal" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-edit"></button></td>
+					<td style="padding: 6px 15px" class="text-right"><button data-edit-modal="{{id}}" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-edit"></button></td>
 		    	</tr>
 		    {{/each}}
 </script>
@@ -45,6 +45,51 @@
 		{{/each}}
 	</tr>
 	{{/each}}
+</script>
+<script id="edit-modal-body-template" type="text/x-handlebars-template">
+	<form id="edit-event-form" data-event-id="{{event.id}}">
+		<div class="form-group">
+			<label>Név:</label> 
+			<input type="text" class="form-control" value="{{event.description}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Esemény típusa:</label> 
+			<select class="custom-select" disabled>
+				<option value="1" {{#ifEqual event.eventTypeId 1}} selected {{/ifEqual}}>Game Event</option>
+				<option value="2" {{#ifEqual event.eventTypeId 2}} selected {{/ifEqual}}>Rank Event</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Liga:</label> 
+			<select class="custom-select" disabled>
+				{{#each leagues}}
+				<option data-sport-id="{{sportId}}" value="{{id}}" {{#ifEqual id ../event.leagueId}} selected {{/ifEqual}}>
+					{{description}}
+				</option>
+				{{/each}}
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Résztvevők:</label> 
+			<select class="custom-select" multiple="multiple" disabled>
+				{{#each competitors}}
+				<option value="{{id}}" {{#ifContain id ../event.competitorIds}} selected {{/ifContain}}>{{description}}</option>
+				{{/each}}
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Dátum:</label> 
+			<input type="date" class="form-control" value="{{event.date}}" readonly>
+			<input type="time" class="form-control" value="{{event.time}}" readonly>
+		</div>
+		<div class="form-group">
+			<label>Státusz:</label> 
+			<select name="status" class="custom-select" required>
+				<option value="OPEN" {{#ifEqual event.status 'OPEN'}} selected {{/ifEqual}}>OPEN</option>
+				<option value="CLOSED" {{#ifEqual event.status 'CLOSED'}} selected {{/ifEqual}}>CLOSED</option>
+			</select>
+		</div>
+	</form>
 </script>
 </head>
 <body>
@@ -131,6 +176,22 @@
 				</div>
 				<div class="modal-footer">
 					<button type="submit" form="new-event-form" class="btn btn-primary">Mentés</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="edit-event-modal" class="modal">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Sportesemény létrehozása</h5>
+					<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="submit" form="edit-event-form" class="btn btn-primary">Mentés</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Bezárás</button>
 				</div>
 			</div>

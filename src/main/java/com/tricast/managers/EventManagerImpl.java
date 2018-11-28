@@ -277,6 +277,7 @@ public class EventManagerImpl implements EventManager {
 			}
 		}
 		event.setStatus(eventStatusRequest.getStatus());
+		eventRepository.save(event);
 		return EventResponseBuilder.build(event, competitorRepository.findByEventId(id));
 	}
 

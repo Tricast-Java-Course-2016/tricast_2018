@@ -1,5 +1,18 @@
 window.onload = function() {
 
+	Handlebars.registerHelper('ifEqual', function(v1, v2, options) {
+		if (v1 == v2) {
+			return options.fn(this);
+		}
+		return options.inverse(this);
+	});
+	Handlebars.registerHelper('ifContain', function(what, inside, options) {
+		if (inside.indexOf(what) >= 0) {
+			return options.fn(this);
+		}
+		return options.inverse(this);
+	});
+	
     let operator = {
         username : SB.Utils.getOperatorUsername()
     };
@@ -74,6 +87,11 @@ window.onload = function() {
                 	sport.marketTypesById = destructById(sport.marketTypes);
                 });
                 
+                $.each(eventsById, function(index, event){
+                	event.date = moment(event.startTime).format('YYYY-MM-DD');
+                	event.time = moment(event.startTime).format('HH:MM');
+                });
+                
                 let eventList = [];
                 $.each(eventsById, function(id, event) {
                     eventList.push({
@@ -115,6 +133,17 @@ window.onload = function() {
                     events : eventList
                 }));
 
+                const editModalTemplate = Handlebars.compile($('#edit-modal-body-template').html());
+                $(document).on('click', '[data-edit-modal]', function(){
+                	const eventId = $(this).attr('data-edit-modal');
+                	$('#edit-event-modal .modal-body').html(editModalTemplate({
+                		event: eventsById[eventId],
+                		leagues : leaguesById,
+                        competitors : competitorsById
+                	}));
+                	$('#edit-event-modal').modal('show');
+                });
+                
                 $('#new-event-form select[name="leagueId"]').on('change', function() {
                     let sportId = -1;
                     const select = $(this);
@@ -185,10 +214,19 @@ window.onload = function() {
                     });
                 });
                 
+                $(document).on('submit', '#edit-event-form', function(e) {
+                    e.preventDefault();
+
+                    const data = SB.Utils.readFormData($('#edit-event-form'));
+                    SB.Utils.putAjax('/sportsbook/api/events/' + $(this).attr('data-event-id'), data, SB.Token.OPERATOR, function() {
+                        location.reload(true);
+                    });
+                });
+                
                 // Sumák Frontend Technic (SFC) - NEM AJÁNLOTT! NE HASZNÁLD!
                 $('#search').on('change keyup', function(){
                 	const search = $(this).val().toLowerCase().trim();
-                	console.log(search);
+                	
                 	if(search.length === 0){
                 		$('#events-table tbody tr').css('display', 'table-row');
                 	}

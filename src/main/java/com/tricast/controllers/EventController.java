@@ -73,7 +73,7 @@ public class EventController {
 	}
 
 	@PutMapping(path="/{id}")
-	public EventResponse update(long id, @RequestBody EventStatusRequest eventStatusRequest) throws SportsbookException {
+	public EventResponse update(@PathVariable("id") long id, @RequestBody EventStatusRequest eventStatusRequest) throws SportsbookException {
 		return eventManager.update(id, eventStatusRequest);
 	}
 
