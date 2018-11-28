@@ -2,31 +2,19 @@ package com.tricast.controllers.responses;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
-
-import com.tricast.repositories.entities.TransactionTypes;
 
 public class TransactionResponse implements Serializable{
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 8033532302109490790L;
 
-    // TransactionId?
 	private long transactionId;
-	
 	private long betId;
-    // OffsetDateTime
-	private OffsetDateTime createdDate;
-	
+    private String createdDate;
 	private String description;
-    // BigDecimal
 	private BigDecimal amount;
-    // Primitive
 	private long accountId;
-    // Enum
-	private TransactionTypes type;
+    private String type;
+
 	public long getTransactionId() {
 		return transactionId;
 	}
@@ -39,10 +27,12 @@ public class TransactionResponse implements Serializable{
 	public void setBetId(long betId) {
 		this.betId = betId;
 	}
-	public OffsetDateTime getCreatedDate() {
+
+    public String getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(OffsetDateTime createdDate) {
+
+    public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
 	public String getDescription() {
@@ -63,10 +53,12 @@ public class TransactionResponse implements Serializable{
 	public void setAccountId(long accountId) {
 		this.accountId = accountId;
 	}
-	public TransactionTypes getType() {
+
+    public String getType() {
 		return type;
 	}
-	public void setType(TransactionTypes type) {
+
+    public void setType(String type) {
 		this.type = type;
 	}
 

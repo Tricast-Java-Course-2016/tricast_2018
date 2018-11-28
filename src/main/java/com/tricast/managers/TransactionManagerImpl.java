@@ -100,10 +100,11 @@ public class TransactionManagerImpl implements TransactionManager {
     }
 
     @Override
-    public List<TransactionResponse> filter(String transactionType, OffsetDateTime fromDate,
+    public List<TransactionResponse> filter(long accountId, String transactionType, OffsetDateTime fromDate,
             OffsetDateTime toDate) {
 
-    	List<Transaction> transactions = transactionRepositoryCustomImpl.filter(transactionType, fromDate, toDate);
+        List<Transaction> transactions =
+                transactionRepositoryCustomImpl.filter(accountId, transactionType, fromDate, toDate);
 
 		List<TransactionResponse> transactionResponses = new ArrayList<>();
 		for (Transaction transaction : transactions) {

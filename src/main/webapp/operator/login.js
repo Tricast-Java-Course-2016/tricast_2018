@@ -20,6 +20,6 @@ function login() {
         let
         token = xhr.getResponseHeader('Authorization');
         SB.Utils.saveOperatorData(token, data.id, data.userName);
-        window.location.href = "operatorhome.html";
+        window.location.href = "events.html";
     });
 }

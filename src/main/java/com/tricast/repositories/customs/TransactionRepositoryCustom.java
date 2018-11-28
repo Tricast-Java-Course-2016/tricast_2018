@@ -7,5 +7,5 @@ import com.tricast.repositories.entities.Transaction;
 
 public interface TransactionRepositoryCustom {
 
-    List<Transaction> filter(String transactionType, OffsetDateTime fromDate, OffsetDateTime toDate);
+    List<Transaction> filter(long accountId, String transactionType, OffsetDateTime fromDate, OffsetDateTime toDate);
 }

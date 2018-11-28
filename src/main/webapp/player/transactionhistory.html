@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Transaction History</title>
+        <meta name="description" content="Transaction History">
+        <meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+		
+        <script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+        <script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+    
+        <script type="text/javascript" src="../js/utils.js"></script>
+        <script type="text/javascript" src="transactionhistory.js"></script>
+        
+       
+        <script id="transactions-row-template" type="text/x-handlebars-template">
+			{{#each transactions}}
+		    {{#with this}}
+		    	<tr>
+		        	<td>{{type}}</td>
+					<td>{{description}}</td>
+		            <td>{{amount}}</td>
+					<td>{{createdDate}}</td>
+				</tr>
+		    {{/with}}
+		    {{/each}}
+		</script>
+		
+    </head>
+    <body>
+        <div id="navbar-content"></div>
+		<div class="container">
+			<div class="row"><div class="col-md-12"><b>Transaction history</b></div></div>
+        	<div class="row">
+		        <div class="col-md-8">
+		          <table id="transactions-table" class="table table-hover">
+		            <thead>
+		              <tr>
+		                <th>Type</th>
+                        <th>Description</th>
+		                <th>Amount</th>	
+                        <th>Created date</th>	             
+		                <th></th>
+		              </tr>
+		            </thead>
+		            <tbody></tbody>
+		          </table>
+		        </div>	        
+		      </div>
+        </div>
+    </body>
+</html>
+

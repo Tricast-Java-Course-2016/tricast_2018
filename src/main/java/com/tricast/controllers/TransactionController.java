@@ -32,10 +32,10 @@ public class TransactionController {
     @GetMapping(path = "/accounts/{accountId}/transactions/filter")
     public List<TransactionResponse> byFilter(@PathVariable("accountId") Long accountId,
             @RequestParam(value = "transactionType", required = false) String transactionType,
-            @RequestParam(value = "fromDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
-            @RequestParam(value = "toDate", required = true) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
+            @RequestParam(value = "fromDate", required = false) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime fromDate,
+            @RequestParam(value = "toDate", required = false) @DateTimeFormat(iso = ISO.DATE_TIME) OffsetDateTime toDate) {
 
-        return this.transactionManager.filter(transactionType, fromDate, toDate);
+        return this.transactionManager.filter(accountId, transactionType, fromDate, toDate);
     }
 
     @PostMapping("/accounts/{accountId}/transactions/deposit")

@@ -22,17 +22,21 @@ public class TransactionRepositoryCustomImpl extends QueryDslRepositorySupport i
     }
 
     @Override
-    public List<Transaction> filter(String transactionType, OffsetDateTime fromDate, OffsetDateTime toDate) {
+    public List<Transaction> filter(long accountId, String transactionType, OffsetDateTime fromDate,
+            OffsetDateTime toDate) {
 
         QTransaction transaction = QTransaction.transaction;
 
-        BooleanExpression dateFilter = transaction.createdDate.between(fromDate, toDate);
+        JPQLQuery<Transaction> query = from(transaction).where(transaction.account().id.eq(accountId));
 
-        JPQLQuery<Transaction> query = from(transaction).where(dateFilter);
+        if (fromDate != null && toDate != null) {
+            BooleanExpression dateFilter = transaction.createdDate.between(fromDate, toDate);
+            query = query.where(dateFilter);
+        }
 
         if (StringUtils.hasText(transactionType)) {
             BooleanExpression typeFilter = transaction.type.eq(TransactionTypes.valueOf(transactionType));
-            query = query.where(typeFilter);
+            query = query.where(typeFilter).orderBy(transaction.createdDate.asc());
         }
 
         return query.fetch();
