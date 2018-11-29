@@ -15,7 +15,8 @@ public interface BetManager {
     
     List<BetResponse> findByEventId(long id);
 
-    BetPlacementResponse create(BetRequest requestObject)  throws SportsbookException;
+    BetPlacementResponse create(BetRequest requestObject, boolean oddsCheck)  throws SportsbookException;
 
+    BetPlacementResponse getNewOdds(BetRequest requestObject) throws SportsbookException;
 
 }

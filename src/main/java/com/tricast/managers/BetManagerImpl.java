@@ -29,6 +29,7 @@ import com.tricast.repositories.TransactionRepository;
 import com.tricast.repositories.entities.Bet;
 import com.tricast.repositories.entities.BetOutcomeMap;
 import com.tricast.repositories.entities.BetTypes;
+import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Transaction;
 import com.tricast.repositories.entities.TransactionTypes;
 
@@ -119,24 +120,66 @@ public class BetManagerImpl implements BetManager {
          */
         return null;
 	}
+	
+	@Override
+	public BetPlacementResponse getNewOdds(BetRequest requestObject) throws SportsbookException{
+		BetPlacementResponse responseEntity=new BetPlacementResponse();
+		ArrayList <BetResponse> responseList=new ArrayList <BetResponse>();
+		ArrayList <String> marketDescriptionList = new ArrayList <String>();
+		ArrayList <Double> newOddsList = new ArrayList <Double>();
+		ArrayList <String> outcomeDescriptionList = new ArrayList <String>();
+		
+		Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet();
+    	Iterator <Long> iterator=outcomeIds.iterator();
+    	Long currentId;
+    	BetResponse currentBet;
+    	Double newOdds;
+    	Outcome currentOutcome;
+    	
+    	while(iterator.hasNext()) {
+    		currentId=iterator.next();
+    		
+    		try {
+    			currentOutcome=outcomeRepository.findById(currentId);
+    			newOdds=currentOutcome.getOdds();
+    			marketDescriptionList.add(currentOutcome.getMarket().getDescription());
+    			outcomeDescriptionList.add(currentOutcome.getDescription());
+    			newOddsList.add(newOdds);
+    			
+    		}catch(Exception e) {
+    			throw new OddsException("Bad OutcomeId.");
+    		}
+    	}
+		
+    	currentBet=new BetResponse();
+    	currentBet.setMarketDescription(marketDescriptionList);
+    	currentBet.setOutcome(outcomeDescriptionList);
+    	currentBet.setOdds(newOddsList);
+    	
+    	responseList.add(currentBet);
+    	responseEntity.setListOfBetResponses(responseList);
+    	responseEntity.setSumStake(BigDecimal.valueOf(1).negate());
+		return responseEntity;
+	}
 
     @Override
-    public BetPlacementResponse create(BetRequest requestObject) throws SportsbookException {
+    public BetPlacementResponse create(BetRequest requestObject , boolean oddsCheck) throws SportsbookException {
         if(requestObject == null) {
             return null;
         }
         
-        Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet();
-    	Iterator <Long> iterator=outcomeIds.iterator();
-    	Long currentId;
-    	while(iterator.hasNext()) {
-    		currentId=iterator.next();
-    		if(outcomeRepository.findById(currentId).getOdds()!=requestObject.getOutcomeOdds().get(currentId)) {
-    			throw new OddsException("Some of the outcomes referred in betRequest have new odds.");
-    		}
-    	}
-    	
-    	
+        if(oddsCheck) {
+            Set <Long> outcomeIds=requestObject.getOutcomeOdds().keySet();
+        	Iterator <Long> iterator=outcomeIds.iterator();
+        	Long currentId;
+        	while(iterator.hasNext()) {
+        		currentId=iterator.next();
+        		if(outcomeRepository.findById(currentId).getOdds()!=requestObject.getOutcomeOdds().get(currentId)) {
+        			throw new OddsException("Some of the outcomes referred in betRequest have new odds.");
+        		}
+        	}
+        }
+        
 
         if(requestObject.getBetStake().compareTo(BigDecimal.valueOf(0))!=1)
         	throw new SportsbookException("Stake has to be greater than 0.");

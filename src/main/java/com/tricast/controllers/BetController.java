@@ -18,8 +18,8 @@ import com.tricast.controllers.requests.BetRequest;
 import com.tricast.controllers.responses.BetPlacementResponse;
 import com.tricast.controllers.responses.BetResponse;
 import com.tricast.managers.BetManager;
-import com.tricast.managers.BetOutcomeMapManager;
-import com.tricast.repositories.entities.BetOutcomeMap;
+import com.tricast.managers.exceptions.OddsException;
+import com.tricast.managers.exceptions.SportsbookException;
 
 @RestController
 @RequestMapping(path = "api/bets")
@@ -30,9 +30,6 @@ public class BetController {
     @Autowired
     private BetManager betManager;
     
-    @Autowired
-    private BetOutcomeMapManager betOutcomeMapManager;
-
     @GetMapping
     public List<BetResponse> findAll() {
         return betManager.findAll();
@@ -54,7 +51,28 @@ public class BetController {
 		log.trace("Trying to create bet for: AccountId: " + newBet.getAccountId());
 
 		try {
-			BetPlacementResponse bet = betManager.create(newBet);
+			BetPlacementResponse bet = betManager.create(newBet,true);
+			return ResponseEntity.ok(bet);
+		}catch(OddsException oe) {
+			try {
+				BetPlacementResponse bet = betManager.getNewOdds(newBet);
+				return ResponseEntity.ok(bet);
+			} catch (SportsbookException e) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+			}
+		} 
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
+	}
+	
+	@PostMapping(path="/withoutOddsCheck")
+	public ResponseEntity<?> createBetWithoutOddsCheck(@RequestBody BetRequest newBet) {
+
+		log.trace("Trying to create bet for: AccountId: " + newBet.getAccountId());
+
+		try {
+			BetPlacementResponse bet = betManager.create(newBet,false);
 			return ResponseEntity.ok(bet);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

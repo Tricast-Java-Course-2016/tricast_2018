@@ -25,6 +25,25 @@
        		 <b>{{eventStartTime}}</b>
 		</script>
 		
+		<script id="show_odds_message" type="text/x-handlebars-template">
+			<b>{{message}}</b>	
+		</script>
+		
+		<script id="generate_buttons" type="text/x-handlebars-template">
+			<td style="padding: 6px 15px" class="text-right"><button onclick="placeBetAnyways()" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>Fogadás</b></button></td>
+			<td style="padding: 6px 15px" class="text-right"><button onclick="removeAll()" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>Mégse</b></button></td>
+		</script>
+		
+		<script id="show_new_odds" type="text/x-handlebars-template">
+			{{#combinations}}
+      			<tr>
+					<td>{{marketDescription}}</td>
+					<td>{{outcome}}</td>
+					<td>{{odds}}</td>
+				</tr>
+    		{{/combinations}}
+		</script>
+		
         <script id="show_event_details" type="text/x-handlebars-template">
 				{{#each periodMarketsList}}
 					<tr>
@@ -66,13 +85,16 @@
 		            <thead> </thead>
 		            <tbody></tbody>
 		          </table>
+		          <div id="buttons" class="row">
+		          
+		          </div>
 		        </div>
 		        <div class="col-md-4">
 					<div class="container">
 						<table id="betslip-table" class="table table-sm">
 						 	<thead>
 		              		<tr>
-		                	<th>Szelvény</th>
+		                	<th>BetSlip</th>
 		                	<th></th>
 		                	<th></th>
 		              		</tr>
@@ -80,9 +102,16 @@
 		            		<tbody>
 		            		</tbody>
 						</table>
+						<div class="row mt-3">
+							<div class="col-sm-5">
+								<button class="btn btn-block" style="line-height: 22px; padding: 4px 6px 4px 8px" onclick=removeAll()><b>Remove All</b></button>
+  							</div>
+  						</div>
+  						<div class="row mt-3">
+  						</div>
 						<form id="betslip">
   							<div class="form-group row">
-   								<label for="stake" class="col-sm-2 col-form-label"><b>Tét</b></label>
+   								<label for="stake" class="col-sm-2 col-form-label"><b>Stake</b></label>
    								<div class="col-sm-10">
    									<input type="text" class="form-control" id="stake" placeholder="0 FT">
    								</div>
@@ -107,7 +136,7 @@
 							</div>
 							<div class="row mt-3">
 							<div class="col-sm-5">
-								<button class="btn btn-block" style="line-height: 22px; padding: 4px 6px 4px 8px" type="submit"><b>Fogadás</b></button>
+								<button class="btn btn-block" style="line-height: 22px; padding: 4px 6px 4px 8px" type="submit"><b>Place Bet</b></button>
   							</div>
   							</div>
   						</form>
