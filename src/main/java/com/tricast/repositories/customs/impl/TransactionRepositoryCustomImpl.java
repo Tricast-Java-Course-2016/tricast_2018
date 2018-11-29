@@ -29,11 +29,16 @@ public class TransactionRepositoryCustomImpl extends QueryDslRepositorySupport i
 
         JPQLQuery<Transaction> query = from(transaction).where(transaction.account().id.eq(accountId));
 
-        if (fromDate != null && toDate != null) {
-            BooleanExpression dateFilter = transaction.createdDate.between(fromDate, toDate);
-            query = query.where(dateFilter);
+        if (fromDate != null) {
+            BooleanExpression fromDateFilter = transaction.createdDate.after(fromDate);
+            query = query.where(fromDateFilter);
         }
 
+        if (toDate != null) {
+            BooleanExpression toDateFilter = transaction.createdDate.before(toDate);
+            query = query.where(toDateFilter);
+        }
+        
         if (StringUtils.hasText(transactionType)) {
             BooleanExpression typeFilter = transaction.type.eq(TransactionTypes.valueOf(transactionType));
             query = query.where(typeFilter).orderBy(transaction.createdDate.asc());

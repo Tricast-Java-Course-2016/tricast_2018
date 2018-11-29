@@ -21,20 +21,42 @@ function loadTransactionHistory() {
     let
     typeFromFilter = $('#transaction-type-filter').val();
 
-    console.log(typeFromFilter);
-
     let
     fromDateIdFromFilter = $('#tr-from-date-filter').val();
+    
+console.log(fromDateIdFromFilter);
+    
     let
     toDateIdFromFilter = $('#tr-to-date-filter').val();
 
     let
-    typeFilterSet = false;
+    filterSet = false;
     if (typeFromFilter != 'NONE') {
         url += "?transactionType=" + typeFromFilter;
-        typeFilterSet = true;
+        filterSet = true;
     }
 
+    if (fromDateIdFromFilter != '') {
+        if(filterSet) {
+        	url += "&"
+        } else {
+        	url += "?"
+        }
+    	
+    	url += "fromDate=" + moment(fromDateIdFromFilter).toISOString();
+        filterSet = true;
+    }
+    
+    if (toDateIdFromFilter != '') {
+    	if(filterSet) {
+        	url += "&"
+        } else {
+        	url += "?"
+        }
+    	
+    	url += "toDate=" +  moment(toDateIdFromFilter).toISOString();        
+    }
+    
     SB.Utils.getAjax(url, SB.Token.PLAYER, function(data, status, xhr) {
 
         let
