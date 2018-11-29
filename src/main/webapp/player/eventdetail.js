@@ -45,6 +45,22 @@ window.onload = function() {
 			betslip
      ));
 	
+	if(localStorage.getItem('betType') && 	localStorage.getItem('stake')){
+		document.getElementById("stake").value=localStorage.getItem('stake');
+		let bettype=localStorage.getItem('betType');
+		
+		if(bettype=="single"){
+			document.getElementById("betType1").checked=true;
+		}
+		else if(bettype=="double"){
+			document.getElementById("betType2").checked=true;
+		} 
+		else if(bettype=="treble"){
+			document.getElementById("betType3").checked=true;
+		}
+		refresh();
+	}
+	
 	const betslipform = document.getElementById("betslip");
 
 	   
@@ -97,8 +113,81 @@ window.onload = function() {
     	
 	    });
     });
+	
+	$('#betslip').change(function() {
+		  refresh();
+		  localStorage.setItem('betType',document.querySelector('input[name="betType"]:checked').value);
+		  if( document.getElementById("stake").value!=""){
+			localStorage.setItem('stake',document.getElementById("stake").value);  
+		  }
+	})
 		
 };
+
+function refresh(){
+	let string=createString();
+	let json=JSON.parse(string);
+	let combinations={
+			odds : [ ]
+	};
+	
+	let outcomeIds=[];
+	let odds=[];
+	let count=0;
+	let sumStake=0;
+	let sumWin=0;
+	let sumOdds=1;
+	
+	if(json.betStake!=0){
+		var myObject = json.outcomeOdds;
+
+		for (var key in myObject) {
+		    if (myObject.hasOwnProperty(key)) {
+		    	odds[count]=myObject[key];
+		    	outcomeIds[count]=key;
+		    	count++;
+		    }
+		}
+		
+		if(json.bettypeId==1){
+			for(let i=0;i<odds.length;i++){
+				sumWin+=odds[i]*json.betStake;
+			}
+			sumStake=json.betStake*odds.length;
+		}
+		else if(json.bettypeId==2){
+			if(odds.length>1){
+				for(let i=0;i<outcomeIds.length-1;i++) {
+					for(let  j=i+1;j<outcomeIds.length;j++) {
+						combinations.odds.push(
+							odds[i]*odds[j]		
+						);
+					}
+				}
+				sumStake=json.betStake*combinations.odds.length;
+				for(let i=0;i<combinations.odds.length;i++){
+					sumWin+=json.betStake*combinations.odds[i];
+				}
+			}
+		}
+		else if(json.bettypeId==3){
+			if(odds.length==3){
+				sumStake=json.betStake;
+				for(let i=0;i<odds.length;i++){
+					sumOdds*=odds[i];
+					sumWin=sumOdds*json.betStake;
+				}
+			}
+		}
+		if(sumStake==0 || sumWin==0){
+			document.getElementById("sumstake").value="N/A";
+			document.getElementById("win").value="N/A";
+		}else{			
+			document.getElementById("sumstake").value=Math.ceil(sumStake);
+			document.getElementById("win").value=Math.ceil(sumWin);
+		}
+	}	
+}
 
 function createString(){
 	var string1='';
@@ -108,15 +197,22 @@ function createString(){
 	string1+='"';
 	string1+=": ";
 
+	var stake;
 	var bettype = document.querySelector('input[name="betType"]:checked').value;
-	var stake = document.getElementById("stake").value;
+	
+	if(document.getElementById("stake").value!= ""){
+		stake = document.getElementById("stake").value;
+	}
+	else{
+		stake=0;
+	}
 	var accountId=localStorage.getItem('PLAYER_ID');
 	
 	
 	if(bettype=="single"){
 		string1+="1,";
 	}
-	else if(bettype=='double'){
+	else if(bettype=="double"){
 		string1+="2,";
 	} 
 	else{
@@ -187,6 +283,8 @@ function removeAll(){
 		}
 	}
 	localStorage.removeItem('string');
+	localStorage.removeItem('stake');
+	localStorage.removeItem('betType');
 	location.reload();
 }
 
@@ -234,7 +332,7 @@ function addToBetslip(element) {
 	$('#betslip-table tbody').html(Handlebars.compile($('#add-to-betslip').html())(
 			betslip
      ));
-	
+	refresh();
 }
 
 function removeFromBetslip(element) {
@@ -258,7 +356,6 @@ function removeFromBetslip(element) {
 		
 	localStorage.setItem('betslip',betslip);
 	location.reload();
-	
 }
 
 function loadBalance() {
