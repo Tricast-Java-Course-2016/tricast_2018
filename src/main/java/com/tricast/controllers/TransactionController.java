@@ -1,6 +1,7 @@
 package com.tricast.controllers;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tricast.controllers.requests.TransactionRequest;
 import com.tricast.controllers.responses.TransactionResponse;
+import com.tricast.controllers.responses.TransactionTypeResponse;
 import com.tricast.managers.TransactionManager;
 import com.tricast.repositories.entities.AccountType;
+import com.tricast.repositories.entities.TransactionTypes;
 
 @RestController
 @RequestMapping(path = "api")
@@ -76,6 +79,27 @@ public class TransactionController {
         try {
             TransactionResponse transactionResponse = transactionManager.withdraw(accountId, request);
             return ResponseEntity.ok(transactionResponse);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/transactions/types")
+    public ResponseEntity<?> loadTransactionTypes() {
+
+        List<TransactionTypeResponse> typeResponseList = new ArrayList<>();
+
+        for (TransactionTypes type : TransactionTypes.values()) {
+            TransactionTypeResponse typeResponse = new TransactionTypeResponse();
+            typeResponse.setId(type.getId());
+            typeResponse.setType(type.name());
+            typeResponse.setDescription(type.getDescription());
+
+            typeResponseList.add(typeResponse);
+        }
+
+        try {
+            return ResponseEntity.ok(typeResponseList);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
