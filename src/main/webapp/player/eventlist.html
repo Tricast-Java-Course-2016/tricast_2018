@@ -17,6 +17,24 @@
         <script type="text/javascript" src="../js/utils.js"></script>
         <script type="text/javascript" src="eventlist.js"></script>
         
+       <script id="show_odds_message" type="text/x-handlebars-template">
+			<b>{{message}}</b>	
+		</script>
+		
+		<script id="generate_buttons" type="text/x-handlebars-template">
+			<td style="padding: 6px 15px" class="text-right"><button onclick="placeBetAnyways()" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>Place Bet Anyways</b></button></td>
+			<td style="padding: 6px 15px" class="text-right"><button onclick="removeAll()" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>Cancel</b></button></td>
+		</script>
+		
+		<script id="show_new_odds" type="text/x-handlebars-template">
+			{{#combinations}}
+      			<tr>
+					<td>{{marketDescription}}</td>
+					<td>{{outcome}}</td>
+					<td>{{odds}}</td>
+				</tr>
+    		{{/combinations}}
+		</script>
        
         <script id="event-row-template" type="text/x-handlebars-template">
 			{{#each events}}
@@ -25,7 +43,7 @@
 		        	<td>{{title}}</td>
 		            <td>{{league}}</td>
 		            <td>{{startDate}}</td>
-					<td style="padding: 6px 15px" class="text-right"><button value={{id}} onclick="eventdetail(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default class="btn btn-sm btn-default"><b>Megnyitás</b></button></td>
+					<td style="padding: 6px 15px" class="text-right"><button value={{id}} onclick="eventdetail(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default class="btn btn-sm btn-default"><b>Open Details</b></button></td>
 		    	</tr>
 		    {{/with}}
 		    {{/each}}
@@ -47,27 +65,30 @@
     <body>
         <div id="navbar-content"></div>
 		<div class="container">
-			<div class="row"><div class="col-md-12"><b>Aktív események</b></div></div>
+			<div class="row"><div class="col-md-12"><b>Open Events</b></div></div>
         	<div class="row">
 		        <div class="col-md-8">
 		          <table id="events-table" class="table table-hover">
 		            <thead>
 		              <tr>
-		                <th>Esemény</th>
-		                <th>Liga</th>
-		                <th>Esemény kezdete</th>
+		                <th>Event</th>
+		                <th>League</th>
+		                <th>Start time</th>
 		                <th></th>
 		              </tr>
 		            </thead>
 		            <tbody></tbody>
 		          </table>
+		          <div id="buttons" class="row">
+		          
+		          </div>
 		        </div>
 		        <div class="col-md-4">
 					<div class="container">
 						<table id="betslip-table" class="table table-sm">
 						 	<thead>
 		              		<tr>
-		                	<th>Szelvény</th>
+		                	<th>BetSlip</th>
 		                	<th></th>
 		                	<th></th>
 		              		</tr>
@@ -75,9 +96,16 @@
 		            		<tbody>
 		            		</tbody>
 						</table>
+						<div class="row mt-3">
+							<div class="col-sm-5">
+								<button class="btn btn-block" style="line-height: 22px; padding: 4px 6px 4px 8px" onclick=removeAll()><b>Remove All</b></button>
+  							</div>
+  						</div>
+  						<div class="row mt-3">
+  						</div>
 						<form id="betslip">
   							<div class="form-group row">
-   								<label for="stake" class="col-sm-2 col-form-label"><b>Tét</b></label>
+   								<label for="stake" class="col-sm-2 col-form-label"><b>Stake</b></label>
    								<div class="col-sm-10">
    									<input type="text" class="form-control" id="stake" placeholder="0 FT">
    								</div>
@@ -102,7 +130,7 @@
 							</div>
 							<div class="row mt-3">
 							<div class="col-sm-5">
-								<button class="btn btn-block" style="line-height: 22px; padding: 4px 6px 4px 8px" type="submit"><b>Fogadás</b></button>
+								<button class="btn btn-block" style="line-height: 22px; padding: 4px 6px 4px 8px" type="submit"><b>Place Bet</b></button>
   							</div>
   							</div>
   						</form>
