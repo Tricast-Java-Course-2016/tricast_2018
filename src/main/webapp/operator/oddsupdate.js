@@ -9,33 +9,34 @@ window.onload = function() {
 
 	let url = "/sportsbook/api/events/"+ eventid +"/odds";
 	
-	localStorage.setItem('url',url);
+
 		    
-	SB.Utils.getAjax(url, SB.Token.OPERATOR, function(data) {		      
-		localStorage.setItem('url',url);
-		$('#eventdetail_table tbody').html(Handlebars.compile($('#show_event_details').html())(
-		            data
-		));
+	SB.Utils.getAjax(url, SB.Token.OPERATOR, function(data) {
+		
+		let
+	    eventDetail = {
+	    eventId : data.eventId,
+	    eventDescription : data.eventDescription,
+	    eventStartTime : moment(data.eventStartTime).format('YYYY.MM.DD HH:MM')
+		};
+		    $('#event_description').html(Handlebars.compile($('#show_event_description').html())(
+	           eventDetail
+	       ));
+
+		    $('#event_start').html(Handlebars.compile($('#show_event_start').html())(
+	           eventDetail
+	       ));
+		
 		$('#odds_table tbody').html(Handlebars.compile($('#show_odds').html())(
 	            data
-	));
+		));
 	});	
 	
-	let
-    eventDetail = {
-    eventId : data.eventId,
-    eventDescription : data.eventDescription,
-    eventStartTime : moment(data.eventStartTime).format('YYYY.MM.DD HH:MM')
-	 };
-	    $('#event_description thead').html(Handlebars.compile($('#show_event_description').html())(
-           eventDetail
-       ));
-
-	    $('#event_start thead').html(Handlebars.compile($('#show_event_start').html())(
-           eventDetail
-       ));
-	
 };
+
+function updateOdds(){
+	
+}
 
 
 
