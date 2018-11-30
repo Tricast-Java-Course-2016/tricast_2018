@@ -21,6 +21,20 @@ window.onload = function() {
 	));
 	});	
 	
+	let
+    eventDetail = {
+    eventId : data.eventId,
+    eventDescription : data.eventDescription,
+    eventStartTime : moment(data.eventStartTime).format('YYYY.MM.DD HH:MM')
+	 };
+	    $('#event_description thead').html(Handlebars.compile($('#show_event_description').html())(
+           eventDetail
+       ));
+
+	    $('#event_start thead').html(Handlebars.compile($('#show_event_start').html())(
+           eventDetail
+       ));
+	
 };
 
 
