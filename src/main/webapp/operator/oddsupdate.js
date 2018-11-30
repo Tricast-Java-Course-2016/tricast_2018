@@ -61,7 +61,7 @@ function updateOdds(){
 	
 	$('input[data-type="oddsu"]').each(function(index, item){
 		outcomeId.push($(item).attr('data-outcomeId'));
-		odds.push($(item).attr('value'));
+		odds.push($(item).val());
 	});
 	
 	for(let i=0;i<odds.length;i++){
