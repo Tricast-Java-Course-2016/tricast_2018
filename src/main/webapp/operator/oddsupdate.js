@@ -78,9 +78,8 @@ function updateOdds(){
 		}	
 	}
 	
-	string1+="}}";
+	string1+="}}";	
 	
-	localStorage.setItem('string',string1);
 	let url = "/sportsbook/api/events/"+ eventId +"/odds";
 	SB.Utils.postAjax(url,JSON.parse(string1),SB.Token.OPERATOR,function(){
     	alert("Odds update successful!");
