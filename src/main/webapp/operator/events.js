@@ -245,3 +245,8 @@ window.onload = function() {
                 
             });
 };
+
+function oddsload(element) {
+    localStorage.setItem('eventid', element.getAttribute('data-eventid'));
+    window.location.href = "oddsupdate.html";
+};

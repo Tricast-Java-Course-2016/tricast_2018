@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Odds update</title>
+        <meta name="description" content="Events">
+        <meta name="viewport" content="width=device-width">
+
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+		
+        <script type="text/javascript" src="../js/lib/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/lib/moment.min.js"></script>
+        <script type="text/javascript" src="../js/lib/handlebars-v4.0.12.js"></script>
+    
+        <script type="text/javascript" src="../js/utils.js"></script>
+        <script type="text/javascript" src="oddsupdate.js"></script>
+        
+        <script id="show_event_description" type="text/x-handlebars-template">
+			<b>{{eventDescription}}</b>		       
+        </script>        
+        
+		<script id="show_odds" type="text/x-handlebars-template">
+				{{#each periodMarketsList}}
+					<tr>
+					<td><b>{{period.description}}</b></td>
+					<td><b>{{market.marketDescription}}</b></td>
+					<td><b>{{market.marketTypeDescription}}</b></td>
+					{{#each outcomes}}
+						<tr>
+						<td>{{outcomeDescription}}</td>
+						<td>{{outcomeId}}</td>
+						<td style="padding: 6px 15px" class="text-right"><input type="text" </input></td>		
+						</tr>
+					{{/each}}
+					</tr>
+				{{/each}}
+		</script>
+		
+		<script id="show_event_details" type="text/x-handlebars-template">
+				{{#each periodMarketsList}}
+					<tr>
+					<td><b>{{period.description}}</b></td>
+					<td><b>{{market.marketDescription}}</b></td>
+					<td><b>{{market.marketTypeDescription}}</b></td>
+					{{#each outcomes}}
+						<tr>
+						<td>{{outcomeDescription}}</td>
+						<td>{{outcomeId}}</td>	1
+						<td style="padding: 6px 15px" class="text-right"><button data-outcomeId={{outcomeId}} data-odds={{odds}} data-marketDescription="{{../market.marketDescription}}" data-outcomeDescription={{outcomeDescription}} onclick="addToBetslip(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>{{odds}}</b></button></td>		
+						</tr>
+					{{/each}}
+					</tr>
+				{{/each}}
+		</script>
+		
+		
+   </head>
+   <body>
+        <div id="navbar-content"></div>
+		<div class="container">
+			<div class="row"><div id="event_description" class="col"></div><div id="event_start" class="col"></div></div>
+        	<div class="row">
+		        <div class="col-md-8">
+		        	<form>		        	
+		        		<div id="odds_place"></div>
+		        	</form>		         
+		        </div>
+		    </div>
+		</div>
+   
+   </body>
+ </html>
