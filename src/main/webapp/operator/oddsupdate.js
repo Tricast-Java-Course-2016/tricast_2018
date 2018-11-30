@@ -16,6 +16,9 @@ window.onload = function() {
 		$('#eventdetail_table tbody').html(Handlebars.compile($('#show_event_details').html())(
 		            data
 		));
+		$('#odds_table tbody').html(Handlebars.compile($('#show_odds').html())(
+	            data
+	));
 	});	
 	
 };

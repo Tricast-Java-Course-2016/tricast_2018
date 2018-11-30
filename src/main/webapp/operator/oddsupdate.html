@@ -30,8 +30,8 @@
 					{{#each outcomes}}
 						<tr>
 						<td>{{outcomeDescription}}</td>
-						<td>{{outcomeId}}</td>
-						<td style="padding: 6px 15px" class="text-right"><input type="text" </input></td>		
+						<td></td>
+						<td style="padding: 6px 15px" class="text-right"><input type="text" data-outcomeId={{outcomeId}} data-odds={{odds}} value = "{{odds}}" data-type="oddsu"</input></td>		
 						</tr>
 					{{/each}}
 					</tr>
@@ -62,13 +62,13 @@
         <div id="navbar-content"></div>
 		<div class="container">
 			<div class="row"><div id="event_description" class="col"></div><div id="event_start" class="col"></div></div>
-        	<div class="row">
+        	<div class="row">		        
 		        <div class="col-md-8">
-		          <table id="eventdetail_table" class="table table-hover">
+		          <table id="odds_table" class="table table-hover">
 		            <thead> </thead>
 		            <tbody></tbody>
 		          </table>
-		        </div>
+		          </div>
 		    </div>
 		</div>
    </body>
