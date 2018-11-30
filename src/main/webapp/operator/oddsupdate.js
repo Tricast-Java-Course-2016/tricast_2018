@@ -8,11 +8,14 @@ window.onload = function() {
 	
 
 	let url = "/sportsbook/api/events/"+ eventid +"/odds";
+	
+	localStorage.setItem('url',url);
 		    
-	SB.Utils.getAjax(url, SB.Token.OPERATOR, function(e) {		       
-		$('#odds_place').html(Handlebars.compile($('#show_event_details').html())({
-		            e
-		}));
+	SB.Utils.getAjax(url, SB.Token.OPERATOR, function(data) {		      
+		localStorage.setItem('url',url);
+		$('#eventdetail_table tbody').html(Handlebars.compile($('#show_event_details').html())(
+		            data
+		));
 	});	
 	
 };

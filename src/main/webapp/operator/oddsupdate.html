@@ -38,7 +38,7 @@
 				{{/each}}
 		</script>
 		
-		<script id="show_event_details" type="text/x-handlebars-template">
+        <script id="show_event_details" type="text/x-handlebars-template">
 				{{#each periodMarketsList}}
 					<tr>
 					<td><b>{{period.description}}</b></td>
@@ -47,7 +47,7 @@
 					{{#each outcomes}}
 						<tr>
 						<td>{{outcomeDescription}}</td>
-						<td>{{outcomeId}}</td>	1
+						<td></td>
 						<td style="padding: 6px 15px" class="text-right"><button data-outcomeId={{outcomeId}} data-odds={{odds}} data-marketDescription="{{../market.marketDescription}}" data-outcomeDescription={{outcomeDescription}} onclick="addToBetslip(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" button class="btn btn-block"><b>{{odds}}</b></button></td>		
 						</tr>
 					{{/each}}
@@ -58,17 +58,18 @@
 		
    </head>
    <body>
+    <body>
         <div id="navbar-content"></div>
 		<div class="container">
 			<div class="row"><div id="event_description" class="col"></div><div id="event_start" class="col"></div></div>
         	<div class="row">
 		        <div class="col-md-8">
-		        	<form>		        	
-		        		<div id="odds_place"></div>
-		        	</form>		         
+		          <table id="eventdetail_table" class="table table-hover">
+		            <thead> </thead>
+		            <tbody></tbody>
+		          </table>
 		        </div>
 		    </div>
 		</div>
-   
    </body>
  </html>
