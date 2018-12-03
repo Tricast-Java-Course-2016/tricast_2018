@@ -34,25 +34,39 @@ type="text/css">
 			<th id="competitor">{{this.description}}</th> 
 	</thead>
 			<tbody>
-			{{#each ../results}}	
-				{{#each ../../resulttypes}}
-					{{#each ../../../periodtypes}}
-						{{#equals ../../this.periodTypeId this.id}}
-							{{#equals ../../this.resultTypeId ../this.id}}
-								{{#equals ../../this.competitorId ../../../this.id}}		
-									<tr>
-										<td>{{../this.description}} - {{this.description}}</td>
-										<td>
-											<input id="{{../../../this.id}}{{../this.id}}{{this.id}}" type="text" class="resultInput form-control" value="{{../../this.result}}"
-												   data-periodId={{this.id}} data-resultTypeId={{../this.id}} data-competitorId={{../../../this.id}} data-resultId={{../../this.id}}>
-										</td>
-									</tr>
+			{{#if ../results}}
+				{{#each ../results}}	
+					{{#each ../../resulttypes}}
+						{{#each ../../../periodtypes}}
+							{{#equals ../../this.periodTypeId this.id}}
+								{{#equals ../../this.resultTypeId ../this.id}}
+									{{#equals ../../this.competitorId ../../../this.id}}		
+										<tr>
+											<td>{{../this.description}} - {{this.description}}</td>
+											<td>
+												<input id="{{../../../this.id}}{{../this.id}}{{this.id}}" type="text" class="resultInput form-control" value="{{../../this.result}}"
+													   data-periodId={{this.id}} data-resultTypeId={{../this.id}} data-competitorId={{../../../this.id}} data-resultId={{../../this.id}}>
+											</td>
+										</tr>
+									{{/equals}}
 								{{/equals}}
 							{{/equals}}
-						{{/equals}}
+						{{/each}}		
+					{{/each}}
+				{{/each}}
+			{{else}}
+				{{#each ../resulttypes}}
+					{{#each ../../periodtypes}}
+						<tr>
+							<td>{{../this.description}} - {{this.description}}</td>
+							<td>
+								<input id="{{../../this.id}}{{../this.id}}{{this.id}}" type="text" class="resultInput form-control"
+									   data-periodId={{this.id}} data-resultTypeId={{../this.id}} data-competitorId={{../../this.id}}>
+							</td>
+						</tr>
 					{{/each}}		
 				{{/each}}
-			{{/each}}
+			{{/if}}
 			</tbody>
 		{{/each}}		
 </table>

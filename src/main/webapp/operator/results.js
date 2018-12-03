@@ -60,15 +60,13 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 			
 			$.each(resultsByEventId, function(id, result) {
 				resultsList.push({
+					'id' : result.id,
 					'periodTypeId' : result.periodTypeId,
 					'resultTypeId' : result.resultTypeId,
 					'result' : result.result,
 					'competitorId' : result.comeptitorId
 				});
 			});
-						
-			console.log("-----");
-			console.log(resultsList);
 						
 			$.each(resultTypesByEventId, function(id, resulttypes) {
 				resultTypeList.push({
@@ -118,6 +116,7 @@ function ResultSave(eventTypeId, resultsList) {
 	
 	let eventId = parseInt(urlParam.get("eventid"));
 	let competitorId;
+	let resultId;
 	let periodTypeId;
 	let result;
 	let resultTypeId;
@@ -125,13 +124,35 @@ function ResultSave(eventTypeId, resultsList) {
 	console.log("This is the EventId: " + eventId + " " + typeof(eventId));
 	
 	if(eventTypeId === 1){
-		console.log("Foci");
 		$(".resultInput").each(function(){
 			competitorId = parseInt($(this).attr("data-competitorId"));
+			resultId = parseInt($(this).attr("data-resultId"));
 			periodTypeId = parseInt($(this).attr("data-periodId"));
 			result = parseInt($(this).val());
 			resultTypeId = parseInt($(this).attr("data-resultTypeId"));
-
+			
+			console.log("CompetitorID: " + competitorId);
+			console.log("ResultID: " + resultId);
+			console.log("PeriodTypeID: " + periodTypeId);
+			console.log("Result: " + result);
+			console.log("ResultTypeId: " + resultTypeId);
+			
+			if(resultsList.length > 0){
+				console.log("!!!!!Módosítás!!!!!")
+				SB.Utils.putAjax("/sportsbook/api/results/" + resultId,
+					{
+					  "eventId": eventId,
+					  "resultToSave": {
+						"competitorId": competitorId,
+						"periodTypeId": periodTypeId,
+						"result": result,
+						"resultTypeId": resultTypeId
+					  }
+					},
+					SB.Token.OPERATOR, function(data, status, xhr) {
+						alert("success");
+					});
+			} else {
 				SB.Utils.postAjax("/sportsbook/api/results",
 					{
 				  "eventId": eventId,
@@ -143,12 +164,12 @@ function ResultSave(eventTypeId, resultsList) {
 				  }
 				},
 				SB.Token.OPERATOR, function(data, status, xhr) {
-					//alert("success");
+					alert("success");
 				});
+			}
 		});
 		
 	} else {
-		console.log("Ló");
 		$(".resultInput").each(function(){
 			competitorId = parseInt($(this).find(":selected").attr("id"));
 			periodTypeId = parseInt($(this).find(":selected").attr("data-periodTypeId"));
@@ -166,7 +187,7 @@ function ResultSave(eventTypeId, resultsList) {
 		    	  }
 		    	},
 				SB.Token.OPERATOR, function(data, status, xhr) {
-					//alert("success");
+					alert("success");
 				});
 		});
 	}
