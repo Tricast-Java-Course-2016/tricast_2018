@@ -250,3 +250,8 @@ function oddsload(element) {
     localStorage.setItem('eventid', element.getAttribute('data-eventid'));
     window.location.href = "oddsupdate.html";
 };
+
+function resultsload(element) { 
+	localStorage.setItem('eventid', element.getAttribute('data-eventid')); 
+	window.location.href = "results.html?eventid=" + element.getAttribute('data-eventid');
+}
