@@ -33,20 +33,20 @@ type="text/css">
 		{{#each competitors}}
 			<th id="competitor">{{this.description}}</th> 
 	</thead>
-			<tbody> 
-			{{#each ../results}} 
+			<tbody>
+			{{#each ../results}}	
 				{{#each ../../resulttypes}}
 					{{#each ../../../periodtypes}}
-						{{#equals ../../this.comeptitorId ../../../this.id}}
+						{{#equals ../../this.periodTypeId this.id}}
 							{{#equals ../../this.resultTypeId ../this.id}}
-								{{#equals ../../this.periodTypeId this.id}}
-								<tr>
-									<td>{{../this.description}} - {{this.description}} A</td>
-									<td>
-										<input id="{{../../../this.id}}{{../this.id}}{{this.id}}" type="text" class="resultInput form-control" value="{{../../this.result}}"
-											   data-periodId={{this.id}} data-resultTypeId={{../this.id}} data-competitorId={{../../../this.id}} data-resultId={{../../this.id}}>
-									</td>
-								</tr>
+								{{#equals ../../this.competitorId ../../../this.id}}		
+									<tr>
+										<td>{{../this.description}} - {{this.description}}</td>
+										<td>
+											<input id="{{../../../this.id}}{{../this.id}}{{this.id}}" type="text" class="resultInput form-control" value="{{../../this.result}}"
+												   data-periodId={{this.id}} data-resultTypeId={{../this.id}} data-competitorId={{../../../this.id}} data-resultId={{../../this.id}}>
+										</td>
+									</tr>
 								{{/equals}}
 							{{/equals}}
 						{{/equals}}

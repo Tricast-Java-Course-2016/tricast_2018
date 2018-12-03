@@ -63,9 +63,12 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 					'periodTypeId' : result.periodTypeId,
 					'resultTypeId' : result.resultTypeId,
 					'result' : result.result,
-					'comeptitorId' : result.comeptitorId
+					'competitorId' : result.comeptitorId
 				});
 			});
+						
+			console.log("-----");
+			console.log(resultsList);
 						
 			$.each(resultTypesByEventId, function(id, resulttypes) {
 				resultTypeList.push({
