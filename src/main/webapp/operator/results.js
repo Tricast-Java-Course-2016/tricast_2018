@@ -150,8 +150,9 @@ function ResultSave(eventTypeId, resultsList) {
 					  }
 					},
 					SB.Token.OPERATOR, function(data, status, xhr) {
-						alert("success");
+						alert("Sikeres módosítás!");
 					});
+					
 			} else {
 				SB.Utils.postAjax("/sportsbook/api/results",
 					{
@@ -164,7 +165,7 @@ function ResultSave(eventTypeId, resultsList) {
 				  }
 				},
 				SB.Token.OPERATOR, function(data, status, xhr) {
-					alert("success");
+					alert("Sikeres eredménymegadás!");
 				});
 			}
 		});
