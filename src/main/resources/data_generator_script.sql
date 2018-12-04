@@ -99,17 +99,17 @@ INSERT INTO "tricast"."markets" ("id", "eventid", "markettypeid", "description",
 	(3, 2, 8, E'A nagy lóverseny - Lord Clenaghcastle - Poetic Force', 4),
 	(4, 2, 8, E'A nagy lóverseny - Mamillius - Poetic Force', 4);
 	
-INSERT INTO tricast.outcomes(id, marketid, outcomecode, description, odds) VALUES 
-	(1, 1, '1', 'FTC', 3.10),
-	(2, 1, 'X', 'Döntetlen', 2.10),
-	(3, 1, '2', 'ARSENAL', 1.15),
-	(4, 2, '1', 'ETO', 4),
-	(5, 2, 'X', 'Döntetlen', 2.15),
-	(6, 2, '2', 'MILAN', 1.2),
-	(7, 3, '1', 'Lord Clenaghcastle', 1.4),
-	(8, 3, '2', 'Poetic Force', 3.15),
-	(9, 4, '1', 'Mamillius', 1.15),
-	(10, 4, '2', 'Poetic Force', 2.15);
+INSERT INTO tricast.outcomes(id, marketid, outcomecode, description, odds, competitorid) VALUES 
+	(1, 1, '1', 'FTC', 3.10, 1),
+	(2, 1, 'X', 'Döntetlen', 2.10, NULL),
+	(3, 1, '2', 'ARSENAL', 1.15, 3),
+	(4, 2, '1', 'ETO', 4, 2),
+	(5, 2, 'X', 'Döntetlen', 2.15, NULL),
+	(6, 2, '2', 'MILAN', 1.2, 4),
+	(7, 3, '1', 'Lord Clenaghcastle', 1.4, 6),
+	(8, 3, '2', 'Poetic Force', 3.15, 7),
+	(9, 4, '1', 'Mamillius', 1.15, 8),
+	(10, 4, '2', 'Poetic Force', 2.15, 7);
 	
 INSERT INTO tricast.results(id, resulttypeid, result, eventcompetitormapid, periodtypeid) VALUES 
 	(1, 1, 1, 1, 1),

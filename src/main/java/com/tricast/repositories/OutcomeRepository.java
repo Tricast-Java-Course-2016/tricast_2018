@@ -13,7 +13,7 @@ public interface OutcomeRepository extends CrudRepository<Outcome, Long> {
 
     Outcome findById(Long id);
     
-    List <Outcome> findByMarket_Id(Long marketId);
+    List <Outcome> findByMarket_Id(long marketId);
     
     List<Outcome> findByMarket_Event_Id(long eventId);
 }

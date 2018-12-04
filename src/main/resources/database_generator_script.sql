@@ -204,6 +204,7 @@ ALTER SEQUENCE tricast.markettypes_id_seq OWNED BY tricast.markettypes.id;
 CREATE TABLE tricast.outcomes (
     id integer NOT NULL,
     marketid integer NOT NULL,
+    competitorid integer,
     outcomecode character varying(5) NOT NULL,
     description character varying(50) NOT NULL,
     odds numeric(18,2),
@@ -455,3 +456,6 @@ ALTER TABLE ONLY tricast.transactions
 
 ALTER TABLE ONLY tricast.transactions
     ADD CONSTRAINT fk_transactions_bets FOREIGN KEY (betid) REFERENCES tricast.bets(id);
+    
+ALTER TABLE ONLY tricast.outcomes
+    ADD CONSTRAINT fk_outcomes_competitorid FOREIGN KEY (competitorid) REFERENCES tricast.competitors(id);

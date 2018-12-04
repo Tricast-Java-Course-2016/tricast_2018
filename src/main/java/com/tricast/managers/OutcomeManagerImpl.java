@@ -67,41 +67,66 @@ public class OutcomeManagerImpl implements OutcomeManager {
 
 	@Override
 	public Set<Result> findByEventId(long eventId) {
-		List<Outcome> outcomeByMarketId;
-		List<Result> resultByEventId = resultRepository.findByEventCompetitorMap_Event_Id(eventId);
+		List<Result> resultByEventId = resultRepository.findByEventCompetitorMap_Event_IdOrderByEventCompetitorMap_CompetitorIdAscResultType_IdAscPeriodType_IdAsc(eventId);
 		List<Market> marketByEventId = marketRepository.findByEvent_Id(eventId);
-		Competitor competitor;
 		
 		Set<Result> resultByEventIdAndMarketType = new HashSet<Result>();
-		Map<Long, String> winnerOutcomeCode = new HashMap<Long, String>();
-		Map<Long, Integer> resultsByOutcome = new HashMap<Long, Integer>();
-		
-		for(Result currentResult : resultByEventId) {
-			for(Market currentMarket : marketByEventId) {
-				if(
-					currentResult.getPeriodType().getType() == currentMarket.getMarketType().getType().getPeriodType()
-						&&
-					currentResult.getResultType().getType() == currentMarket.getMarketType().getType().getResultType()) {
-					resultByEventIdAndMarketType.add(currentResult);
-				}
-			}
-		}
+		Map<Long, Integer> competitorWithResult = new HashMap<Long, Integer>();
 		
 		for(Market currentMarket : marketByEventId) {
-			outcomeByMarketId = outcomeRepository.findByMarket_Id(currentMarket.getId());
-			for(Outcome currentOutcome : outcomeByMarketId) {
-				for(Result currentResult : resultByEventIdAndMarketType) {
-					competitor = competitorRepository.findById(currentResult.getEventCompetitorMap().getCompetitorId());
-					if(competitor.getDescription().equalsIgnoreCase(currentOutcome.getDescription())) {
-						resultsByOutcome.put(currentOutcome.getId(), currentResult.getResult());
-					}
+			for(Result currentResult : resultByEventId) {
+				if(
+					currentResult.getResultType().getType() == currentMarket.getMarketType().getType().getResultType()
+						&&
+					currentResult.getPeriodType().getId() == currentMarket.getPeriodTypeId().getId()) {
+					
+					competitorWithResult.put(currentResult.getEventCompetitorMap().getCompetitorId(), currentResult.getResult());
 				}
 			}
-			for(Map.Entry<Long, Integer> mapValue : resultsByOutcome.entrySet()) {
+			settlementWDW(competitorWithResult, currentMarket.getId(), eventId);
+		}
+		return resultByEventIdAndMarketType;
+	}
+	
+	private void settlementWDW(Map<Long, Integer> competitorWithResultMap, long marketId, long eventId) {
+		//Megfelelő outcome-ok betöltése és updatelése
+
+		List<Outcome> outcomes = outcomeRepository.findByMarket_Id(marketId);
+		List<Competitor> competitors = competitorRepository.findByEventId(eventId);
+		
+		int resultHome = 0;
+		long competitorHome = 0;
+		int resultAway = 0;
+		long competitorAway = 0;
+		int status = 0;
+		Long winnerCompetitor = null;
+		
+		for(Competitor currentCompetitor : competitors) {
+			if(status == 0) {
+				resultHome = competitorWithResultMap.get(currentCompetitor.getId());
+				competitorHome = currentCompetitor.getId();
+				status++;
+			} else {
+				resultAway = competitorWithResultMap.get(currentCompetitor.getId());
+				competitorAway = currentCompetitor.getId();
 			}
 		}
 		
+		if(resultHome > resultAway) {
+			winnerCompetitor = competitorHome;
+		} else if (resultHome < resultAway) {
+			winnerCompetitor = competitorAway;
+		} else {
+			winnerCompetitor = null;
+		}
 		
-		return resultByEventIdAndMarketType;
+		for(Outcome currentOutcome : outcomes) {
+			if(currentOutcome.getCompetitorId() == winnerCompetitor) {
+				currentOutcome.setWinYN(1);
+			} else {
+				currentOutcome.setWinYN(0);
+			}
+			outcomeRepository.save(currentOutcome);
+		}		
 	}
 }

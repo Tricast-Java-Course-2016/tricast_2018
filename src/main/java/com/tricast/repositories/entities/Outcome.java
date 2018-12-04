@@ -22,11 +22,14 @@ public class Outcome implements Serializable {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
 	@ManyToOne
     @JoinColumn(name = "marketid")
     private Market market;
+	
+	@Column(name="competitorid")
+	private Long competitorId;
 	
 	@Column(name="outcomecode")
 	private String outcomeCode;
@@ -40,11 +43,11 @@ public class Outcome implements Serializable {
 	@Column(name="winyn",nullable=true)
 	private Integer winYN;
 	
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -87,5 +90,12 @@ public class Outcome implements Serializable {
 	public void setWinYN(Integer winYN) {
 			this.winYN = winYN;
 	}
-	
+
+	public Long getCompetitorId() {
+		return competitorId;
+	}
+
+	public void setCompetitorId(Long competitorId) {
+		this.competitorId = competitorId;
+	}	
 }
