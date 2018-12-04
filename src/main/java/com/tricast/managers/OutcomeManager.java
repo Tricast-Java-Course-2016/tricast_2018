@@ -3,6 +3,7 @@ package com.tricast.managers;
 import java.util.List;
 import java.util.Set;
 
+import com.tricast.repositories.entities.Bet;
 import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Result;
 

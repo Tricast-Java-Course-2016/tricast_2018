@@ -1,5 +1,7 @@
 package com.tricast.managers;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,14 +13,23 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.tricast.builders.TransactionResponseBuilder;
+import com.tricast.controllers.responses.TransactionResponse;
+import com.tricast.repositories.BetOutcomeMapRepository;
 import com.tricast.repositories.CompetitorRepository;
 import com.tricast.repositories.MarketRepository;
 import com.tricast.repositories.OutcomeRepository;
 import com.tricast.repositories.ResultRepository;
+import com.tricast.repositories.TransactionRepository;
+import com.tricast.repositories.entities.Bet;
+import com.tricast.repositories.entities.BetOutcomeMap;
+import com.tricast.repositories.entities.BetTypes;
 import com.tricast.repositories.entities.Competitor;
 import com.tricast.repositories.entities.Market;
 import com.tricast.repositories.entities.Outcome;
 import com.tricast.repositories.entities.Result;
+import com.tricast.repositories.entities.Transaction;
+import com.tricast.repositories.entities.TransactionTypes;
 
 @Service
 public class OutcomeManagerImpl implements OutcomeManager {
@@ -27,17 +38,23 @@ public class OutcomeManagerImpl implements OutcomeManager {
     private ResultRepository resultRepository;
     private MarketRepository marketRepository;
     private CompetitorRepository competitorRepository;
+    private BetOutcomeMapRepository betOutcomeRepository;
+    private TransactionRepository transactionRepository;
 
     @Inject
     public OutcomeManagerImpl(
     						OutcomeRepository outcomeRepository,
     						ResultRepository resultRepository,
     						MarketRepository marketRepository,
-							CompetitorRepository competitorRepository) {
+							CompetitorRepository competitorRepository,
+							BetOutcomeMapRepository betOutcomeRepository,
+							TransactionRepository transactionRepository) {
         this.outcomeRepository = outcomeRepository;
         this.resultRepository = resultRepository;
         this.marketRepository = marketRepository;
         this.competitorRepository = competitorRepository;
+        this.betOutcomeRepository = betOutcomeRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     @Override
@@ -83,12 +100,13 @@ public class OutcomeManagerImpl implements OutcomeManager {
 					competitorWithResult.put(currentResult.getEventCompetitorMap().getCompetitorId(), currentResult.getResult());
 				}
 			}
-			settlementWDW(competitorWithResult, currentMarket.getId(), eventId);
+			settlementWDWOutcome(competitorWithResult, currentMarket.getId(), eventId);
 		}
+		
 		return resultByEventIdAndMarketType;
 	}
 	
-	private void settlementWDW(Map<Long, Integer> competitorWithResultMap, long marketId, long eventId) {
+	private void settlementWDWOutcome(Map<Long, Integer> competitorWithResultMap, long marketId, long eventId) {
 		//Megfelelő outcome-ok betöltése és updatelése
 
 		List<Outcome> outcomes = outcomeRepository.findByMarket_Id(marketId);
@@ -127,6 +145,51 @@ public class OutcomeManagerImpl implements OutcomeManager {
 				currentOutcome.setWinYN(0);
 			}
 			outcomeRepository.save(currentOutcome);
-		}		
+			settlementWDWBet(currentOutcome.getId());
+		}
 	}
+	
+	private List<Bet> settlementWDWBet(long outcomeId) {
+		
+		List<Bet> betList = new ArrayList<Bet>();
+		
+		List<BetOutcomeMap> betOutcomeMapList = betOutcomeRepository.findByOutcomeID_Id(outcomeId);
+		
+		Outcome outcome = outcomeRepository.findById(outcomeId);
+		
+		TransactionResponse transactionResponse = new TransactionResponse();
+
+		if(outcome.getWinYN() == 1) {
+			for(BetOutcomeMap currentBetOutcomeMap : betOutcomeMapList) {
+				
+				if(currentBetOutcomeMap.getBetId().getBetTypeId().getDescription() == BetTypes.Single) {
+
+					transactionResponse = createTransaction(currentBetOutcomeMap);
+				}
+				
+				betList.add(currentBetOutcomeMap.getBetId());
+			}
+		}
+		
+		for(BetOutcomeMap currentBetOutcomeMap : betOutcomeMapList) {
+			betList.add(currentBetOutcomeMap.getBetId());
+		}
+		
+		return betList;
+	}
+	
+	private TransactionResponse createTransaction(BetOutcomeMap betOutcomeMap) {
+		
+		Transaction transactionByBet = transactionRepository.findByBet(betOutcomeMap.getBetId());
+		
+        Transaction transaction = new Transaction();
+        transaction.setAmount(BigDecimal.valueOf(((transactionByBet.getAmount().abs()).doubleValue() * betOutcomeMap.getOdds())));
+        transaction.setDescription("Nyeremény jóváírás:  " + transaction.getAmount() + "Ft összeggel.");
+        transaction.setCreatedDate(OffsetDateTime.now());
+        transaction.setType(TransactionTypes.SETTLEMENT);
+        transaction.setAccount(betOutcomeMap.getBetId().getAccountId());
+		
+		return TransactionResponseBuilder.build(transactionRepository.save(transaction));
+	}
+	
 }
