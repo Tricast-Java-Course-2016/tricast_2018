@@ -25,7 +25,7 @@
 		            <td>{{league}}</td>
 		            <td>{{startDate}}</td>
 		            <td>{{status}}</td>
-					<td><button type="button" class="btn btn-primary">Nyeremények kiosztása</button></td>
+					<td><button id="{{this.id}}" type="button" class="settlementButton btn btn-primary" data-eventId="{{id}}" onclick="settlement({{id}})">Nyeremények kiosztása</button></td>
 					<td style="padding: 6px 15px" class="text-right"><button data-eventid="{{this.id}}" type="button" onclick="resultsload(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-trophy"></button></td>
 					<td style="padding: 6px 15px" class="text-right"><button data-eventid="{{this.id}}" type="button" onclick="oddsload(this)" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-cog"></button></td>
 					<td style="padding: 6px 15px" class="text-right"><button data-edit-modal="{{id}}" style="line-height: 22px; padding: 4px 6px 4px 8px" class="btn btn-sm btn-default fa fa-edit"></button></td>

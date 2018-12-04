@@ -242,9 +242,19 @@ window.onload = function() {
         	        	});
             		}
                 });
-                
             });
 };
+
+function settlement(eventId) {
+
+	console.log("This is the EventID: " + eventId);
+	
+	SB.Utils.getAjax("/sportsbook/api/outcomes/test/" + eventId, SB.Token.OPERATOR, function(data, status, xhr) {
+						alert("Nyeremény jóváírva");
+						$("#" + eventId).prop("disabled", true);
+					});
+}
+
 
 function oddsload(element) {
     localStorage.setItem('eventid', element.getAttribute('data-eventid'));

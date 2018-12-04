@@ -183,6 +183,7 @@ public class OutcomeManagerImpl implements OutcomeManager {
 		Transaction transactionByBet = transactionRepository.findByBet(betOutcomeMap.getBetId());
 		
         Transaction transaction = new Transaction();
+        transaction.setBet(betOutcomeMap.getBetId());
         transaction.setAmount(BigDecimal.valueOf(((transactionByBet.getAmount().abs()).doubleValue() * betOutcomeMap.getOdds())));
         transaction.setDescription("Nyeremény jóváírás:  " + transaction.getAmount() + "Ft összeggel.");
         transaction.setCreatedDate(OffsetDateTime.now());

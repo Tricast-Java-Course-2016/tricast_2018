@@ -30,7 +30,7 @@ public class OutcomeController {
         return outcomeManager.findById(id);
     }
     
-    @GetMapping(path = "test/{id}")
+    @GetMapping(path = "/test/{id}")
     public Set<Result> findByEventId(@PathVariable("id") long id){
     	return outcomeManager.findByEventId(id);
     }
