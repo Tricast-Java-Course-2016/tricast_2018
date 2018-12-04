@@ -76,7 +76,7 @@ public class ResultManagerImpl implements ResultManager {
 		List<ResultResponse> listOfResultResponse = new ArrayList<ResultResponse>();
 		ResultResponse resultResponse;
 		
-		List<Result> resultByEventId = resultRepository.findByEventCompetitorMap_Event_Id(eventId);
+		List<Result> resultByEventId = resultRepository.findByEventCompetitorMap_Event_IdOrderByEventCompetitorMap_CompetitorIdAscResultType_IdAscPeriodType_IdAsc(eventId);
 		
 		for(Result currentResult : resultByEventId) {
 			resultResponse = new ResultResponse();

@@ -37,14 +37,11 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 		SB.Utils.getAjax('/sportsbook/api/resulttypes/findByEventId/' + id, SB.Token.OPERATOR),
 		SB.Utils.getAjax('/sportsbook/api/periodtypes/findByEventId/' + id, SB.Token.OPERATOR)).done(
 		function(competitors, events, results, resulttypes, periodtypes) {
-			
+						
 			eventsById = destructById(events[0]);
 			competitorsByEventId = destructById(competitors[0]);
-			resultsByEventId = destructById(results[0]);
 			resultTypesByEventId = resulttypes[0]; 
 			periodTypesByEventId = periodtypes[0]; 
-
-			console.log(resultsByEventId);
 			
 			let competitorsList = [];
 			let resultsList = [];
@@ -58,7 +55,7 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 				});
 			});
 			
-			$.each(resultsByEventId, function(id, result) {
+			$.each(results[0], function(id, result) {
 				resultsList.push({
 					'id' : result.id,
 					'periodTypeId' : result.periodTypeId,
@@ -83,7 +80,7 @@ $.when(SB.Utils.getAjax('/sportsbook/api/competitors/eventid/' + id, SB.Token.OP
 			});
 			
 			eventTypeId = events[0].eventTypeId;
-			
+
 			if(eventTypeId === 1){
 				$('#results-tabele table').html(Handlebars.compile($('#football-results-template').html())({					
 					competitors : competitorsList,
