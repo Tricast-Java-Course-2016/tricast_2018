@@ -41,9 +41,9 @@ public class ResultController {
     }
     
 	@PutMapping(path="/{id}")
-	public ResponseEntity<?> update(long id, @RequestBody ResultSaveRequest resultUpdate) {
+	public ResponseEntity<?> update(@PathVariable("id") long resultId, @RequestBody ResultSaveRequest resultUpdate) {
     	try {
-    		ResultSaveResponse result = resultManager.update(id, resultUpdate);
+    		ResultSaveResponse result = resultManager.update(resultId, resultUpdate);
 			return ResponseEntity.ok(result);
     	}catch (Exception e) {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
