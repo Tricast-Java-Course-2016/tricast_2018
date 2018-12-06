@@ -41,50 +41,24 @@ window.onload = function() {
 function updateOdds(){
 	eventId=localStorage.getItem('eventid');
 	
-	var string1='';
-	string1+='{';
-	string1+='"';
-	string1+="eventId";
-	string1+='"';
-	string1+=": ";
-	string1+='"';
-	string1+=eventId;
-	string1+='"';
-	string1+=',';
-	string1+='"';
-	string1+="outcomeIdOdds";
-	string1+='"';
-	string1+=":{";
+	var json={eventId:eventId}
+	var outcomeIdOdds={};
 	
-	let odds = [];
-	let outcomeId = [];
+	let odds ;
+	let outcomeId ;
 	
 	$('input[data-type="oddsu"]').each(function(index, item){
-		outcomeId.push($(item).attr('data-outcomeId'));
-		odds.push($(item).val());
+		outcomeId=($(item).attr('data-outcomeId'));
+		odds=($(item).val());
+		outcomeIdOdds[outcomeId]=odds;
 	});
 	
-	for(let i=0;i<odds.length;i++){
-		string1+='"';
-		string1+=outcomeId[i];
-		string1+='"';
-		string1+=": ";
-		string1+='"';
-		string1+=odds[i];
-		string1+='"';
-		
-		if(i<odds.length-1){
-			string1+=',';
-		}	
-	}
-	
-	string1+="}}";	
-	
+
+	json.outcomeIdOdds=outcomeIdOdds;
 	let url = "/sportsbook/api/events/"+ eventId +"/odds";
-	SB.Utils.postAjax(url,JSON.parse(string1),SB.Token.OPERATOR,function(){
+	SB.Utils.postAjax(url,json,SB.Token.OPERATOR,function(){
     	alert("Odds update successful!");
-	});
-		
+	});		
 }
 
 

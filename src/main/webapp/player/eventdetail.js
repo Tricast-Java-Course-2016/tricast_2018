@@ -190,13 +190,9 @@ function refresh(){
 }
 
 function createString(){
-	var string1='';
-	string1+='{';
-	string1+='"';
-	string1+="bettypeId";
-	string1+='"';
-	string1+=": ";
-
+	
+	var json={};
+	var outcomeOdds={};
 	var stake;
 	var bettype = document.querySelector('input[name="betType"]:checked').value;
 	
@@ -208,68 +204,38 @@ function createString(){
 	}
 	var accountId=localStorage.getItem('PLAYER_ID');
 	
+	json.betStake=stake;
+	json.accountId=accountId;
 	
 	if(bettype=="single"){
-		string1+="1,";
+		json.bettypeId=1;
 	}
 	else if(bettype=="double"){
-		string1+="2,";
+		json.bettypeId=2;
 	} 
 	else{
-		string1+="3,";
+		json.bettypeId=3;
 	}
-	string1+='"'; 
-	string1+="accountId";
-	string1+='"';
-	string1+=": ";
-	string1+='"';
-	string1+=accountId;
-	string1+='"';
-	string1+=',';
-	string1+='"';
-	string1+="betStake";
-	string1+='"';
-	string1+=": ";
-	string1+=stake;
-	string1+=',';
-	string1+='"';
-	string1+="outcomeOdds";
-	string1+='"';
-	string1+=": {";
 	
+	let odds;
+	let outcomeId;
 	
-	let odds = [];
-	let outcomeId = [];
 	let current;
 	for(let i = 0; i < localStorage.length; i++){
 		if(localStorage.key(i)!='betslip'){
 			current=localStorage.getItem(localStorage.key(i));
 
 			if (current.includes("outcomeOdds") && localStorage.key(i)!='string'){					
-				odds.push(JSON.parse(current).odds);
-	    		outcomeId.push(JSON.parse(current).outcomeId);
+				odds=(JSON.parse(current).odds);
+	    		outcomeId=(JSON.parse(current).outcomeId);
+	    		outcomeOdds[outcomeId]=odds;
 			}
 
 	    }
 	}
+	json.outcomeOdds=outcomeOdds;
 	
-	for(let i=0;i<odds.length;i++){
-		string1+='"';
-		string1+=outcomeId[i];
-		string1+='"';
-		string1+=": ";
-		string1+='"';
-		string1+=odds[i];
-		string1+='"';
-		
-		if(i<odds.length-1){
-			string1+=',';
-		}	
-	}
-	
-	
-	string1+="}}";
-	return string1;
+	return JSON.stringify(json);
 }
 
 function removeAll(){
